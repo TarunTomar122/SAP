@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-class HomeScreen extends React.Component {
+class JournalScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -12,7 +12,7 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.home}>
-        <Text style={styles.text}>Home Screen</Text>
+        <Text style={styles.text}>Journal Screen</Text>
       </View>
     );
   }
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default JournalScreen;
