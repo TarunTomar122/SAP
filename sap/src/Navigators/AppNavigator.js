@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import TabBar from '../Components/TabBar';
+import Header from '../Components/Header';
 
 import HomeScreen from '../Containers/Home/HomeScreen.js';
 import JournalScreen from '../Containers/Journal/JournalScreen.js';
@@ -20,11 +21,11 @@ function HomeTabs() {
   return (
     <Tab.Navigator
       initialRouteName={'home'}
-      screenOptions={{headerShown: false}}
+      screenOptions={{header: props => <Header {...props} />}}
       tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="home" component={HomeScreen} />
       <Tab.Screen name="todo" component={TodoScreen} />
-      <Tab.Screen name="JournalScreen" component={JournalScreen} />
+      <Tab.Screen name="journal" component={JournalScreen} />
       <Tab.Screen name="track" component={TrackScreen} />
       <Tab.Screen name="people" component={PeopleScreen} />
     </Tab.Navigator>

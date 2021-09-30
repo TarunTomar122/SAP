@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
+import Header from '../../Components/Header';
+
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);

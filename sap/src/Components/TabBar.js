@@ -46,7 +46,9 @@ const TabBar = ({state, descriptors, navigation}) => {
               onPress={onPress}
               style={{
                 // backgroundColor: isFocused ? '#d6bfa9' : '#222a2d',
-                borderRadius: 20,
+                // borderRadius: 20,
+                borderBottomColor: 'white',
+                borderBottomWidth: isFocused ? 1 : 0,
               }}>
               <View
                 style={{
@@ -56,28 +58,26 @@ const TabBar = ({state, descriptors, navigation}) => {
                   padding: 10,
                 }}>
                 {label == 'home' ? (
-                  // {isFocused ? (  <Feather name="home" color="#ecc9a7" size={34} />):}
                   isFocused ? (
-                    <Ionicons name="home" color="white" size={42} />
+                    <Ionicons name="home" color="white" size={38} />
                   ) : (
                     <Ionicons name="home-outline" color="#ecc9a7" size={38} />
                   )
-                ) : // <Feather name="home" color="#ecc9a7" size={34} />
-                label == 'todo' ? (
+                ) : label == 'todo' ? (
                   isFocused ? (
-                    <FontAwesome5 name="pen" color="white" size={38} />
+                    <FontAwesome5 name="pen" color="white" size={35} />
                   ) : (
                     <SimpleLineIcons name="pencil" color="#ecc9a7" size={35} />
                   )
-                ) : label == 'JournalScreen' ? (
+                ) : label == 'journal' ? (
                   isFocused ? (
-                    <AntDesign name="pluscircle" color="white" size={52} />
+                    <AntDesign name="pluscircle" color="white" size={48} />
                   ) : (
                     <AntDesign name="pluscircleo" color="#ecc9a7" size={48} />
                   )
                 ) : label == 'track' ? (
                   isFocused ? (
-                    <Ionicons name="stopwatch-sharp" color="white" size={50} />
+                    <Ionicons name="stopwatch" color="white" size={49} />
                   ) : isFocused ? (
                     <Ionicons
                       name="stopwatch-outline"
@@ -92,12 +92,12 @@ const TabBar = ({state, descriptors, navigation}) => {
                     />
                   )
                 ) : isFocused ? (
-                  <Ionicons name="people" color="white" size={46} />
+                  <Ionicons name="people" color="white" size={42} />
                 ) : (
                   <Ionicons
                     name="ios-people-outline"
                     color="#ecc9a7"
-                    size={40}
+                    size={42}
                   />
                 )}
               </View>
