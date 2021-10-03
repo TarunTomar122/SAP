@@ -1,38 +1,54 @@
 import React from 'react';
-import {Header} from '@react-navigation/native';
-import {View, Platform, Text, StyleSheet} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {View, Text, StyleSheet} from 'react-native';
+
+import {color, size, spacing} from '../theme';
 
 const CustomHeader = props => {
+  const {
+    leftIcon,
+    rightIcon,
+    title,
+    style,
+    titleStyle,
+    leftIconStyle,
+    rightIconStyle,
+  } = props;
+
   return (
+    // <View style={[styles.container, style]}>
+    //   <View style={styles.leftIcon}>{leftIcon}</View>
+    //   <View style={styles.title}>
+    //     <Text style={[styles.titleText, titleStyle]}>{title}</Text>
+    //   </View>
+    //   <View style={styles.rightIcon}>{rightIcon}</View>
+    // </View>
+
     <View style={styles.customHeader}>
-      <LinearGradient colors={['#333b45', '#1d2025']} style={styles.custom}>
-        {/* <Header {...props} /> */}
-        <Text style={styles.title}>{props.route.name}</Text>
-      </LinearGradient>
+      <Text style={styles.title}>{props.route.name}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   customHeader: {
-    height: Platform.OS === 'ios' ? 70 : 60,
-    paddingTop: Platform.OS === 'ios' ? 20 : 0,
-    backgroundColor: '#333b45',
+    height: size.scale(54),
+    paddingHorizontal: spacing.tiny,
+    backgroundColor: color.background,
     borderBottomWidth: 1,
-    borderBottomColor: '#333b45',
-    shadowColor: '#000',
+    borderBottomColor: color.primaryDarker,
+    shadowColor: color.primaryDarker,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
-    elevation: 2,
+    elevation: 5,
     position: 'relative',
   },
   title: {
-    fontSize: 28,
-    color: 'white',
-    paddingLeft: 20,
-    paddingTop: 8,
-    paddingBottom: 15,
+    fontSize: size.scale(24),
+    color: color.text,
+    margin: spacing.smaller,
+    position: 'absolute',
+    left: spacing.tiny,
+    top: spacing.tiny,
   },
 });
 

@@ -1,6 +1,10 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
+import FloatingButton from '../../Components/FloatingButton';
+
+import styles from './TrackScreenStyles';
+
 class TrackScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -12,23 +16,10 @@ class TrackScreen extends React.Component {
   render() {
     return (
       <View style={styles.home}>
-        <Text style={styles.text}>Track Screen</Text>
+        <FloatingButton onPress={() => console.log('I am pressed')} />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  home: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#1d2025',
-  },
-  text: {
-    fontSize: 50,
-    color: 'white',
-  },
-});
 
 export default TrackScreen;

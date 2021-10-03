@@ -3,6 +3,8 @@ import {View, Text, StyleSheet} from 'react-native';
 
 import Header from '../../Components/Header';
 
+import styles from './HomeScreenStyles';
+
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -19,18 +21,5 @@ class HomeScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  home: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#1d2025',
-  },
-  text: {
-    fontSize: 50,
-    color: 'white',
-  },
-});
 
 export default HomeScreen;

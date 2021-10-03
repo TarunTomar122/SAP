@@ -1,0 +1,16 @@
+export const palette = {
+  black: '#000000',
+  white: '#ffffff',
+  description: '#666666',
+  darkGrey: '#4C525C',
+  primary: '#CC0400',
+  secondary: '#333333',
+  offWhite: '#e6e6e6',
+  orange: '#FBA928',
+  orangeDarker: '#EB9918',
+  lighYellowish: '#ecc9a7',
+  lightGrey: '#939AA4',
+  lighterGrey: '#CDD4DA',
+  angry: '#dd3333',
+  transparent: 'transparent',
+};

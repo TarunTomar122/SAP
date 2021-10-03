@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text} from 'react-native';
+
+import styles from './PeopleScreenStyles.js';
 
 class PeopleScreen extends React.Component {
   constructor(props) {
@@ -17,18 +19,5 @@ class PeopleScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  home: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#1d2025',
-  },
-  text: {
-    fontSize: 50,
-    color: 'white',
-  },
-});
 
 export default PeopleScreen;
