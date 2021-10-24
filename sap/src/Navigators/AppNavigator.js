@@ -13,6 +13,9 @@ import PeopleScreen from '../Containers/People/PeopleScreen.js';
 import TodoScreen from '../Containers/Todo/TodoScreen.js';
 import TrackScreen from '../Containers/Track/TrackScreen.js';
 
+import AddTaskScreen from '../Containers/AddTask/AddTaskScreen.js';
+import TaskDetailsScreen from '../Containers/TaskDetails/TaskDetailsScreen.js';
+
 const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
@@ -39,6 +42,8 @@ function AppNavigator() {
         initialRouteName={'HomeTabs'}
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="HomeTabs" component={HomeTabs} />
+        <Stack.Screen name="AddTask" component={AddTaskScreen} />
+        <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

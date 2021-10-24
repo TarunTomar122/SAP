@@ -5,12 +5,24 @@ import {color, size} from '../../theme';
 export default StyleSheet.create({
   home: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: color.background,
   },
   text: {
-    fontSize: 50,
+    fontSize: size.scale(20),
+    color: color.text,
+  },
+  task: {
+    padding: size.scale(10),
+    margin: size.scale(10),
+    borderBottomWidth: 1,
+    borderBottomColor: color.line,
+  },
+  taskTitle: {
+    fontSize: size.scale(20),
+    color: color.text,
+  },
+  taskRemaining: {
+    fontSize: size.scale(15),
     color: color.text,
   },
 });

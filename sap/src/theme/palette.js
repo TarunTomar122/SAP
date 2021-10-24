@@ -9,8 +9,9 @@ export const palette = {
   orange: '#FBA928',
   orangeDarker: '#EB9918',
   lighYellowish: '#ecc9a7',
-  lightGrey: '#939AA4',
+  lightGrey: '#999999',
   lighterGrey: '#CDD4DA',
   angry: '#dd3333',
   transparent: 'transparent',
+  reddish: '#CC0300',
 };

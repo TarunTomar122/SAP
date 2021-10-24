@@ -26,9 +26,9 @@ export const color = {
 
   primary: palette.orange,
 
-  primaryDarker: palette.orangeDarker,
+  primaryDarker: palette.reddish,
 
-  icons: palette.lighYellowish,
+  icons: palette.reddish,
 
   line: palette.offWhite,
 

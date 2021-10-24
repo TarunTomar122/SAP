@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import {color} from '../theme';
+import {color, size} from '../theme';
 
 const {width} = Dimensions.get('window');
 
@@ -59,76 +59,56 @@ const TabBar = ({state, descriptors, navigation}) => {
                 }}>
                 {label == 'home' ? (
                   isFocused ? (
-                    <Ionicons
-                      name="home"
-                      color={color.primaryDarker}
-                      size={37}
-                    />
+                    <Ionicons name="home" color={color.text} size={37} />
                   ) : (
                     <Ionicons
                       name="home-outline"
-                      color={color.icons}
+                      color={color.text}
                       size={37}
                     />
                   )
                 ) : label == 'todo' ? (
                   isFocused ? (
-                    <FontAwesome5
-                      name="pen"
-                      color={color.primaryDarker}
-                      size={34}
-                    />
+                    <FontAwesome5 name="pen" color={color.text} size={34} />
                   ) : (
                     <SimpleLineIcons
                       name="pencil"
-                      color={color.icons}
+                      color={color.text}
                       size={34}
                     />
                   )
                 ) : label == 'journal' ? (
                   isFocused ? (
-                    <AntDesign
-                      name="pluscircle"
-                      color={color.primaryDarker}
-                      size={48}
-                    />
+                    <AntDesign name="pluscircle" color={color.text} size={48} />
                   ) : (
                     <AntDesign
                       name="pluscircleo"
-                      color={color.icons}
+                      color={color.text}
                       size={48}
                     />
                   )
                 ) : label == 'track' ? (
                   isFocused ? (
-                    <Ionicons
-                      name="stopwatch"
-                      color={color.primaryDarker}
-                      size={49}
-                    />
+                    <Ionicons name="stopwatch" color={color.text} size={49} />
                   ) : isFocused ? (
                     <Ionicons
                       name="stopwatch-outline"
-                      color={color.icons}
+                      color={color.text}
                       size={52}
                     />
                   ) : (
                     <Ionicons
                       name="stopwatch-outline"
-                      color={color.icons}
+                      color={color.text}
                       size={50}
                     />
                   )
                 ) : isFocused ? (
-                  <Ionicons
-                    name="people"
-                    color={color.primaryDarker}
-                    size={42}
-                  />
+                  <Ionicons name="people" color={color.text} size={42} />
                 ) : (
                   <Ionicons
                     name="ios-people-outline"
-                    color={color.icons}
+                    color={color.text}
                     size={42}
                   />
                 )}
@@ -146,18 +126,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
-    backgroundColor: color.background,
+    backgroundColor: color.icons,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     marginHorizontal: 0,
+    paddingVertical: size.scale(4),
   },
   mainItemContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 10,
     borderRadius: 1,
-    borderColor: color.primaryDarker,
+    borderColor: color.text,
   },
 });
 
