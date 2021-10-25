@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-import {color, size} from '../../theme';
+import {color, size, typography} from '../../theme';
 
 export default StyleSheet.create({
   home: {
@@ -18,6 +18,7 @@ export default StyleSheet.create({
     borderColor: color.text,
     padding: size.scale(10),
     fontSize: size.scale(20),
+    fontFamily: typography.primaryBold,
   },
   buttonContainer: {
     marginVertical: size.scale(20),
@@ -35,6 +36,7 @@ export default StyleSheet.create({
   buttonText: {
     fontSize: size.scale(20),
     color: color.palette.reddish,
+    fontFamily: typography.primaryBold,
   },
   entriesContainer: {
     padding: size.scale(10),
@@ -44,6 +46,7 @@ export default StyleSheet.create({
     fontSize: size.scale(20),
     color: color.text,
     marginBottom: size.scale(10),
+    fontFamily: typography.primaryBold,
   },
   entries: {
     paddingVertical: size.scale(10),
@@ -60,5 +63,6 @@ export default StyleSheet.create({
   entryText: {
     fontSize: size.scale(20),
     color: color.text,
+    fontFamily: typography.primaryBold,
   },
 });

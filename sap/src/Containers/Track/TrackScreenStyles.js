@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-import {color, size} from '../../theme';
+import {color, size, typography} from '../../theme';
 
 export default StyleSheet.create({
   home: {
@@ -10,6 +10,7 @@ export default StyleSheet.create({
   text: {
     fontSize: size.scale(20),
     color: color.text,
+    fontFamily: typography.primaryBold,
   },
   task: {
     padding: size.scale(10),
@@ -20,9 +21,11 @@ export default StyleSheet.create({
   taskTitle: {
     fontSize: size.scale(20),
     color: color.text,
+    fontFamily: typography.primaryBold,
   },
   taskRemaining: {
     fontSize: size.scale(15),
     color: color.text,
+    fontFamily: typography.primaryBold,
   },
 });

@@ -10,6 +10,8 @@ const sequelize = new Sequelize(
 const models = {
   Person: sequelize.import("./person"),
   Review: sequelize.import("./review"),
+  TaskInfo: sequelize.import("./taskInfo"),
+  TaskTrack: sequelize.import("./taskTrack"),
 };
 
 Object.keys(models).forEach((key) => {

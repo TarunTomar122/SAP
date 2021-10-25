@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-import {color, size, spacing} from '../theme';
+import {color, size, spacing, typography} from '../theme';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     fontSize: size.scale(24),
     color: color.text,
     marginHorizontal: size.scale(10),
+    fontFamily: typography.primaryBold,
   },
 });
 

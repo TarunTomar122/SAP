@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-import {color, size} from '../../theme';
+import {color, size, typography} from '../../theme';
 
 export default StyleSheet.create({
   home: {
@@ -12,17 +12,38 @@ export default StyleSheet.create({
     backgroundColor: color.background,
     padding: size.scale(10),
   },
-  inputContainer: {
-    // borderWidth: 1,
-    // borderColor: 'white',
+  autocomplete: {
+    borderRadius: size.scale(15),
+    padding: size.scale(10),
+    fontSize: size.scale(20),
+    fontFamily: typography.primaryBold,
+    color: color.lightGrey,
+  },
+  autocompleteContainer: {
+    flex: 1,
+    left: 20,
+    position: 'absolute',
+    right: 20,
+    top: 30,
+    zIndex: 1,
+  },
+  suggestionBox: {
+    backgroundColor: color.background,
+    width: '100%',
+    padding: size.scale(10),
+  },
+  suggestionText: {
+    fontSize: size.scale(20),
+    fontFamily: typography.primaryBold,
+    color: color.lightGrey,
   },
   textInput: {
     marginVertical: size.scale(20),
     borderBottomWidth: 1,
     borderColor: color.text,
     padding: size.scale(10),
-    paddingRight: size.scale(56),
     fontSize: size.scale(20),
+    fontFamily: typography.primaryBold,
   },
   dot: {
     position: 'absolute',
@@ -60,6 +81,7 @@ export default StyleSheet.create({
     marginBottom: size.scale(20),
     textAlign: 'center',
     fontSize: size.scale(20),
+    fontFamily: typography.primaryBold,
   },
   colorPickerContainer: {
     flexDirection: 'row',
@@ -88,5 +110,6 @@ export default StyleSheet.create({
   buttonText: {
     fontSize: size.scale(20),
     color: color.palette.reddish,
+    fontFamily: typography.primaryBold,
   },
 });
