@@ -13,7 +13,7 @@ import Header from '../../Components/Header';
 
 import styles from './TaskDetailsScreenStyles';
 
-import {addCountTask} from '../../Services/API/task';
+import {addCountTask, getLatestTasks} from '../../Services/API/task';
 
 class TaskDetailsScreen extends React.Component {
   constructor(props) {
@@ -21,19 +21,16 @@ class TaskDetailsScreen extends React.Component {
     this.state = {
       title: this.props.route.params.title,
       count: null,
-      entries: [
-        {date: Date.now(), target: 20, count: 18},
-        {date: Date.now(), target: 20, count: 18},
-        {date: Date.now(), target: 20, count: 18},
-        {date: Date.now(), target: 20, count: 18},
-        {date: Date.now(), target: 20, count: 18},
-        {date: Date.now(), target: 20, count: 18},
-        {date: Date.now(), target: 20, count: 18},
-      ],
+      entries: [],
     };
   }
 
-  async componentDidMount() {}
+  async componentDidMount() {
+    // Fetch recent entries
+    const entries = await getLatestTasks(this.state.title);
+
+    this.setState({entries: entries});
+  }
 
   async submitCount() {
     if (this.state.count == null) {
@@ -94,9 +91,7 @@ class TaskDetailsScreen extends React.Component {
                         {date.getUTCDate()} : {date.getUTCMonth() + 1} :{' '}
                         {date.getUTCFullYear()}
                       </Text>
-                      <Text style={styles.entryText}>
-                        Target : {entry.target}
-                      </Text>
+                      <Text style={styles.entryText}>Goal : {entry.goal}</Text>
                       <Text style={styles.entryText}>
                         Reached : {entry.count}
                       </Text>

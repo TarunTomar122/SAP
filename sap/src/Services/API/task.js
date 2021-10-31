@@ -42,7 +42,7 @@ export async function addCountTask(taskName, count) {
 
 export async function getLatestTasks(taskName) {
   try {
-    const response = client.get(`/task/getLatest`, {taskName});
+    const response = await client.post(`/task/getLatest`, {taskName});
     return response.data;
   } catch (er) {
     console.log(er);
