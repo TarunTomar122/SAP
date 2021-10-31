@@ -89,16 +89,21 @@ router.post("/addCount", async (req, res) => {
 });
 
 // Get latest entries from the TaskTrack table
-router.get("/getLatest", async (req, res) => {
+router.post("/getLatest", async (req, res) => {
   try {
     const { taskName } = req.body;
 
+    console.log("Task name is: ", taskName);
+
+    // Get all the TaskTrack object for corresponding taskName
     const tasks = await models.TaskTrack.findAll(
       {
-        limit: 5,
-        order: [["date", "ASC"]],
+        where: { taskInfoTaskName: taskName },
+        order: [["date", "DESC"]],
       },
-      { where: { taskInfoTaskName: taskName } }
+      {
+        include: [models.TaskInfo],
+      }
     );
 
     res.json(tasks);
