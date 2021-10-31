@@ -24,7 +24,10 @@ function HomeTabs() {
   return (
     <Tab.Navigator
       initialRouteName={'home'}
-      screenOptions={{header: props => <Header {...props} />}}
+      screenOptions={{
+        header: props => <Header {...props} />,
+        keyboardHidesTabBar: true,
+      }}
       tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="home" component={HomeScreen} />
       <Tab.Screen name="todo" component={TodoScreen} />

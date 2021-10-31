@@ -6,7 +6,7 @@ const taskTrack = (sequelize, DataTypes) => {
       autoIncrement: true,
     },
     date: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     count: {
@@ -15,7 +15,7 @@ const taskTrack = (sequelize, DataTypes) => {
     },
     goal: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      defaultValue: 0,
     },
   });
 

@@ -13,11 +13,14 @@ import Header from '../../Components/Header';
 
 import styles from './TaskDetailsScreenStyles';
 
+import {addCountTask} from '../../Services/API/task';
+
 class TaskDetailsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       title: this.props.route.params.title,
+      count: null,
       entries: [
         {date: Date.now(), target: 20, count: 18},
         {date: Date.now(), target: 20, count: 18},
@@ -30,7 +33,22 @@ class TaskDetailsScreen extends React.Component {
     };
   }
 
-  componentDidMount() {}
+  async componentDidMount() {}
+
+  async submitCount() {
+    if (this.state.count == null) {
+      console.log('Please enter a count');
+      return;
+    }
+
+    const done = await addCountTask(this.state.title, this.state.count);
+    if (!done) {
+      console.log('Failed to add count');
+      return;
+    } else {
+      this.props.navigation.navigate('track');
+    }
+  }
 
   render() {
     return (
@@ -49,16 +67,16 @@ class TaskDetailsScreen extends React.Component {
               placeholderTextColor="#999999"
               color="#999999"
               onChangeText={text => {
-                this.setState({taskName: text});
+                this.setState({count: text});
               }}
-              value={this.state.taskName}
+              value={this.state.count}
             />
           </View>
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => console.log(this.state)}>
+              onPress={this.submitCount.bind(this)}>
               <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
           </View>

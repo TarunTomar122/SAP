@@ -7,6 +7,8 @@ import Autocomplete from 'react-native-autocomplete-input';
 import styles from './AddTaskScreenStyles';
 import {color, size, typography} from '../../theme';
 
+import {getTasks, addTask} from '../../Services/API/task';
+
 class AddTaskScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -14,14 +16,42 @@ class AddTaskScreen extends React.Component {
       taskName: null,
       goal: null,
       modalVisible: true,
-      data: ['pushups', 'situps', 'sex'],
+      data: ['pushups', 'situps', 'something'],
     };
   }
 
-  componentDidMount() {}
+  async componentDidMount() {
+    const tasks = await getTasks();
+    if (tasks) {
+      let taskNames = [];
+      for (let task in tasks) {
+        taskNames.push(tasks[task].taskName);
+      }
+      this.setState({data: taskNames});
+    }
+  }
+
+  async addTodayTask() {
+    if (this.state.taskName == null || this.state.goal == null) {
+      console.log('Invalid Details');
+      return;
+    }
+    const done = await addTask(this.state.taskName, this.state.goal);
+    if (!done) {
+      console.log('Something Went Wrong');
+    } else {
+      this.props.navigation.navigate('track');
+    }
+  }
 
   filterData(taskName) {
-    return this.state.data.filter(item => item.includes(taskName));
+    try {
+      return this.state.data.filter(item =>
+        item.includes(taskName.toLowerCase()),
+      );
+    } catch (e) {
+      return [];
+    }
   }
 
   render() {
@@ -40,9 +70,12 @@ class AddTaskScreen extends React.Component {
           <View style={styles.autocompleteContainer}>
             <Autocomplete
               data={data}
-              value={taskName}
+              value={taskName == null ? null : taskName.toLocaleLowerCase()}
               onChangeText={text =>
-                this.setState({taskName: text, modalVisible: true})
+                this.setState({
+                  taskName: text.toLocaleLowerCase(),
+                  modalVisible: true,
+                })
               }
               placeholder="Task name"
               placeholderTextColor={color.lightGrey}
@@ -82,7 +115,7 @@ class AddTaskScreen extends React.Component {
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => console.log(this.state)}>
+                onPress={this.addTodayTask.bind(this)}>
                 <Text style={styles.buttonText}>Submit</Text>
               </TouchableOpacity>
             </View>

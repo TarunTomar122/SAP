@@ -39,16 +39,31 @@ router.post("/add", async (req, res) => {
       });
     }
 
-    // Add today's goal to the taskTrack table
-    await models.TaskTrack.create({
-      taskName: taskName,
-      goal: goal,
-      date: new Date().toISOString().slice(0, 10),
-      taskInfoTaskName: taskName,
+    // If there is no taskTrack with the given task name and date
+
+    const taskTrackObj = await models.TaskTrack.findOne({
+      where: {
+        taskInfoTaskName: taskName,
+        date: new Date().toISOString().slice(0, 10),
+      },
+    });
+
+    if (!taskTrackObj) {
+      await models.TaskTrack.create({
+        taskInfoTaskName: taskName,
+        date: new Date().toISOString().slice(0, 10),
+      });
+    }
+    await models.TaskTrack.increment("goal", {
+      where: {
+        taskInfoTaskName: taskName,
+        date: new Date().toISOString().slice(0, 10),
+      },
+      by: goal,
     });
 
     res.status(200).json({
-      message: "Task added successfully",
+      message: "Task Track Updated successfully",
     });
   } catch (err) {
     console.error(err);
@@ -81,7 +96,7 @@ router.get("/getLatest", async (req, res) => {
     const tasks = await models.TaskTrack.findAll(
       {
         limit: 5,
-        order: [["date", "DESC"]],
+        order: [["date", "ASC"]],
       },
       { where: { taskInfoTaskName: taskName } }
     );
@@ -93,4 +108,19 @@ router.get("/getLatest", async (req, res) => {
   }
 });
 
+router.get("/getTodaysTasks", async (req, res) => {
+  try {
+    const tasks = await models.TaskTrack.findAll(
+      {
+        order: [["date", "ASC"]],
+      },
+      { where: { date: new Date().toISOString().slice(0, 10) } }
+    );
+
+    res.json(tasks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
 export default router;

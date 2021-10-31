@@ -127,10 +127,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     backgroundColor: color.icons,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
     marginHorizontal: 0,
-    paddingVertical: size.scale(4),
+    paddingVertical: size.scale(2),
   },
   mainItemContainer: {
     flex: 1,
