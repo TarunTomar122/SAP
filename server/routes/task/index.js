@@ -93,8 +93,6 @@ router.post("/getLatest", async (req, res) => {
   try {
     const { taskName } = req.body;
 
-    console.log("Task name is: ", taskName);
-
     // Get all the TaskTrack object for corresponding taskName
     const tasks = await models.TaskTrack.findAll(
       {
@@ -106,7 +104,7 @@ router.post("/getLatest", async (req, res) => {
       }
     );
 
-    res.json(tasks);
+    res.status(200).json(tasks);
   } catch (err) {
     console.error(err);
     res.status(500).send(err);
@@ -115,17 +113,34 @@ router.post("/getLatest", async (req, res) => {
 
 router.get("/getTodaysTasks", async (req, res) => {
   try {
-    const tasks = await models.TaskTrack.findAll(
-      {
-        order: [["date", "ASC"]],
-      },
-      { where: { date: new Date().toISOString().slice(0, 10) } }
-    );
+    const tasks = await models.TaskTrack.findAll({
+      where: { date: new Date().toISOString().slice(0, 10) },
+      order: [["date", "ASC"]],
+    });
 
-    res.json(tasks);
+    res.status(200).json(tasks);
   } catch (err) {
     console.error(err);
     res.status(500).send(err);
   }
 });
+
+router.post("/deleteTodaysTask", async (req, res) => {
+  try {
+    const { taskName } = req.body;
+
+    await models.TaskTrack.destroy({
+      where: {
+        taskInfoTaskName: taskName,
+        date: new Date().toISOString().slice(0, 10),
+      },
+    });
+
+    res.status(200).send("done");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
 export default router;

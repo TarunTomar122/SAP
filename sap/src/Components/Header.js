@@ -4,11 +4,13 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {color, size, spacing, typography} from '../theme';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const CustomHeader = props => {
   const {
     leftIcon,
     onLeftPress,
+    onRightPress,
     rightIcon,
     title,
     style,
@@ -28,7 +30,7 @@ const CustomHeader = props => {
 
     <View style={{...styles.customHeader, ...style}}>
       {leftIcon ? (
-        <TouchableOpacity onPress={onLeftPress}>
+        <TouchableOpacity onPress={onLeftPress} style={leftIconStyle}>
           <Ionicons
             name="arrow-back-outline"
             color={color.text}
@@ -38,6 +40,18 @@ const CustomHeader = props => {
         </TouchableOpacity>
       ) : null}
       <Text style={styles.title}>{props.route.name}</Text>
+      {rightIcon ? (
+        <TouchableOpacity
+          onPress={onRightPress}
+          style={[rightIconStyle, styles.rightIconStyle]}>
+          <AntDesign
+            name="delete"
+            color={color.text}
+            size={32}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };
@@ -48,8 +62,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.tiny,
     backgroundColor: color.background,
     borderBottomWidth: 1,
-    borderBottomColor: color.primaryDarker,
-    shadowColor: color.primaryDarker,
+    borderBottomColor: color.primary,
+    shadowColor: color.primary,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
     elevation: 5,
@@ -65,6 +79,10 @@ const styles = StyleSheet.create({
     color: color.text,
     marginHorizontal: size.scale(10),
     fontFamily: typography.primaryBold,
+  },
+  rightIconStyle: {
+    position: 'absolute',
+    right: size.scale(18),
   },
 });
 

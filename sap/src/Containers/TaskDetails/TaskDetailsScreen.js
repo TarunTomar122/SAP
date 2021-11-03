@@ -4,16 +4,22 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  ShadowPropTypesIOS,
   ScrollView,
-  Pressable,
+  ActivityIndicator,
+  ToastAndroid,
+  RefreshControl,
 } from 'react-native';
 
 import Header from '../../Components/Header';
 
 import styles from './TaskDetailsScreenStyles';
+import {color, size, typography} from '../../theme';
 
-import {addCountTask, getLatestTasks} from '../../Services/API/task';
+import {
+  addCountTask,
+  getLatestTasks,
+  deleteTask,
+} from '../../Services/API/task';
 
 class TaskDetailsScreen extends React.Component {
   constructor(props) {
@@ -22,28 +28,56 @@ class TaskDetailsScreen extends React.Component {
       title: this.props.route.params.title,
       count: null,
       entries: [],
+      loading: false,
+      refreshing: false,
     };
   }
 
   async componentDidMount() {
     // Fetch recent entries
+    this.setState({loading: true});
     const entries = await getLatestTasks(this.state.title);
-
-    this.setState({entries: entries});
+    if (entries) {
+      this.setState({entries: entries, loading: false});
+    } else {
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+      this.setState({loading: false});
+    }
   }
 
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    getLatestTasks(this.state.title).then(entries => {
+      this.setState({entries, refreshing: false});
+    });
+  };
+
   async submitCount() {
+    this.setState({loading: true});
     if (this.state.count == null) {
-      console.log('Please enter a count');
+      ToastAndroid.show('Invalid Count', ToastAndroid.SHORT);
+      this.setState({loading: false});
       return;
     }
 
     const done = await addCountTask(this.state.title, this.state.count);
     if (!done) {
-      console.log('Failed to add count');
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+      this.setState({loading: false});
       return;
     } else {
       this.props.navigation.navigate('track');
+    }
+  }
+
+  async delete() {
+    this.setState({loading: true});
+    const done = await deleteTask(this.state.title);
+    if (done) {
+      this.props.navigation.navigate('track');
+    } else {
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+      this.setState({loading: false});
     }
   }
 
@@ -54,6 +88,8 @@ class TaskDetailsScreen extends React.Component {
           route={{name: this.state.title}}
           leftIcon={true}
           onLeftPress={() => this.props.navigation.navigate('track')}
+          rightIcon={true}
+          onRightPress={() => this.delete()}
         />
 
         <View style={styles.container}>
@@ -77,29 +113,46 @@ class TaskDetailsScreen extends React.Component {
               <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
           </View>
+          {this.state.loading && (
+            <View>
+              <ActivityIndicator size="large" color={color.primary} />
+            </View>
+          )}
 
           <View style={styles.entriesContainer}>
             <Text style={styles.entriesText}>Recent Entries</Text>
 
-            <View style={styles.entries}>
-              <ScrollView>
-                {this.state.entries.map((entry, index) => {
-                  let date = new Date(entry.date);
-                  return (
-                    <View style={styles.entryContainer} key={index}>
-                      <Text style={styles.entryText}>
-                        {date.getUTCDate()} : {date.getUTCMonth() + 1} :{' '}
-                        {date.getUTCFullYear()}
-                      </Text>
-                      <Text style={styles.entryText}>Goal : {entry.goal}</Text>
-                      <Text style={styles.entryText}>
-                        Reached : {entry.count}
-                      </Text>
-                    </View>
-                  );
-                })}
-              </ScrollView>
-            </View>
+            {this.state.loading ? (
+              <ActivityIndicator size="large" color={color.primary} />
+            ) : (
+              <View style={styles.entries}>
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={this.state.refreshing}
+                      onRefresh={this._onRefresh}
+                    />
+                  }>
+                  {this.state.entries.map((entry, index) => {
+                    let date = new Date(entry.date);
+                    return (
+                      <View style={styles.entryContainer} key={index}>
+                        <Text style={styles.entryText}>
+                          {date.getUTCDate()} : {date.getUTCMonth() + 1} :{' '}
+                          {date.getUTCFullYear()}
+                        </Text>
+                        <Text style={styles.entryText}>
+                          Goal : {entry.goal}
+                        </Text>
+                        <Text style={styles.entryText}>
+                          Reached : {entry.count}
+                        </Text>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+              </View>
+            )}
           </View>
         </View>
       </View>

@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ActivityIndicator,
+  ToastAndroid,
+} from 'react-native';
 
 import Header from '../../Components/Header';
 import Autocomplete from 'react-native-autocomplete-input';
@@ -16,29 +23,37 @@ class AddTaskScreen extends React.Component {
       taskName: null,
       goal: null,
       modalVisible: true,
-      data: ['pushups', 'situps', 'something'],
+      data: [],
+      loading: false,
     };
   }
 
   async componentDidMount() {
+    this.setState({loading: true});
     const tasks = await getTasks();
     if (tasks) {
       let taskNames = [];
       for (let task in tasks) {
         taskNames.push(tasks[task].taskName);
       }
-      this.setState({data: taskNames});
+      this.setState({data: taskNames, loading: false});
+    } else {
+      this.setState({loading: false});
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
     }
   }
 
   async addTodayTask() {
+    this.setState({loading: true});
     if (this.state.taskName == null || this.state.goal == null) {
-      console.log('Invalid Details');
+      ToastAndroid.show('Invalid Details', ToastAndroid.SHORT);
+      this.setState({loading: false});
       return;
     }
     const done = await addTask(this.state.taskName, this.state.goal);
     if (!done) {
-      console.log('Something Went Wrong');
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+      this.setState({loading: false});
     } else {
       this.props.navigation.navigate('track');
     }
@@ -119,6 +134,12 @@ class AddTaskScreen extends React.Component {
                 <Text style={styles.buttonText}>Submit</Text>
               </TouchableOpacity>
             </View>
+
+            {this.state.loading && (
+              <View>
+                <ActivityIndicator size="large" color={color.primary} />
+              </View>
+            )}
           </View>
         </View>
       </View>

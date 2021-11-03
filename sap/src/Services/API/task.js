@@ -49,3 +49,13 @@ export async function getLatestTasks(taskName) {
     return false;
   }
 }
+
+export async function deleteTask(taskName) {
+  try {
+    const response = await client.post(`/task/deleteTodaysTask`, {taskName});
+    return response.data;
+  } catch (er) {
+    console.log(er);
+    return false;
+  }
+}

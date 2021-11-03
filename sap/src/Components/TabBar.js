@@ -55,61 +55,55 @@ const TabBar = ({state, descriptors, navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   flex: 1,
-                  padding: 10,
+                  padding: 4,
                 }}>
                 {label == 'home' ? (
                   isFocused ? (
-                    <Ionicons name="home" color={color.text} size={37} />
+                    <Ionicons name="home" color={color.text} size={30} />
                   ) : (
                     <Ionicons
                       name="home-outline"
                       color={color.text}
-                      size={37}
+                      size={30}
                     />
                   )
                 ) : label == 'todo' ? (
                   isFocused ? (
-                    <FontAwesome5 name="pen" color={color.text} size={34} />
+                    <FontAwesome5 name="pen" color={color.text} size={27} />
                   ) : (
                     <SimpleLineIcons
                       name="pencil"
                       color={color.text}
-                      size={34}
+                      size={28}
                     />
                   )
                 ) : label == 'journal' ? (
                   isFocused ? (
-                    <AntDesign name="pluscircle" color={color.text} size={48} />
+                    <AntDesign name="pluscircle" color={color.text} size={40} />
                   ) : (
                     <AntDesign
                       name="pluscircleo"
                       color={color.text}
-                      size={48}
+                      size={40}
                     />
                   )
                 ) : label == 'track' ? (
                   isFocused ? (
-                    <Ionicons name="stopwatch" color={color.text} size={49} />
-                  ) : isFocused ? (
-                    <Ionicons
-                      name="stopwatch-outline"
-                      color={color.text}
-                      size={52}
-                    />
+                    <Ionicons name="stopwatch" color={color.text} size={44} />
                   ) : (
                     <Ionicons
                       name="stopwatch-outline"
                       color={color.text}
-                      size={50}
+                      size={45}
                     />
                   )
                 ) : isFocused ? (
-                  <Ionicons name="people" color={color.text} size={42} />
+                  <Ionicons name="people" color={color.text} size={36} />
                 ) : (
                   <Ionicons
                     name="ios-people-outline"
                     color={color.text}
-                    size={42}
+                    size={36}
                   />
                 )}
               </View>
@@ -126,7 +120,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
-    backgroundColor: color.icons,
+    backgroundColor: color.description,
     marginHorizontal: 0,
     paddingVertical: size.scale(2),
   },

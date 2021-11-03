@@ -43,4 +43,11 @@ export default StyleSheet.create({
     color: color.text,
     fontFamily: typography.primaryBold,
   },
+  noEntryText: {
+    fontSize: size.scale(20),
+    color: color.text,
+    fontFamily: typography.primaryBold,
+    textAlign: 'center',
+    marginTop: size.scale(20),
+  },
 });

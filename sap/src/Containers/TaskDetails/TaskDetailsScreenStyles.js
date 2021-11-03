@@ -28,14 +28,14 @@ export default StyleSheet.create({
   button: {
     borderWidth: 1,
     borderRadius: size.scale(10),
-    borderColor: color.palette.reddish,
+    borderColor: color.primary,
     padding: size.scale(10),
     alignItems: 'center',
     width: '50%',
   },
   buttonText: {
     fontSize: size.scale(20),
-    color: color.palette.reddish,
+    color: color.primary,
     fontFamily: typography.primaryBold,
   },
   entriesContainer: {
@@ -51,6 +51,7 @@ export default StyleSheet.create({
   entries: {
     paddingVertical: size.scale(10),
     marginBottom: size.scale(200),
+    minHeight: size.scale(100),
   },
   entryContainer: {
     marginVertical: size.scale(10),

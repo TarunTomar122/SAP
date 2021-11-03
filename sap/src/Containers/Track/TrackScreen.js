@@ -6,11 +6,15 @@ import {
   ScrollView,
   RefreshControl,
   TextInput,
+  ActivityIndicator,
+  ToastAndroid,
+  Alert,
 } from 'react-native';
 
 import FloatingButton from '../../Components/FloatingButton';
 
 import styles from './TrackScreenStyles';
+import {color, size, typography} from '../../theme';
 
 import {getTodaysTasks} from '../../Services/API/task';
 
@@ -21,26 +25,30 @@ class TrackScreen extends React.Component {
       tasks: [],
       refreshing: false,
       searchTask: '',
+      loading: false,
     };
   }
 
   async componentDidMount() {
     // Fetch tasks from the api
+    this.setState({loading: true});
     const tasks = await getTodaysTasks();
-    this.setState({tasks});
+    if (!tasks) {
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+      this.setState({loading: false});
+    } else {
+      this.setState({tasks, loading: false});
+    }
 
-    this.list = [
-      this.props.navigation.addListener('didFocus', () => {
-        console.log('Focusing Screen again');
-        this.refreshScreen();
-      }),
-    ];
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.refreshScreen();
+    });
   }
 
   componentWillUnmount() {
     try {
-      this.list.forEach(item => item.remove());
-    } catch (er) {}
+      this._unsubscribe();
+    } catch (err) {}
   }
 
   _onRefresh = () => {
@@ -52,8 +60,14 @@ class TrackScreen extends React.Component {
 
   async refreshScreen() {
     // Fetch tasks from the api
+    this.setState({loading: true});
     const tasks = await getTodaysTasks();
-    this.setState({tasks});
+    if (!tasks) {
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+      this.setState({loading: false});
+    } else {
+      this.setState({tasks, loading: false});
+    }
   }
 
   filterData(searchTask) {
@@ -85,31 +99,41 @@ class TrackScreen extends React.Component {
           />
         </View>
 
-        <ScrollView
-          style={styles.listView}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh}
-            />
-          }>
-          {data.map((task, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.task}
-              onPress={() =>
-                this.props.navigation.navigate('TaskDetails', {
-                  title: task.taskInfoTaskName,
-                })
-              }>
-              <Text style={styles.taskTitle}>{task.taskInfoTaskName}</Text>
-              <Text style={styles.taskRemaining}>Goal: {task.goal}</Text>
-              <Text style={styles.taskRemaining}>
-                Remaining: {task.goal - task.count}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        {this.state.loading ? (
+          <ActivityIndicator size="large" color={color.primary} />
+        ) : (
+          <ScrollView
+            style={styles.listView}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }>
+            {data.length == 0 && (
+              <>
+                <Text style={styles.noEntryText}>No entries for today :(</Text>
+              </>
+            )}
+
+            {data.map((task, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.task}
+                onPress={() =>
+                  this.props.navigation.navigate('TaskDetails', {
+                    title: task.taskInfoTaskName,
+                  })
+                }>
+                <Text style={styles.taskTitle}>{task.taskInfoTaskName}</Text>
+                <Text style={styles.taskRemaining}>Goal: {task.goal}</Text>
+                <Text style={styles.taskRemaining}>
+                  Remaining: {task.goal - task.count}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        )}
 
         <FloatingButton
           onPress={() => this.props.navigation.navigate('AddTask')}

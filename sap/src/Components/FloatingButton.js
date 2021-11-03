@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    color: color.primaryDarker,
+    color: color.primary,
     fontSize: size.scale(24),
   },
 });
