@@ -41,4 +41,8 @@ export const color = {
   storybookDarkBg: palette.black,
 
   storybookTextColor: palette.black,
+
+  searchText: palette.lightGrey,
+
+  separator: palette.orangeDarker,
 };

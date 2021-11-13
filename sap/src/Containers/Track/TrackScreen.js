@@ -90,8 +90,8 @@ class TrackScreen extends React.Component {
           <TextInput
             style={[styles.textInput]}
             placeholder="Search task"
-            placeholderTextColor="#999999"
-            color="#999999"
+            placeholderTextColor={color.searchText}
+            color={color.searchText}
             onChangeText={text => {
               this.setState({searchTask: text});
             }}

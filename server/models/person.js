@@ -1,35 +1,31 @@
 const person = (sequelize, DataTypes) => {
   const Person = sequelize.define("person", {
     name: {
+      primaryKey: true,
       type: DataTypes.STRING,
       allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
-    contact: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
+    contacts: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
     },
     address: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     dob: {
       type: DataTypes.DATE,
-      allowNull: false,
-    },
-    tags: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
     },
   });
 
-  // Relate person to review with one to many relationship
+  // Relate person to thought with one to many relationship
   Person.associate = (models) => {
-    Person.hasMany(models.Review, {
+    Person.hasMany(models.Thought, {
       onDelete: "CASCADE",
+    });
+    Person.belongsToMany(models.Tag, {
+      through: "peopletag",
     });
   };
 

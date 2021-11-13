@@ -27,7 +27,7 @@ export default StyleSheet.create({
     marginHorizontal: size.scale(10),
     marginVertical: size.scale(6),
     borderBottomWidth: 1,
-    borderBottomColor: color.line,
+    borderBottomColor: color.separator,
   },
   listView: {
     marginBottom: size.scale(60),

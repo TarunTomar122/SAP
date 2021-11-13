@@ -1,20 +1,139 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+  TextInput,
+  ActivityIndicator,
+  ToastAndroid,
+  Alert,
+} from 'react-native';
 
+import FloatingButton from '../../Components/FloatingButton';
 import styles from './PeopleScreenStyles.js';
+import {color, size, typography} from '../../theme';
+
+import {getPeopleList} from '../../Services/API/people';
 
 class PeopleScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loading: false,
+      searchText: '',
+      people: [],
+    };
   }
 
-  componentDidMount() {}
+  async componentDidMount() {
+    // Fetch people from the api
+    this.setState({loading: true});
+    const people = await getPeopleList();
+    if (!people) {
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+      this.setState({loading: false});
+    } else {
+      this.setState({people, loading: false});
+    }
+
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.refreshScreen();
+    });
+  }
+
+  componentWillUnmount() {
+    try {
+      this._unsubscribe();
+    } catch (err) {}
+  }
+
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    getPeopleList().then(people => {
+      this.setState({people, refreshing: false});
+    });
+  };
+
+  async refreshScreen() {
+    // Fetch people from the api
+    this.setState({loading: true});
+    const people = await getPeopleList();
+    if (!people) {
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+      this.setState({loading: false});
+    } else {
+      this.setState({people, loading: false});
+    }
+  }
+
+  filterData(searchPerson) {
+    try {
+      return this.state.tasks.filter(item =>
+        item.taskInfoTaskName.includes(searchPerson.toLowerCase()),
+      );
+    } catch (e) {
+      return [];
+    }
+  }
 
   render() {
+    const {searchPerson} = this.state;
+    const data = this.filterData(searchPerson);
+
     return (
       <View style={styles.home}>
-        <Text style={styles.text}>People Screen</Text>
+        <View style={styles.searchBar}>
+          <TextInput
+            style={[styles.textInput]}
+            placeholder="search person"
+            placeholderTextColor={color.searchText}
+            color={color.searchText}
+            onChangeText={text => {
+              this.setState({searchTask: text});
+            }}
+            value={this.state.searchTask}
+          />
+        </View>
+
+        {this.state.loading ? (
+          <ActivityIndicator size="large" color={color.primary} />
+        ) : (
+          <ScrollView
+            style={styles.listView}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }>
+            {data.length == 0 && (
+              <>
+                <Text style={styles.noEntryText}>
+                  You're gonna die alone :(
+                </Text>
+              </>
+            )}
+
+            {data.map((person, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.task}
+                onPress={() =>
+                  this.props.navigation.navigate('AddThought', {
+                    title: person.name,
+                  })
+                }>
+                <Text style={styles.taskTitle}>{person.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        )}
+
+        <FloatingButton
+          onPress={() => this.props.navigation.navigate('AddPerson')}
+        />
       </View>
     );
   }

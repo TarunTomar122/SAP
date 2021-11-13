@@ -14,6 +14,7 @@ export default StyleSheet.create({
   },
   autocomplete: {
     borderRadius: size.scale(15),
+    borderColor: color.primary,
     padding: size.scale(10),
     fontSize: size.scale(20),
     fontFamily: typography.primaryBold,
@@ -26,9 +27,11 @@ export default StyleSheet.create({
     right: 20,
     top: 30,
     zIndex: 1,
+    borderColor: color.primary,
   },
   suggestionBox: {
     backgroundColor: color.background,
+    borderColor: color.primary,
     width: '100%',
     padding: size.scale(10),
   },
@@ -40,7 +43,7 @@ export default StyleSheet.create({
   textInput: {
     marginVertical: size.scale(20),
     borderBottomWidth: 1,
-    borderColor: color.text,
+    borderColor: color.lightGrey,
     padding: size.scale(10),
     fontSize: size.scale(20),
     fontFamily: typography.primaryBold,
@@ -109,7 +112,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     fontSize: size.scale(20),
-    color: color.primary,
+    color: color.text,
     fontFamily: typography.primaryBold,
   },
 });

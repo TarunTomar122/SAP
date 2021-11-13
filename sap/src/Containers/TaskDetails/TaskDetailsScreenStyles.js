@@ -35,7 +35,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     fontSize: size.scale(20),
-    color: color.primary,
+    color: color.text,
     fontFamily: typography.primaryBold,
   },
   entriesContainer: {

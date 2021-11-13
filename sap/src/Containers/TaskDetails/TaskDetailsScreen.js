@@ -97,8 +97,8 @@ class TaskDetailsScreen extends React.Component {
             <TextInput
               style={[styles.textInput]}
               placeholder="Count"
-              placeholderTextColor="#999999"
-              color="#999999"
+              placeholderTextColor={color.searchText}
+              color={color.searchText}
               onChangeText={text => {
                 this.setState({count: text});
               }}
