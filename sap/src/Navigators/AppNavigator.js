@@ -9,12 +9,14 @@ import Header from '../Components/Header';
 
 import HomeScreen from '../Containers/Home/HomeScreen.js';
 import JournalScreen from '../Containers/Journal/JournalScreen.js';
-import PeopleScreen from '../Containers/People/PeopleScreen.js';
 import TodoScreen from '../Containers/Todo/TodoScreen.js';
 import TrackScreen from '../Containers/Track/TrackScreen.js';
 
 import AddTaskScreen from '../Containers/AddTask/AddTaskScreen.js';
 import TaskDetailsScreen from '../Containers/TaskDetails/TaskDetailsScreen.js';
+
+import PeopleScreen from '../Containers/People/PeopleScreen.js';
+import AddPersonScreen from '../Containers/AddPerson/AddPersonScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +48,7 @@ function AppNavigator() {
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="HomeTabs" component={HomeTabs} />
         <Stack.Screen name="AddTask" component={AddTaskScreen} />
+        <Stack.Screen name="AddPerson" component={AddPersonScreen} />
         <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>

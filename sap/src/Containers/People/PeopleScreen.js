@@ -17,12 +17,15 @@ import {color, size, typography} from '../../theme';
 
 import {getPeopleList} from '../../Services/API/people';
 
+import Entypo from 'react-native-vector-icons/Entypo';
+
 class PeopleScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
-      searchText: '',
+      searchPerson: '',
+      refreshing: false,
       people: [],
     };
   }
@@ -70,9 +73,21 @@ class PeopleScreen extends React.Component {
 
   filterData(searchPerson) {
     try {
-      return this.state.tasks.filter(item =>
-        item.taskInfoTaskName.includes(searchPerson.toLowerCase()),
-      );
+      const {people} = this.state;
+      const filteredPeople = [];
+      people.forEach(person => {
+        const tagsForThisPerson = person.tags;
+        if (person.name.toLowerCase().includes(searchPerson.toLowerCase())) {
+          filteredPeople.push(person);
+        } else {
+          tagsForThisPerson.forEach(tag => {
+            if (tag.name.toLowerCase().includes(searchPerson.toLowerCase())) {
+              filteredPeople.push(person);
+            }
+          });
+        }
+      });
+      return filteredPeople;
     } catch (e) {
       return [];
     }
@@ -87,13 +102,13 @@ class PeopleScreen extends React.Component {
         <View style={styles.searchBar}>
           <TextInput
             style={[styles.textInput]}
-            placeholder="search person"
+            placeholder="search person or tag"
             placeholderTextColor={color.searchText}
             color={color.searchText}
             onChangeText={text => {
-              this.setState({searchTask: text});
+              this.setState({searchPerson: text});
             }}
-            value={this.state.searchTask}
+            value={this.state.searchPerson}
           />
         </View>
 
@@ -115,17 +130,31 @@ class PeopleScreen extends React.Component {
                 </Text>
               </>
             )}
-
             {data.map((person, index) => (
               <TouchableOpacity
                 key={index}
-                style={styles.task}
+                style={styles.listBox}
                 onPress={() =>
                   this.props.navigation.navigate('AddThought', {
                     title: person.name,
                   })
                 }>
-                <Text style={styles.taskTitle}>{person.name}</Text>
+                <Text style={styles.personName}>{person.name}</Text>
+                <View style={styles.tagView}>
+                  <Entypo
+                    name="price-ribbon"
+                    color={color.primary}
+                    size={24}
+                    style={styles.tagIcon}
+                  />
+                  <View style={styles.tagListView}>
+                    {person.tags.map(tag => (
+                      <Text style={styles.tag} key={tag}>
+                        {tag.name}
+                      </Text>
+                    ))}
+                  </View>
+                </View>
               </TouchableOpacity>
             ))}
           </ScrollView>

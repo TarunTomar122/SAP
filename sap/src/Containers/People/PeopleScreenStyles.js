@@ -22,4 +22,30 @@ export default StyleSheet.create({
     color: color.text,
     fontFamily: typography.primaryBold,
   },
+  listBox: {
+    margin: size.scale(10),
+    borderRightWidth: 0.6,
+    borderColor: color.lightGrey,
+    padding: size.scale(10),
+  },
+  listView: {
+    marginBottom: size.scale(60),
+  },
+  personName: {
+    fontSize: size.scale(22),
+    color: color.text,
+    fontFamily: typography.primaryBoldItalic,
+  },
+  tagView: {
+    flexDirection: 'row',
+    marginTop: size.scale(10),
+  },
+  tag: {
+    fontSize: size.scale(14),
+    color: color.lightGrey,
+    fontFamily: typography.primary,
+  },
+  tagListView: {
+    flexDirection: 'row',
+  },
 });

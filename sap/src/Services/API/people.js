@@ -9,3 +9,23 @@ export async function getPeopleList() {
     return false;
   }
 }
+
+export async function getTags() {
+  try {
+    const response = await client.get(`/people/getTags`);
+    return response.data;
+  } catch (er) {
+    console.log(er);
+    return false;
+  }
+}
+
+export async function addPerson(person) {
+  try {
+    const response = await client.post(`/people/add`, person);
+    return response.data;
+  } catch (er) {
+    console.log(er);
+    return false;
+  }
+}
