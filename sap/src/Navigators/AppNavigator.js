@@ -17,6 +17,8 @@ import TaskDetailsScreen from '../Containers/TaskDetails/TaskDetailsScreen.js';
 
 import PeopleScreen from '../Containers/People/PeopleScreen.js';
 import AddPersonScreen from '../Containers/AddPerson/AddPersonScreen.js';
+import AddThoughtScreen from '../Containers/AddThought/AddThoughtScreen';
+import ViewThoughtsScreen from '../Containers/ViewThoughts/ViewThoughtsScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +52,8 @@ function AppNavigator() {
         <Stack.Screen name="AddTask" component={AddTaskScreen} />
         <Stack.Screen name="AddPerson" component={AddPersonScreen} />
         <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
+        <Stack.Screen name="AddThought" component={AddThoughtScreen} />
+        <Stack.Screen name="ViewThoughts" component={ViewThoughtsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

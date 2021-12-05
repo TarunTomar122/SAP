@@ -5,6 +5,7 @@ import {color, size, spacing, typography} from '../theme';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const CustomHeader = props => {
   const {
@@ -40,7 +41,7 @@ const CustomHeader = props => {
         </TouchableOpacity>
       ) : null}
       <Text style={styles.title}>{props.route.name}</Text>
-      {rightIcon ? (
+      {rightIcon == 'delete' && (
         <TouchableOpacity
           onPress={onRightPress}
           style={[rightIconStyle, styles.rightIconStyle]}>
@@ -51,7 +52,19 @@ const CustomHeader = props => {
             style={styles.icon}
           />
         </TouchableOpacity>
-      ) : null}
+      )}
+      {rightIcon == 'view' && (
+        <TouchableOpacity
+          onPress={onRightPress}
+          style={[rightIconStyle, styles.rightIconStyle]}>
+          <MaterialIcons
+            name="show-chart"
+            color={color.text}
+            size={32}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

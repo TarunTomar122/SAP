@@ -44,6 +44,7 @@ export default StyleSheet.create({
     fontSize: size.scale(14),
     color: color.lightGrey,
     fontFamily: typography.primary,
+    marginHorizontal: size.scale(5),
   },
   tagListView: {
     flexDirection: 'row',

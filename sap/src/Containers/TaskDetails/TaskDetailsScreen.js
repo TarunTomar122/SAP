@@ -88,7 +88,7 @@ class TaskDetailsScreen extends React.Component {
           route={{name: this.state.title}}
           leftIcon={true}
           onLeftPress={() => this.props.navigation.navigate('track')}
-          rightIcon={true}
+          rightIcon="delete"
           onRightPress={() => this.delete()}
         />
 

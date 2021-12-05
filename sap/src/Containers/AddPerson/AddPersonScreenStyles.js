@@ -11,6 +11,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: color.background,
     padding: size.scale(10),
+    paddingTop: size.scale(30),
   },
   autocomplete: {
     borderRadius: size.scale(15),
@@ -21,13 +22,17 @@ export default StyleSheet.create({
     color: color.lightGrey,
   },
   autocompleteContainer: {
-    flex: 1,
-    left: 20,
-    position: 'absolute',
-    right: 20,
-    top: 30,
-    zIndex: 1,
-    borderColor: color.primary,
+    // flex: 1,
+    // left: 20,
+    // position: 'absolute',
+    // right: 20,
+    // top: 30,
+    // zIndex: 1,
+    // borderColor: color.primary,
+
+    paddingBottom: size.scale(100),
+    // borderWidth: size.scale(1),
+    // borderColor: color.primary,
   },
   suggestionBox: {
     backgroundColor: color.background,
@@ -81,5 +86,30 @@ export default StyleSheet.create({
     fontSize: size.scale(20),
     color: color.text,
     fontFamily: typography.primaryBold,
+  },
+  selectedTagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginVertical: size.scale(20),
+  },
+  selectedTagListItemContainer: {
+    flexDirection: 'row',
+    borderColor: color.primary,
+    borderWidth: 1,
+    borderRadius: size.scale(8),
+    padding: size.scale(10),
+    marginRight: size.scale(10),
+  },
+  selectedTagText: {
+    fontSize: size.scale(16),
+    fontFamily: typography.primaryBold,
+    color: color.text,
+    marginHorizontal: size.scale(5),
+  },
+  removeTagText: {
+    fontSize: size.scale(16),
+    fontFamily: typography.primaryBold,
+    color: color.primary,
+    marginHorizontal: size.scale(5),
   },
 });

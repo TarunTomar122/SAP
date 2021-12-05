@@ -149,7 +149,7 @@ class PeopleScreen extends React.Component {
                   />
                   <View style={styles.tagListView}>
                     {person.tags.map(tag => (
-                      <Text style={styles.tag} key={tag}>
+                      <Text style={styles.tag} key={tag.name}>
                         {tag.name}
                       </Text>
                     ))}
