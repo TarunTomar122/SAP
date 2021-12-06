@@ -1,5 +1,12 @@
 const thought = (sequelize, DataTypes) => {
   const Thought = sequelize.define("thought", {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
     date: {
       type: DataTypes.DATE,
       allowNull: false,

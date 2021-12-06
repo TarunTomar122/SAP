@@ -23,6 +23,8 @@ class AddThoughtScreen extends React.Component {
       name: this.props.route.params.title,
       thought: '',
       loading: false,
+      title: '',
+      rating: '',
     };
   }
 
@@ -30,8 +32,8 @@ class AddThoughtScreen extends React.Component {
 
   async addThought() {
     this.setState({loading: true});
-    const {thought, rating, name} = this.state;
-    const response = await addThought({name, thought, rating});
+    const {thought, rating, name, title} = this.state;
+    const response = await addThought({name, thought, rating, title});
     if (response) {
       this.setState({loading: false});
       ToastAndroid.show('Thought Added', ToastAndroid.SHORT);
@@ -57,6 +59,15 @@ class AddThoughtScreen extends React.Component {
           }
         />
         <View style={styles.container}>
+          <TextInput
+            style={[styles.titleBox]}
+            value={this.state.title}
+            onChangeText={text => this.setState({title: text})}
+            placeholder="Title"
+            placeholderTextColor={color.description}
+            textColor={color.text}
+          />
+
           <TextInput
             style={styles.textBox}
             placeholder="Enter your thoughts..."

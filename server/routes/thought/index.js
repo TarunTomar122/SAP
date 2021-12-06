@@ -6,13 +6,14 @@ const router = Router();
 // Add thought
 router.post("/add", async (req, res) => {
   try {
-    const { name, thought, rating } = req.body;
+    const { name, thought, rating, title } = req.body;
 
     // Add thought to person
     await models.Thought.create({
       thought: thought,
       rating: rating,
       personName: name,
+      title: title,
     });
 
     res.status(200).json({ response: "Thought added" });

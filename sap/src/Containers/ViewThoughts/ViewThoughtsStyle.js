@@ -24,8 +24,8 @@ export default StyleSheet.create({
   },
   thought: {
     flex: 1,
-    padding: size.scale(10),
-    paddingTop: size.scale(16),
+    paddingHorizontal: size.scale(10),
+    // paddingTop: size.scale(16),
     paddingBottom: size.scale(10),
     borderBottomWidth: 1,
     borderBottomColor: color.lightGrey,
@@ -46,5 +46,19 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: size.scale(10),
     marginTop: size.scale(10),
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: size.scale(10),
+    paddingVertical: size.scale(10),
+    borderBottomWidth: 0.5,
+    borderColor: color.primary,
+  },
+  headerText: {
+    fontSize: size.scale(20),
+    color: color.lightGrey,
+    fontFamily: typography.primaryBold,
   },
 });

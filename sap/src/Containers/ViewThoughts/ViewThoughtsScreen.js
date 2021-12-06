@@ -17,6 +17,7 @@ import {color, size, typography} from '../../theme';
 import {getThoughts} from '../../Services/API/thought';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Accordion from 'react-native-collapsible/Accordion';
 
 class AddThoughtScreen extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class AddThoughtScreen extends React.Component {
       name: this.props.route.params.name,
       thoughts: [],
       loading: false,
+      activeSections: [],
     };
   }
 
@@ -44,6 +46,55 @@ class AddThoughtScreen extends React.Component {
     }
   }
 
+  _renderSectionTitle = section => {
+    return null;
+  };
+
+  _renderHeader = section => {
+    return (
+      <View style={styles.header}>
+        <Text style={styles.headerText}>{section.title}</Text>
+      </View>
+    );
+  };
+
+  _renderContent = section => {
+    return (
+      <View style={styles.content}>
+        <TouchableOpacity style={styles.thought}>
+          <Text style={styles.thoughtText}>{section.thought}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={styles.date}>
+              {new Date(section.date).getDate()}-
+              {new Date(section.date).getMonth()}-
+              {new Date(section.date).getFullYear()}
+            </Text>
+            <View style={styles.ratingView}>
+              {
+                // Show a star for the rating
+                [...Array(section.rating)].map((_, index) => (
+                  <AntDesign
+                    name="star"
+                    size={size.scale(12)}
+                    color={color.primary}
+                  />
+                ))
+              }
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  _updateSections = activeSections => {
+    this.setState({activeSections});
+  };
+
   render() {
     return (
       <View style={styles.home}>
@@ -61,7 +112,15 @@ class AddThoughtScreen extends React.Component {
                 {this.state.thoughts.length == 0 && (
                   <Text style={styles.noThought}>No Thoughts yet</Text>
                 )}
-                {this.state.thoughts.map((thought, index) => (
+                <Accordion
+                  sections={this.state.thoughts}
+                  activeSections={this.state.activeSections}
+                  renderSectionTitle={this._renderSectionTitle}
+                  renderHeader={this._renderHeader}
+                  renderContent={this._renderContent}
+                  onChange={this._updateSections}
+                />
+                {/* {this.state.thoughts.map((thought, index) => (
                   <TouchableOpacity
                     key={index}
                     style={styles.thought}
@@ -95,7 +154,7 @@ class AddThoughtScreen extends React.Component {
                       </View>
                     </View>
                   </TouchableOpacity>
-                ))}
+                ))} */}
               </>
             )}
           </ScrollView>
