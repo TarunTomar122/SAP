@@ -9,7 +9,7 @@ const person = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     contacts: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      type: DataTypes.ARRAY(DataTypes.BIGINT),
     },
     address: {
       type: DataTypes.STRING,
