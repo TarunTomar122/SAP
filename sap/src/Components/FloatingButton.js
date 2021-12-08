@@ -7,7 +7,7 @@ import {color, size} from '../theme';
 const FloatingButton = props => {
   return (
     <>
-      <TouchableOpacity style={styles.container} onPress={props.onPress}>
+      <TouchableOpacity style={[styles.container]} onPress={props.onPress}>
         <AntDesign name="plus" style={styles.icon} />
       </TouchableOpacity>
     </>

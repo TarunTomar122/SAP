@@ -58,7 +58,7 @@ class AddThoughtScreen extends React.Component {
             })
           }
         />
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <TextInput
             style={[styles.titleBox]}
             value={this.state.title}
@@ -100,7 +100,7 @@ class AddThoughtScreen extends React.Component {
               <ActivityIndicator size="large" color={color.primary} />
             </View>
           )}
-        </View>
+        </ScrollView>
       </View>
     );
   }

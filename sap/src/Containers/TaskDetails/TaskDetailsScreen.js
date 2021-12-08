@@ -108,7 +108,7 @@ class TaskDetailsScreen extends React.Component {
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button]}
               onPress={this.submitCount.bind(this)}>
               <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
@@ -136,7 +136,9 @@ class TaskDetailsScreen extends React.Component {
                   {this.state.entries.map((entry, index) => {
                     let date = new Date(entry.date);
                     return (
-                      <View style={styles.entryContainer} key={index}>
+                      <View
+                        style={[styles.entryContainer, styles.elevation]}
+                        key={index}>
                         <Text style={styles.entryText}>
                           {date.getUTCDate()} : {date.getUTCMonth() + 1} :{' '}
                           {date.getUTCFullYear()}

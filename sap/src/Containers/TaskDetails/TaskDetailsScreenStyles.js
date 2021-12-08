@@ -57,7 +57,7 @@ export default StyleSheet.create({
     marginVertical: size.scale(10),
     padding: size.scale(10),
     borderWidth: 1,
-    borderColor: color.palette.white,
+    // borderColor: color.palette.white,
     borderRadius: size.scale(10),
     opacity: 0.8,
   },
@@ -65,5 +65,17 @@ export default StyleSheet.create({
     fontSize: size.scale(20),
     color: color.text,
     fontFamily: typography.primaryBold,
+  },
+  elevation: {
+    elevation: 4,
+    shadowColor: color.lightGrey,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: size.scale(10),
+    padding: size.scale(15),
   },
 });
