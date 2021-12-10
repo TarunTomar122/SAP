@@ -70,12 +70,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    borderWidth: 1,
-    borderRadius: size.scale(10),
-    borderColor: color.primary,
-    padding: size.scale(10),
-    alignItems: 'center',
-    width: '50%',
+    alignSelf: 'center',
+    width: '40%',
   },
   buttonText: {
     fontSize: size.scale(20),

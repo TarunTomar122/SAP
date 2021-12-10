@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-import {color, size} from '../../theme';
+import {color, size, typography} from '../../theme';
 
 export default StyleSheet.create({
   home: {
@@ -12,5 +12,6 @@ export default StyleSheet.create({
   text: {
     fontSize: 50,
     color: color.text,
+    fontFamily: typography.primaryBold,
   },
 });

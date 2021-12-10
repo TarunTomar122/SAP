@@ -8,7 +8,7 @@ import TabBar from '../Components/TabBar';
 import Header from '../Components/Header';
 
 import HomeScreen from '../Containers/Home/HomeScreen.js';
-import JournalScreen from '../Containers/Journal/JournalScreen.js';
+import AnalysisScreen from '../Containers/Analysis/AnalysisScreen.js';
 import TodoScreen from '../Containers/Todo/TodoScreen.js';
 import TrackScreen from '../Containers/Track/TrackScreen.js';
 
@@ -19,6 +19,8 @@ import PeopleScreen from '../Containers/People/PeopleScreen.js';
 import AddPersonScreen from '../Containers/AddPerson/AddPersonScreen.js';
 import AddThoughtScreen from '../Containers/AddThought/AddThoughtScreen';
 import ViewThoughtsScreen from '../Containers/ViewThoughts/ViewThoughtsScreen.js';
+
+import AnalysisDetailsScreen from '../Containers/AnalysisDetails/AnalysisDetailsScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +37,7 @@ function HomeTabs() {
       tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="home" component={HomeScreen} />
       <Tab.Screen name="todo" component={TodoScreen} />
-      <Tab.Screen name="journal" component={JournalScreen} />
+      <Tab.Screen name="analysis" component={AnalysisScreen} />
       <Tab.Screen name="track" component={TrackScreen} />
       <Tab.Screen name="people" component={PeopleScreen} />
     </Tab.Navigator>
@@ -54,6 +56,10 @@ function AppNavigator() {
         <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
         <Stack.Screen name="AddThought" component={AddThoughtScreen} />
         <Stack.Screen name="ViewThoughts" component={ViewThoughtsScreen} />
+        <Stack.Screen
+          name="analysisDetails"
+          component={AnalysisDetailsScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -10,7 +10,7 @@ import {
 
 import Header from '../../Components/Header';
 import Autocomplete from 'react-native-autocomplete-input';
-
+import Button from '../../Components/Button';
 import styles from './AddTaskScreenStyles';
 import {color, size, typography} from '../../theme';
 
@@ -127,13 +127,11 @@ class AddTaskScreen extends React.Component {
               value={this.state.goal}
             />
 
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={this.addTodayTask.bind(this)}>
-                <Text style={styles.buttonText}>Submit</Text>
-              </TouchableOpacity>
-            </View>
+            <Button
+              style={styles.button}
+              onPress={this.addTodayTask.bind(this)}
+              text="Submit"
+            />
 
             {this.state.loading && (
               <View>

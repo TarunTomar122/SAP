@@ -23,7 +23,7 @@ export default StyleSheet.create({
     fontFamily: typography.primaryBold,
     color: color.text,
   },
-  titleBox:{
+  titleBox: {
     marginBottom: size.scale(30),
     marginTop: size.scale(10),
     borderBottomWidth: 1,
@@ -48,16 +48,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    borderWidth: 1,
-    borderRadius: size.scale(10),
-    borderColor: color.primary,
-    padding: size.scale(10),
     alignItems: 'center',
-    width: '50%',
-  },
-  buttonText: {
-    fontSize: size.scale(20),
-    color: color.text,
-    fontFamily: typography.primaryBold,
+    alignSelf: 'center',
+    width: '40%',
   },
 });
