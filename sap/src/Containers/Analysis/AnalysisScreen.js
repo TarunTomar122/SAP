@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, ToastAndroid} from 'react-native';
 
 import Button from '../../Components/Button';
 import styles from './AnalysisScreenStyles';
@@ -58,7 +58,15 @@ class AnalysisScreen extends React.Component {
         <Button
           text="Analyse"
           style={{marginVertical: size.scale(30)}}
-          onPress={() => this.props.navigation.navigate('analysisDetails')}
+          onPress={() => {
+            if (this.state.value === '') {
+              ToastAndroid.show('Please select an option', ToastAndroid.SHORT);
+              return;
+            }
+            this.props.navigation.navigate('analysisDetails', {
+              option: this.state.value,
+            });
+          }}
         />
       </View>
     );

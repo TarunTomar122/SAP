@@ -78,7 +78,10 @@ router.post("/addCount", async (req, res) => {
 
     await models.TaskTrack.increment("count", {
       by: count,
-      where: { taskInfoTaskName: taskName },
+      where: {
+        taskInfoTaskName: taskName,
+        date: new Date().toISOString().slice(0, 10),
+      },
     });
 
     return res.status(200).json({ message: "Updated Successfully" });
