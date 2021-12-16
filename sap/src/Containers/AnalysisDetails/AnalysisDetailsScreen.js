@@ -13,46 +13,23 @@ import {color, size, typography} from '../../theme';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {getTasksInfo} from '../../Services/API/analysis';
 
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 import {Dimensions} from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from 'react-native-chart-kit';
+import {LineChart, BarChart} from 'react-native-chart-kit';
 
 const chartConfig = {
   backgroundGradientFrom: '#1E2923',
   backgroundGradientFromOpacity: 0,
   backgroundGradientTo: '#08130D',
   backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+  color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional
-};
-
-const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43],
-      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-      strokeWidth: 2, // optional
-      legend: ['Rainy Days'], // optional
-    },
-    {
-      data: [23, 33, 23, 23, 23, 33],
-      color: (opacity = 1) => `rgba(26, 255, 244, ${opacity})`, // optional
-      strokeWidth: 2, // optional
-      legend: ['Not rainy days'], // optional
-    },
-  ],
-  legend: ['Rainy Days', 'not rainy days'], // optional
 };
 
 class AnalysisDetailsScreen extends React.Component {
@@ -63,6 +40,7 @@ class AnalysisDetailsScreen extends React.Component {
       tasks: {},
       data: null,
       fopen: false,
+      pickedChart: 1,
       fvalue: '',
       fitems: [],
       sopen: false,
@@ -115,7 +93,15 @@ class AnalysisDetailsScreen extends React.Component {
     }
 
     const {tasks} = this.state;
-    const taskDataArr = tasks[fvalue];
+    let taskDataArr = tasks[fvalue];
+
+    const sorted_by_name = taskDataArr.sort((a, b) => {
+      if (new Date(a.date) > new Date(b.date)) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
 
     var past = 0;
 
@@ -127,8 +113,10 @@ class AnalysisDetailsScreen extends React.Component {
       past = 30;
     }
 
-    const validData = taskDataArr.slice(0, past);
-    console.log(taskDataArr.slice(0, past));
+    let validData = sorted_by_name.slice(
+      Math.max(0, sorted_by_name.length - past),
+      sorted_by_name.length,
+    );
 
     const labels = [];
     const goals = [];
@@ -136,10 +124,7 @@ class AnalysisDetailsScreen extends React.Component {
 
     for (let i = 0; i < validData.length; i++) {
       var label = validData[i].date;
-      label =
-        label.slice(0, 10).split(' ')[2] +
-        '-' +
-        label.slice(0, 10).split(' ')[1];
+      label = label.slice(0, 10).split(' ')[2];
       labels.push(label);
 
       goals.push(validData[i].goal);
@@ -151,16 +136,17 @@ class AnalysisDetailsScreen extends React.Component {
       datasets: [
         {
           data: goals,
-          color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+          color: (opacity = 1) => `rgba(221,51,51, ${opacity})`, // optional
           strokeWidth: 2, // optional
         },
         {
           data: achieved,
-          color: (opacity = 1) => `rgba(26, 255, 244, ${opacity})`, // optional
-          strokeWidth: 2, // optional
+          color: (opacity = 1) => `rgba(251,169,40, ${opacity})`, // optional
+          strokeWidth: 4, // optional
         },
       ],
       legend: ['Goals', 'Achieved'], // optional
+      barColors: ['#dfe4ea', '#ced6e0'],
     };
 
     this.setState({data: data});
@@ -235,16 +221,55 @@ class AnalysisDetailsScreen extends React.Component {
             labelStyle={{borderRadius: 5, borderColor: 'white'}}
           />
 
-          <Button text="Apply" onPress={this.applyFilters.bind(this)} />
+          <Button
+            text="Apply"
+            onPress={this.applyFilters.bind(this)}
+            textStyle={{color: 'white'}}
+          />
+
+          <View style={styles.chatPickerContainer}>
+            <TouchableOpacity onPress={() => this.setState({pickedChart: 1})}>
+              {this.state.pickedChart === 1 ? (
+                <AntDesign name="linechart" color={color.primary} size={40} />
+              ) : (
+                <AntDesign name="linechart" color={color.text} size={40} />
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({pickedChart: 2})}>
+              {this.state.pickedChart === 2 ? (
+                <FontAwesome name="bar-chart" color={color.primary} size={40} />
+              ) : (
+                <FontAwesome name="bar-chart" color={color.text} size={40} />
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.chartView}>
-          {this.state.data && (
-            <LineChart
-              data={this.state.data}
-              width={screenWidth}
-              height={220}
-              chartConfig={chartConfig}
-            />
+          {this.state.pickedChart === 1 && (
+            <>
+              {this.state.data && (
+                <LineChart
+                  data={this.state.data}
+                  width={screenWidth}
+                  height={220}
+                  chartConfig={chartConfig}
+                />
+              )}
+            </>
+          )}
+          {this.state.pickedChart === 2 && (
+            <>
+              {this.state.data && (
+                <BarChart
+                  // style={graphStyle}
+                  data={this.state.data}
+                  width={screenWidth}
+                  height={220}
+                  chartConfig={chartConfig}
+                  verticalLabelRotation={30}
+                />
+              )}
+            </>
           )}
         </View>
       </ScrollView>

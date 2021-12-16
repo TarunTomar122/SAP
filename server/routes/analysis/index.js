@@ -49,4 +49,80 @@ router.get("/track", async (req, res) => {
   }
 });
 
+router.get("/contribanal", async (req, res) => {
+  try {
+    const result = [];
+
+    const taskTrackObj = await models.TaskTrack.findAll({});
+
+    // sort taskTrack by date
+    const sorted_by_date = taskTrackObj.sort((a, b) => {
+      if (new Date(a.createdAt) > new Date(b.createdAt)) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+
+    // remove first 4 entries
+    const taskTrack = sorted_by_date.slice(6, sorted_by_date.length);
+
+    let tempObj = {};
+
+    for (let i = 0; i < taskTrack.length; i++) {
+      let date = taskTrack[i].createdAt.toString().slice(0, 10);
+      let goal = taskTrack[i].goal;
+      let achieved = taskTrack[i].count;
+
+      if (tempObj[date]) {
+        tempObj[date].push({
+          goal,
+          achieved,
+        });
+      } else {
+        tempObj[date] = [
+          {
+            goal,
+            achieved,
+          },
+        ];
+      }
+    }
+
+    const mainTemp = {};
+
+    const maxTaskInADay = 6;
+
+    for (let key in tempObj) {
+      let temp = tempObj[key];
+
+      let total = 0;
+
+      for (let i = 0; i < temp.length; i++) {
+        if (temp[i].achieved <= temp[i].goal) {
+          total += temp[i].achieved / temp[i].goal;
+        } else {
+          total += 1;
+          let extra = (temp[i].achieved - temp[i].goal) / temp[i].goal;
+          // Normalize extra by the number of tasks
+          extra = extra / temp.length;
+          total += extra;
+        }
+      }
+
+      let entry = (total / temp.length) * maxTaskInADay;
+
+      // Normalize by the number of tasks
+      entry = entry / temp.length;
+
+      mainTemp[key] = entry;
+    }
+
+    res.status(200).json({ mainTemp });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
 export default router;
