@@ -13,7 +13,7 @@ import Header from '../../Components/Header';
 
 import styles from './AddThoughtStyles';
 import {color, size, typography} from '../../theme';
-
+import Button from '../../Components/Button';
 import {addThought} from '../../Services/API/thought';
 
 class AddThoughtScreen extends React.Component {
@@ -58,7 +58,7 @@ class AddThoughtScreen extends React.Component {
             })
           }
         />
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <TextInput
             style={[styles.titleBox]}
             value={this.state.title}
@@ -87,20 +87,18 @@ class AddThoughtScreen extends React.Component {
             placeholderTextColor={color.description}
             textColor={color.text}
           />
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={this.addThought.bind(this)}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
-          </View>
+          <Button
+            style={styles.button}
+            onPress={this.addThought.bind(this)}
+            text="Submit"
+          />
 
           {this.state.loading && (
             <View>
               <ActivityIndicator size="large" color={color.primary} />
             </View>
           )}
-        </View>
+        </ScrollView>
       </View>
     );
   }

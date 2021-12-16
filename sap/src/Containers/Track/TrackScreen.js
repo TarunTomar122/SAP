@@ -119,7 +119,7 @@ class TrackScreen extends React.Component {
             {data.map((task, index) => (
               <TouchableOpacity
                 key={index}
-                style={styles.task}
+                style={[styles.task, styles.elevation]}
                 onPress={() =>
                   this.props.navigation.navigate('TaskDetails', {
                     title: task.taskInfoTaskName,

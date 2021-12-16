@@ -75,17 +75,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    borderWidth: 1,
-    borderRadius: size.scale(10),
-    borderColor: color.primary,
-    padding: size.scale(10),
-    alignItems: 'center',
-    width: '50%',
-  },
-  buttonText: {
-    fontSize: size.scale(20),
-    color: color.text,
-    fontFamily: typography.primaryBold,
+    alignSelf: 'center',
+    width: '40%',
   },
   selectedTagsContainer: {
     flexDirection: 'row',

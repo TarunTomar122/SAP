@@ -61,35 +61,27 @@ const TabBar = ({state, descriptors, navigation}) => {
                   isFocused ? (
                     <Ionicons name="home" color={color.text} size={30} />
                   ) : (
-                    <Ionicons
-                      name="home-outline"
-                      color={color.text}
-                      size={30}
-                    />
+                    <Ionicons name="home" color={color.text} size={30} />
                   )
                 ) : label == 'todo' ? (
                   isFocused ? (
-                    <FontAwesome5 name="pen" color={color.text} size={27} />
+                    <SimpleLineIcons name="pencil" color={color.text} size={28} />
                   ) : (
-                    <SimpleLineIcons
-                      name="pencil"
-                      color={color.text}
-                      size={28}
-                    />
+                    <SimpleLineIcons name="pencil" color={color.text} size={28} />
                   )
-                ) : label == 'journal' ? (
+                ) : label == 'analysis' ? (
                   isFocused ? (
-                    <AntDesign name="pluscircle" color={color.text} size={40} />
+                    <AntDesign name="barschart" color={color.text} size={40} />
                   ) : (
-                    <AntDesign
-                      name="pluscircleo"
-                      color={color.text}
-                      size={40}
-                    />
+                    <AntDesign name="barschart" color={color.text} size={40} />
                   )
                 ) : label == 'track' ? (
                   isFocused ? (
-                    <Ionicons name="stopwatch" color={color.text} size={44} />
+                    <Ionicons
+                      name="stopwatch-outline"
+                      color={color.text}
+                      size={44}
+                    />
                   ) : (
                     <Ionicons
                       name="stopwatch-outline"
@@ -98,7 +90,11 @@ const TabBar = ({state, descriptors, navigation}) => {
                     />
                   )
                 ) : isFocused ? (
-                  <Ionicons name="people" color={color.text} size={36} />
+                  <Ionicons
+                    name="ios-people-outline"
+                    color={color.text}
+                    size={36}
+                  />
                 ) : (
                   <Ionicons
                     name="ios-people-outline"

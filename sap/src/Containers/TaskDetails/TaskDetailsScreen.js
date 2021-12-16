@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import Header from '../../Components/Header';
-
+import Button from '../../Components/Button';
 import styles from './TaskDetailsScreenStyles';
 import {color, size, typography} from '../../theme';
 
@@ -105,14 +105,11 @@ class TaskDetailsScreen extends React.Component {
               value={this.state.count}
             />
           </View>
-
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={this.submitCount.bind(this)}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
-          </View>
+          <Button
+            text="Submit"
+            style={styles.button}
+            onPress={this.submitCount.bind(this)}
+          />
           {this.state.loading && (
             <View>
               <ActivityIndicator size="large" color={color.primary} />
@@ -136,7 +133,9 @@ class TaskDetailsScreen extends React.Component {
                   {this.state.entries.map((entry, index) => {
                     let date = new Date(entry.date);
                     return (
-                      <View style={styles.entryContainer} key={index}>
+                      <View
+                        style={[styles.entryContainer, styles.elevation]}
+                        key={index}>
                         <Text style={styles.entryText}>
                           {date.getUTCDate()} : {date.getUTCMonth() + 1} :{' '}
                           {date.getUTCFullYear()}

@@ -52,13 +52,25 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: size.scale(10),
-    paddingVertical: size.scale(10),
-    borderBottomWidth: 0.5,
+    padding: size.scale(10),
+    // borderBottomWidth: 0.5,
     borderColor: color.primary,
   },
   headerText: {
     fontSize: size.scale(20),
     color: color.lightGrey,
     fontFamily: typography.primaryBold,
+  },
+  elevation: {
+    elevation: 4,
+    shadowColor: 'white',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: size.scale(10),
+    padding: size.scale(20),
   },
 });

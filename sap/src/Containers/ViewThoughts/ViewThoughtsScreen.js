@@ -34,8 +34,10 @@ class AddThoughtScreen extends React.Component {
     this.setState({loading: true});
     const response = await getThoughts(this.props.route.params.name);
     if (response) {
+      const thoughts = response.thoughts;
+      thoughts.reverse();
       this.setState({
-        thoughts: response.thoughts,
+        thoughts: thoughts,
         loading: false,
       });
     } else {
@@ -52,7 +54,7 @@ class AddThoughtScreen extends React.Component {
 
   _renderHeader = section => {
     return (
-      <View style={styles.header}>
+      <View style={[styles.header, styles.elevation]}>
         <Text style={styles.headerText}>{section.title}</Text>
       </View>
     );
@@ -60,8 +62,8 @@ class AddThoughtScreen extends React.Component {
 
   _renderContent = section => {
     return (
-      <View style={styles.content}>
-        <TouchableOpacity style={styles.thought}>
+      <View key={section.title} style={styles.elevation}>
+        <View style={styles.thought}>
           <Text style={styles.thoughtText}>{section.thought}</Text>
           <View
             style={{
@@ -86,7 +88,7 @@ class AddThoughtScreen extends React.Component {
               }
             </View>
           </View>
-        </TouchableOpacity>
+        </View>
       </View>
     );
   };

@@ -133,7 +133,7 @@ class PeopleScreen extends React.Component {
             {data.map((person, index) => (
               <TouchableOpacity
                 key={index}
-                style={styles.listBox}
+                style={[styles.listBox, styles.elevation]}
                 onPress={() =>
                   this.props.navigation.navigate('AddThought', {
                     title: person.name,

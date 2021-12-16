@@ -17,6 +17,7 @@ app.use(bodyParser.json());
 app.use("/api/task", routes.task);
 app.use("/api/people", routes.people);
 app.use("/api/thought", routes.thought);
+app.use("/api/analyze", routes.analyze);
 
 const PORT = 4040;
 

@@ -24,12 +24,24 @@ export default StyleSheet.create({
   },
   listBox: {
     margin: size.scale(10),
-    borderRightWidth: 0.6,
-    borderColor: color.lightGrey,
+    // borderRightWidth: 0.6,
+    // borderColor: color.lightGrey,
     padding: size.scale(10),
   },
   listView: {
     marginBottom: size.scale(60),
+  },
+  elevation: {
+    elevation: 4,
+    shadowColor: 'white',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: size.scale(10),
+    padding: size.scale(15),
   },
   personName: {
     fontSize: size.scale(22),

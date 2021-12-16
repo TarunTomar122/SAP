@@ -29,7 +29,7 @@ const CustomHeader = props => {
     //   <View style={styles.rightIcon}>{rightIcon}</View>
     // </View>
 
-    <View style={{...styles.customHeader, ...style}}>
+    <View style={[{...styles.customHeader, ...style}, styles.elevation]}>
       {leftIcon ? (
         <TouchableOpacity onPress={onLeftPress} style={leftIconStyle}>
           <Ionicons
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: size.scale(10),
     alignItems: 'center',
+    
   },
   icon: {
     marginTop: size.scale(4),
@@ -96,6 +97,18 @@ const styles = StyleSheet.create({
   rightIconStyle: {
     position: 'absolute',
     right: size.scale(18),
+  },
+  elevation: {
+    elevation: 10,
+    shadowColor: color.lightGrey,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    // borderRadius: size.scale(10),
+    padding: size.scale(15),
   },
 });
 

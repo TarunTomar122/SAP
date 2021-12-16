@@ -11,7 +11,7 @@ import {
 
 import Header from '../../Components/Header';
 import Autocomplete from 'react-native-autocomplete-input';
-
+import Button from '../../Components/Button';
 import styles from './AddPersonScreenStyles';
 import {color, size, typography} from '../../theme';
 
@@ -49,14 +49,7 @@ class AddPersonScreen extends React.Component {
 
   async addPerson() {
     this.setState({loading: true});
-    const {
-      name,
-      email,
-      contactString,
-      address,
-      dob,
-      selectedTags,
-    } = this.state;
+    const {name, email, contactString, address, dob, selectedTags} = this.state;
     const contacts = contactString.split(' ');
     const data = {
       name,
@@ -222,13 +215,11 @@ class AddPersonScreen extends React.Component {
               value={this.state.contactString}
             />
 
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={this.addPerson.bind(this)}>
-                <Text style={styles.buttonText}>Submit</Text>
-              </TouchableOpacity>
-            </View>
+            <Button
+              style={styles.button}
+              onPress={this.addPerson.bind(this)}
+              text="Submit"
+            />
 
             {this.state.loading && (
               <View>
