@@ -10,7 +10,7 @@ export default StyleSheet.create({
   filters: {
     flex: 1,
     paddingHorizontal: size.scale(30),
-    paddingBottom: size.scale(40),
+    paddingBottom: size.scale(30),
   },
   chartView: {
     flex: 1,
@@ -21,7 +21,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginTop: size.scale(30),
     backgroundColor: color.background,
-    height: size.scale(40),
+    height: size.scale(50),
     zIndex: -1,
   },
   pickerText: {
@@ -46,5 +46,12 @@ export default StyleSheet.create({
     borderRadius: size.scale(10),
     borderWidth: size.scale(1),
     marginTop: size.scale(20),
+  },
+  chatPickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderTopWidth: size.scale(0.5),
+    borderColor: color.lightGrey,
+    paddingTop: size.scale(20),
   },
 });

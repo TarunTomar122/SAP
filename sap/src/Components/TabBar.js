@@ -3,8 +3,8 @@ import React from 'react';
 import {View, Pressable, Dimensions, StyleSheet} from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import AntDesign from 'react-native-vector-icons/AntDesign'
+
 
 import {color, size} from '../theme';
 
@@ -59,9 +59,9 @@ const TabBar = ({state, descriptors, navigation}) => {
                 }}>
                 {label == 'home' ? (
                   isFocused ? (
-                    <Ionicons name="home" color={color.text} size={30} />
+                    <AntDesign name="home" color={color.text} size={32} />
                   ) : (
-                    <Ionicons name="home" color={color.text} size={30} />
+                    <AntDesign name="home" color={color.text} size={32} />
                   )
                 ) : label == 'todo' ? (
                   isFocused ? (
@@ -71,29 +71,29 @@ const TabBar = ({state, descriptors, navigation}) => {
                   )
                 ) : label == 'analysis' ? (
                   isFocused ? (
-                    <AntDesign name="barschart" color={color.text} size={40} />
+                    <SimpleLineIcons name="chart" color={color.text} size={28} />
                   ) : (
-                    <AntDesign name="barschart" color={color.text} size={40} />
+                    <SimpleLineIcons name="chart" color={color.text} size={28} />
                   )
                 ) : label == 'track' ? (
                   isFocused ? (
                     <Ionicons
                       name="stopwatch-outline"
                       color={color.text}
-                      size={44}
+                      size={34}
                     />
                   ) : (
                     <Ionicons
                       name="stopwatch-outline"
                       color={color.text}
-                      size={45}
+                      size={36}
                     />
                   )
                 ) : isFocused ? (
                   <Ionicons
                     name="ios-people-outline"
                     color={color.text}
-                    size={36}
+                    size={34}
                   />
                 ) : (
                   <Ionicons
