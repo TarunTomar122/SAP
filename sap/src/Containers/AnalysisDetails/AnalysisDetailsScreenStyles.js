@@ -11,9 +11,11 @@ export default StyleSheet.create({
     flex: 1,
     paddingHorizontal: size.scale(30),
     paddingBottom: size.scale(30),
+    zIndex: 100,
   },
   chartView: {
     flex: 1,
+    zIndex: -100,
   },
   pickerContainer: {
     flexDirection: 'row',
@@ -52,6 +54,6 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     borderTopWidth: size.scale(0.5),
     borderColor: color.lightGrey,
-    paddingTop: size.scale(20),
+    paddingTop: size.scale(10),
   },
 });

@@ -40,7 +40,7 @@ class AnalysisDetailsScreen extends React.Component {
       tasks: {},
       data: null,
       fopen: false,
-      pickedChart: 1,
+      pickedChart: true,
       fvalue: '',
       fitems: [],
       sopen: false,
@@ -159,6 +159,10 @@ class AnalysisDetailsScreen extends React.Component {
           route={{name: this.state.title}}
           leftIcon={true}
           onLeftPress={() => this.props.navigation.navigate('analysis')}
+          rightIcon="swap"
+          onRightPress={() => {
+            this.setState({pickedChart: !this.state.pickedChart});
+          }}
         />
 
         <View style={styles.filters}>
@@ -226,26 +230,11 @@ class AnalysisDetailsScreen extends React.Component {
             onPress={this.applyFilters.bind(this)}
             textStyle={{color: 'white'}}
           />
-
-          <View style={styles.chatPickerContainer}>
-            <TouchableOpacity onPress={() => this.setState({pickedChart: 1})}>
-              {this.state.pickedChart === 1 ? (
-                <AntDesign name="linechart" color={color.primary} size={40} />
-              ) : (
-                <AntDesign name="linechart" color={color.text} size={40} />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.setState({pickedChart: 2})}>
-              {this.state.pickedChart === 2 ? (
-                <FontAwesome name="bar-chart" color={color.primary} size={40} />
-              ) : (
-                <FontAwesome name="bar-chart" color={color.text} size={40} />
-              )}
-            </TouchableOpacity>
-          </View>
         </View>
         <View style={styles.chartView}>
-          {this.state.pickedChart === 1 && (
+          {!this.state.data && <View style={{flex: 1, height: 100}}></View>}
+
+          {this.state.pickedChart && (
             <>
               {this.state.data && (
                 <LineChart
@@ -257,7 +246,7 @@ class AnalysisDetailsScreen extends React.Component {
               )}
             </>
           )}
-          {this.state.pickedChart === 2 && (
+          {!this.state.pickedChart && (
             <>
               {this.state.data && (
                 <BarChart

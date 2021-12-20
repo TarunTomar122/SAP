@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import {color, size, spacing, typography} from '../theme';
+import { color, size, spacing, typography } from '../theme';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -29,7 +29,7 @@ const CustomHeader = props => {
     //   <View style={styles.rightIcon}>{rightIcon}</View>
     // </View>
 
-    <View style={[{...styles.customHeader, ...style}, styles.elevation]}>
+    <View style={[{ ...styles.customHeader, ...style }, styles.elevation]}>
       {leftIcon ? (
         <TouchableOpacity onPress={onLeftPress} style={leftIconStyle}>
           <Ionicons
@@ -65,6 +65,18 @@ const CustomHeader = props => {
           />
         </TouchableOpacity>
       )}
+      {rightIcon == 'swap' && (
+        <TouchableOpacity
+          onPress={onRightPress}
+          style={[rightIconStyle, styles.rightIconStyle]}>
+          <MaterialIcons
+            name="swap-horiz"
+            color={color.text}
+            size={32}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -77,13 +89,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: color.primary,
     shadowColor: color.primary,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     elevation: 5,
     flexDirection: 'row',
     paddingVertical: size.scale(10),
     alignItems: 'center',
-    
   },
   icon: {
     marginTop: size.scale(4),

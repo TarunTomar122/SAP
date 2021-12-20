@@ -1,20 +1,27 @@
 import React from 'react';
-import {View, Text, ScrollView, ToastAndroid} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  ToastAndroid,
+  ActivityIndicator,
+} from 'react-native';
 
-import {ContributionGraph} from 'react-native-chart-kit';
-import {Dimensions} from 'react-native';
+import { ContributionGraph } from 'react-native-chart-kit';
+import { Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 
 import styles from './HomeScreenStyles';
+import { color, size, typography } from '../../theme';
 
-import {getContribAnalysis} from '../../Services/API/analysis';
+import { getContribAnalysis } from '../../Services/API/analysis';
 
 const chartConfig = {
   backgroundGradientFrom: '#1E2923',
   backgroundGradientFromOpacity: 0,
   backgroundGradientTo: '#08130D',
   backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
+  color: (opacity = 1) => `rgba(108, 198, 68, ${opacity})`,
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional
@@ -26,10 +33,12 @@ class HomeScreen extends React.Component {
     this.state = {
       data: null,
       lastDate: null,
+      loading: false,
     };
   }
 
   async componentDidMount() {
+    this.setState({ loading: true });
     const res = await getContribAnalysis();
     if (res) {
       const result = res.data.mainTemp;
@@ -55,12 +64,12 @@ class HomeScreen extends React.Component {
 
         lastDate = date;
 
-        data.push({date: dateString, count: count});
+        data.push({ date: dateString, count: count });
       }
-
-      this.setState({data: data, lastDate});
+      this.setState({ data: data, lastDate, loading: false });
     } else {
       ToastAndroid.show('Something Went Wrong', ToastAndroid.SHORT);
+      this.setState({ loading: false });
     }
   }
 
@@ -71,14 +80,20 @@ class HomeScreen extends React.Component {
           <Text style={styles.WorkoutHeadingText}>
             Workout Contribution Graph
           </Text>
+
+          {this.state.loading && (
+            <ActivityIndicator size="large" color={color.primary} />
+          )}
+
           {this.state.data && (
             <ContributionGraph
               values={this.state.data}
               endDate={this.state.lastDate}
-              numDays={140}
-              width={screenWidth}
+              numDays={91}
+              width={screenWidth * 0.99}
               height={220}
               chartConfig={chartConfig}
+              style={styles.graphStyles}
             />
           )}
         </View>

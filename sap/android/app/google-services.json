@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "811164371959",
+    "project_id": "sap-app-2d4a6",
+    "storage_bucket": "sap-app-2d4a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811164371959:android:8bff9b2c0ccd3a95a4bcf2",
+        "android_client_info": {
+          "package_name": "com.sap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811164371959-i2qumb06ej4665fhdfavmt0jsd963tl3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1RExy69Hbde4w1HaJ9BxWFRoP8IrItTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811164371959-i2qumb06ej4665fhdfavmt0jsd963tl3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
