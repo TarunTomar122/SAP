@@ -110,7 +110,7 @@ router.get("/contribanal", async (req, res) => {
         }
       }
 
-      let entry = (total / temp.length) * maxTaskInADay;
+      let entry = (total * temp.length) / maxTaskInADay;
 
       // Normalize by the number of tasks
       entry = entry / temp.length;

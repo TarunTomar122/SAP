@@ -1,13 +1,13 @@
 import cors from "cors";
 import express from "express";
 
-import models, { sequelize } from "../models";
+import models, { sequelize } from "./models";
 import bodyParser from "body-parser";
 
-import routes from "../routes";
+import routes from "./routes";
 
-import { reg_id } from "../config";
-import NotificationService from "../services/notification";
+import { reg_id } from "./config";
+import NotificationService from "./services/notification";
 
 const app = express();
 

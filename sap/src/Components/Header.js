@@ -77,6 +77,34 @@ const CustomHeader = props => {
           />
         </TouchableOpacity>
       )}
+      {
+        rightIcon == 'bookmark' && (
+          <TouchableOpacity
+            onPress={onRightPress}
+            style={[rightIconStyle, styles.rightIconStyle]}>
+            <MaterialIcons
+              name="bookmark-outline"
+              color={color.text}
+              size={32}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        )
+      }
+      {
+        rightIcon == "bookmarked" && (
+          <TouchableOpacity
+            onPress={onRightPress}
+            style={[rightIconStyle, styles.rightIconStyle]}>
+            <MaterialIcons
+              name="bookmark"
+              color={color.text}
+              size={32}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        )
+      }
     </View>
   );
 };

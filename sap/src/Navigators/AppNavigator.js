@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import TabBar from '../Components/TabBar';
 import Header from '../Components/Header';
@@ -21,6 +21,8 @@ import AddThoughtScreen from '../Containers/AddThought/AddThoughtScreen';
 import ViewThoughtsScreen from '../Containers/ViewThoughts/ViewThoughtsScreen.js';
 
 import AnalysisDetailsScreen from '../Containers/AnalysisDetails/AnalysisDetailsScreen.js';
+
+import ArticleDetailsScreen from '../Containers/ArticleDetails/ArticleDetailsScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,13 +51,14 @@ function AppNavigator() {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName={'HomeTabs'}
-        screenOptions={{headerShown: false}}>
+        screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeTabs" component={HomeTabs} />
         <Stack.Screen name="AddTask" component={AddTaskScreen} />
         <Stack.Screen name="AddPerson" component={AddPersonScreen} />
         <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
         <Stack.Screen name="AddThought" component={AddThoughtScreen} />
         <Stack.Screen name="ViewThoughts" component={ViewThoughtsScreen} />
+        <Stack.Screen name="ArticleDetails" component={ArticleDetailsScreen} />
         <Stack.Screen
           name="analysisDetails"
           component={AnalysisDetailsScreen}
