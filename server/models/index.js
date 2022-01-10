@@ -1,8 +1,7 @@
 import Sequelize from "sequelize";
 
 const sequelize = new Sequelize(
-  //"postgres://postgres:Tarun@2001@127.0.0.1:3000/sap",
-  "postgres://gjnogsmk:G2CKVv5h1bjBcvze1kco6IE2nBCIJhfi@satao.db.elephantsql.com/gjnogsmk",
+  process.env.DB_HOST,
   {
     dialect: "postgres",
   }
@@ -15,6 +14,7 @@ const models = {
   TaskTrack: sequelize.import("./taskTrack"),
   Tag: sequelize.import("./tag"),
   User: sequelize.import("./user"),
+  Todo: sequelize.import("./todo"),
 };
 
 Object.keys(models).forEach((key) => {

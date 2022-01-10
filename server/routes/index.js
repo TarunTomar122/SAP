@@ -3,6 +3,7 @@ import people from "./people";
 import thought from "./thought";
 import analyze from "./analysis";
 import notif from "./notif";
+import todo from "./todo";
 
 export default {
   task,
@@ -10,4 +11,5 @@ export default {
   thought,
   analyze,
   notif,
+  todo
 };

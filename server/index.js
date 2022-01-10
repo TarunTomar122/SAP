@@ -23,6 +23,7 @@ app.use("/api/task", routes.task);
 app.use("/api/people", routes.people);
 app.use("/api/thought", routes.thought);
 app.use("/api/analyze", routes.analyze);
+app.use('/api/todo', routes.todo);
 
 const PORT = 4040;
 
@@ -31,7 +32,7 @@ const eraseDatabaseOnSync = false;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
 
   // Drop the User Table from the database
-  // await models.User.drop();
+  // await models.Todo.drop();
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
