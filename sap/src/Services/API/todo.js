@@ -10,9 +10,19 @@ export async function addTodo({ title, description }) {
     }
 }
 
-export async function getTodos({ }) {
+export async function getTodos() {
     try {
-        const response = await client.post(`/todo/get`);
+        const response = await client.get(`/todo/get`);
+        return response;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+
+export async function deleteTodo({ title }) {
+    try {
+        const response = await client.post(`/todo/delete`, { title });
         return response;
     } catch (e) {
         console.error(e);

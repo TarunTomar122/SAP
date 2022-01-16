@@ -8,35 +8,20 @@ export default StyleSheet.create({
     backgroundColor: color.background,
     padding: size.scale(10)
   },
-  headingText: {
-    fontSize: size.scale(18),
-    color: color.text,
-    fontFamily: typography.primaryBold,
-    marginVertical: size.scale(10),
-    marginHorizontal: size.scale(10)
-    // alignSelf: 'center'
-  },
-  contribCont: {
-    flex: 1,
-    backgroundColor: color.background,
-    paddingBottom: size.scale(30),
-    paddingTop: size.scale(20),
-    borderBottomWidth: 1,
-    borderBottomColor: color.lightGrey,
-  },
+ 
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginTop: size.scale(10),
     marginBottom: size.scale(20),
-    marginHorizontal: size.scale(10)
+    // marginHorizontal: size.scale(10)
   },
   button: {
     // backgroundColor: color.primary,
     padding: size.scale(10),
     borderRadius: size.scale(5),
     borderBottomWidth: 1,
-    borderColor: color.primary,
+    // borderColor: color.primary,
     marginHorizontal: size.scale(10)
   },
   buttonText: {

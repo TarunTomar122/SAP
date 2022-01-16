@@ -9,17 +9,17 @@ import {
 import Header from '../../Components/Header';
 import Button from '../../Components/Button';
 import styles from './AnalysisDetailsScreenStyles';
-import {color, size, typography} from '../../theme';
+import { color, size, typography } from '../../theme';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {getTasksInfo} from '../../Services/API/analysis';
+import { getTasksInfo } from '../../Services/API/analysis';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 
-import {LineChart, BarChart} from 'react-native-chart-kit';
+import { LineChart, BarChart } from 'react-native-chart-kit';
 
 const chartConfig = {
   backgroundGradientFrom: '#1E2923',
@@ -47,16 +47,16 @@ class AnalysisDetailsScreen extends React.Component {
       svalue: '',
       sitems: [
         {
-          label: 'past 1 week',
-          value: 'past 1 week',
+          label: 'past 7 entries',
+          value: 'past 7 entries',
         },
         {
-          label: 'past 15 days',
-          value: 'past 15 days',
+          label: 'past 15 entries',
+          value: 'past 15 entries',
         },
         {
-          label: 'past 1 month',
-          value: 'past 1 month',
+          label: 'past 30 entries',
+          value: 'past 30 entries',
         },
       ],
     };
@@ -73,11 +73,11 @@ class AnalysisDetailsScreen extends React.Component {
       for (let i = 0; i < result.length; i++) {
         const taskName = result[i].taskName;
         const dataArr = result[i].taskObjArr;
-        taskNames.push({label: taskName, value: taskName});
+        taskNames.push({ label: taskName, value: taskName });
         tasks[taskName] = dataArr;
       }
 
-      this.setState({tasks: tasks, fitems: taskNames});
+      this.setState({ tasks: tasks, fitems: taskNames });
     } else {
       ToastAndroid.show('Something Went Wrong', ToastAndroid.SHORT);
     }
@@ -85,14 +85,14 @@ class AnalysisDetailsScreen extends React.Component {
   }
 
   applyFilters = () => {
-    const {fvalue, svalue} = this.state;
+    const { fvalue, svalue } = this.state;
 
     if (fvalue === '' || svalue === '') {
       ToastAndroid.show('Please select filters', ToastAndroid.SHORT);
       return;
     }
 
-    const {tasks} = this.state;
+    const { tasks } = this.state;
     let taskDataArr = tasks[fvalue];
 
     const sorted_by_name = taskDataArr.sort((a, b) => {
@@ -105,11 +105,11 @@ class AnalysisDetailsScreen extends React.Component {
 
     var past = 0;
 
-    if (svalue === 'past 1 week') {
+    if (svalue === 'past 7 entries') {
       past = 7;
-    } else if (svalue === 'past 15 days') {
+    } else if (svalue === 'past 15 entries') {
       past = 15;
-    } else if (svalue === 'past 1 month') {
+    } else if (svalue === 'past 30 entries') {
       past = 30;
     }
 
@@ -149,19 +149,19 @@ class AnalysisDetailsScreen extends React.Component {
       barColors: ['#dfe4ea', '#ced6e0'],
     };
 
-    this.setState({data: data});
+    this.setState({ data: data });
   };
 
   render() {
     return (
       <ScrollView style={styles.home}>
         <Header
-          route={{name: this.state.title}}
+          route={{ name: this.state.title }}
           leftIcon={true}
           onLeftPress={() => this.props.navigation.navigate('analysis')}
           rightIcon="swap"
           onRightPress={() => {
-            this.setState({pickedChart: !this.state.pickedChart});
+            this.setState({ pickedChart: !this.state.pickedChart });
           }}
         />
 
@@ -170,12 +170,12 @@ class AnalysisDetailsScreen extends React.Component {
             open={this.state.fopen}
             value={this.state.fvalue}
             items={this.state.fitems}
-            setOpen={open => this.setState({fopen: open})}
+            setOpen={open => this.setState({ fopen: open })}
             setValue={value => {
-              this.setState({fvalue: value()});
+              this.setState({ fvalue: value() });
             }}
             setItems={items => {
-              this.setState({fitems: items()});
+              this.setState({ fitems: items() });
             }}
             style={[styles.pickerContainer, styles.elevation]}
             textStyle={[styles.pickerText]}
@@ -193,18 +193,18 @@ class AnalysisDetailsScreen extends React.Component {
               },
               styles.elevation,
             ]}
-            labelStyle={{borderRadius: 5, borderColor: 'white'}}
+            labelStyle={{ borderRadius: 5, borderColor: 'white' }}
           />
           <DropDownPicker
             open={this.state.sopen}
             value={this.state.svalue}
             items={this.state.sitems}
-            setOpen={open => this.setState({sopen: open})}
+            setOpen={open => this.setState({ sopen: open })}
             setValue={value => {
-              this.setState({svalue: value()});
+              this.setState({ svalue: value() });
             }}
             setItems={items => {
-              this.setState({sitems: items()});
+              this.setState({ sitems: items() });
             }}
             style={[styles.pickerContainer, styles.elevation]}
             textStyle={[styles.pickerText]}
@@ -222,17 +222,17 @@ class AnalysisDetailsScreen extends React.Component {
               },
               styles.elevation,
             ]}
-            labelStyle={{borderRadius: 5, borderColor: 'white'}}
+            labelStyle={{ borderRadius: 5, borderColor: 'white' }}
           />
 
           <Button
             text="Apply"
             onPress={this.applyFilters.bind(this)}
-            textStyle={{color: 'white'}}
+            textStyle={{ color: 'white' }}
           />
         </View>
         <View style={styles.chartView}>
-          {!this.state.data && <View style={{flex: 1, height: 100}}></View>}
+          {!this.state.data && <View style={{ flex: 1, height: 100 }}></View>}
 
           {this.state.pickedChart && (
             <>

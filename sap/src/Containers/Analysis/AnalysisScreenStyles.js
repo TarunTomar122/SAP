@@ -1,13 +1,21 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import {color, size, typography} from '../../theme';
+import { color, size, typography } from '../../theme';
 
 export default StyleSheet.create({
   home: {
     flex: 1,
     backgroundColor: color.background,
-    padding: size.scale(30),
+    padding: size.scale(20),
     paddingTop: size.scale(40),
+  },
+  WorkoutHeadingText: {
+    fontSize: size.scale(24),
+    color: color.text,
+    fontFamily: typography.primaryBold,
+    marginHorizontal: size.scale(10),
+    marginBottom: size.scale(10),
+    // alignSelf: 'center'
   },
   text: {
     fontSize: size.scale(50),
@@ -44,4 +52,16 @@ export default StyleSheet.create({
     borderWidth: size.scale(1),
     marginTop: size.scale(20),
   },
+  button: {
+    borderRadius: size.scale(5),
+    borderBottomWidth: size.scale(1),
+    borderColor: color.primary,
+    paddingVertical: size.scale(16),
+    paddingHorizontal: size.scale(10),
+  },
+  buttonText: {
+    fontSize: size.scale(24),
+    color: color.text,
+    fontFamily: typography.primaryBold,
+  }
 });

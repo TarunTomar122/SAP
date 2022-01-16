@@ -28,10 +28,15 @@ router.get("/get", async (req, res) => {
     }
 })
 
-router.get("/delete", async (req, res) => {
+router.post("/delete", async (req, res) => {
     try {
-        const todos = await models.Todo.findAll();
-        res.json(todos);
+        const { title } = req.body;
+        const todo = await models.Todo.destroy({
+            where: {
+                title
+            }
+        });
+        res.json(todo);
     } catch (err) {
         console.error(err);
         res.status(500).send(err);

@@ -3,32 +3,141 @@ import {
   View, Text, Modal, Pressable, TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  TouchableWithoutFeedback,
+  Animated,
   ToastAndroid,
+  FlatList,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import styles from './TodoScreenStyles';
+import { color, size, typography } from '../../theme';
 
 import FloatingButton from '../../Components/FloatingButton';
+
+import { addTodo, getTodos, deleteTodo } from '../../Services/API/todo';
+
+import SwipeableFlatList from 'react-native-swipeable-list';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 class TodoScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: true,
+      modalVisible: false,
       title: '',
       description: '',
+      loading: false,
+      todos: [],
+      backgroundColor: '#fff',
     };
   }
 
-  componentDidMount() { }
+  async componentDidMount() {
 
-  handleSubmit() {
+    const response = await getTodos();
 
+    if (response) {
+      this.setState({
+        todos: response.data,
+      });
+    } else {
+      ToastAndroid.show('Error', ToastAndroid.SHORT);
+    }
 
-    this.setState({ modalVisible: !this.state.modalVisible, title: '', description: ''});
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.refreshScreen();
+    });
+
   }
 
+  async refreshScreen() {
+    this.setState({ loading: true });
+    const response = await getTodos();
+    if (response) {
+      this.setState({
+        todos: response.data,
+        loading: false,
+      });
+    } else {
+      this.setState({ loading: false });
+      ToastAndroid.show('Error', ToastAndroid.SHORT);
+    }
+  }
+
+  async handleSubmit() {
+
+    const { title, description } = this.state;
+
+    if (title.length === 0) {
+      ToastAndroid.show('Title is required', ToastAndroid.SHORT);
+      return;
+    }
+
+    this.setState({ loading: true });
+
+    const response = await addTodo({ title, description });
+
+    if (response) {
+      this.refreshScreen();
+      this.setState({
+        modalVisible: false,
+        title: '',
+        description: '',
+        loading: false,
+      });
+    } else {
+      this.setState({ modalVisible: false, loading: false });
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+    }
+
+  }
+
+  ListItem(todo) {
+    const { title, description, date } = todo
+    return (
+      <Animated.View style={styles.card}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
+      </Animated.View>
+    )
+
+  }
+
+  handleDelete(title) {
+    this.setState({ loading: true });
+    deleteTodo({ title })
+      .then(() => {
+        this.refreshScreen();
+        this.setState({ loading: false });
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+        ToastAndroid.show('Error', ToastAndroid.SHORT);
+      });
+  }
+
+  QuickActions(index, item) {
+    return (
+      <View style={styles.qaContainer}>
+        <View style={[styles.iconView]}>
+          <TouchableOpacity onPress={() => console.log('Pressed here ..', item, index)}>
+            <Ionicons name="alarm-outline" style={styles.icon} />
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.iconView]}>
+          <TouchableOpacity onPress={() => this.handleDelete(item.title)}>
+            <AntDesign name="delete" style={styles.icon} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
   render() {
+
     return (
       <View style={styles.home}>
         <Modal
@@ -39,46 +148,67 @@ class TodoScreen extends React.Component {
             this.setState({ modalVisible: !this.state.modalVisible })
           }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <TextInput
-                style={[styles.textInput]}
-                placeholder="Title"
-                placeholderTextColor="#999999"
-                color="#999999"
-                onChangeText={text => {
-                  this.setState({ title: text });
-                }}
-                value={this.state.title}
-              />
-              <TextInput
-                style={[styles.textInput]}
-                placeholder="Description (Optional)"
-                placeholderTextColor="#999999"
-                color="#999999"
-                multiline={true}
-                textAlignVertical="top"
-                numberOfLines={1}
-                onChangeText={text => {
-                  this.setState({ description: text });
-                }}
-                value={this.state.description}
-              />
-              <Pressable
-                style={[styles.button]}
-                onPress={() => this.handleSubmit()}
-              >
-                <Text style={styles.textStyle}>Submit</Text>
-              </Pressable>
+          <TouchableWithoutFeedback onPress={() => {
+            this.setState({ modalVisible: !this.state.modalVisible })
+          }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <TextInput
+                  style={[styles.textInput]}
+                  placeholder="Title"
+                  placeholderTextColor="#999999"
+                  color="#999999"
+                  onChangeText={text => {
+                    this.setState({ title: text });
+                  }}
+                  value={this.state.title}
+                />
+                <TextInput
+                  style={[styles.textInput]}
+                  placeholder="Description (Optional)"
+                  placeholderTextColor="#999999"
+                  color="#999999"
+                  multiline={true}
+                  textAlignVertical="top"
+                  numberOfLines={1}
+                  onChangeText={text => {
+                    this.setState({ description: text });
+                  }}
+                  value={this.state.description}
+                />
+                <Pressable
+                  style={[styles.button]}
+                  onPress={() => this.handleSubmit()}
+                  disabled={this.state.loading}
+                >
+                  <Text style={styles.textStyle}>Submit</Text>
+                </Pressable>
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
         </Modal>
+        <SafeAreaView style={styles.container}>
+          {this.state.loading && (
+            <ActivityIndicator size="large" color={color.primary} />
+          )}
+          <SwipeableFlatList
+            // style={{ flex: 1, width: "100%" }}
+            keyExtractor={(item, index) => index.toString()}
+            maxSwipeDistance={180}
+            data={this.state.todos}
+            renderItem={(todo) => this.ListItem(todo.item)}
+            renderQuickActions={({ index, item }) => this.QuickActions(index, item)}
+            contentContainerStyle={styles.contentContainerStyle}
+            shouldBounceOnMount={false}
+          />
+        </SafeAreaView>
+
         <FloatingButton
           onPress={() => {
             this.setState({ modalVisible: true });
           }}
         />
-      </View>
+      </View >
     );
   }
 }
