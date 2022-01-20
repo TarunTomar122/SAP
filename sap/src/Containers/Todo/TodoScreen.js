@@ -37,15 +37,7 @@ class TodoScreen extends React.Component {
 
   async componentDidMount() {
 
-    const response = await getTodos();
-
-    if (response) {
-      this.setState({
-        todos: response.data,
-      });
-    } else {
-      ToastAndroid.show('Error', ToastAndroid.SHORT);
-    }
+    this.refreshScreen();
 
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.refreshScreen();
@@ -192,7 +184,7 @@ class TodoScreen extends React.Component {
             <ActivityIndicator size="large" color={color.primary} />
           )}
           <SwipeableFlatList
-            // style={{ flex: 1, width: "100%" }}
+            style={{ flex: 1, width: "100%" }}
             keyExtractor={(item, index) => index.toString()}
             maxSwipeDistance={180}
             data={this.state.todos}

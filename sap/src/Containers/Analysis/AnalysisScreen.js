@@ -46,17 +46,38 @@ class AnalysisScreen extends React.Component {
 
     let data = [];
     let lastDate = null;
-
+    console.log("new....")
     for (let key in result) {
       let date = new Date(key);
+      var dateString = date.toDateString();
+      if (date.getMonth() == '11') {
+        // Convert date into a string
+        dateString =
+          date.getFullYear() +
+          '-' +
+          (date.getMonth() + 1) +
+          '-' +
+          date.getDate();
+      }
+      else {
+        if (date.getMonth() < 10) {
+          dateString =
+            date.getFullYear()+1 +
+            '-0' +
+            (date.getMonth() + 1) +
+            '-' +
+            date.getDate();
+        } else {
+          // Convert date into a string
+          dateString =
+            date.getFullYear() + 1 +
+            '-' +
+            (date.getMonth() + 1) +
+            '-' +
+            date.getDate();
+        }
+      }
 
-      // Convert date into a string
-      let dateString =
-        date.getFullYear() +
-        '-' +
-        (date.getMonth() + 1) +
-        '-' +
-        date.getDate();
 
       let count = result[key];
 
@@ -66,9 +87,14 @@ class AnalysisScreen extends React.Component {
       lastDate = new Date();
       // set year to 2000
       lastDate.setFullYear(date.getFullYear() + 1);
+      // lastDate = dateString;
+      console.log(dateString, count, lastDate);
 
       data.push({ date: dateString, count: count });
     }
+
+    // console.log("data", data)
+
     this.setState({ data: data, lastDate: lastDate, loading: false });
   }
 
