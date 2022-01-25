@@ -15,6 +15,7 @@ const models = {
   Tag: sequelize.import("./tag"),
   User: sequelize.import("./user"),
   Todo: sequelize.import("./todo"),
+  Notification: sequelize.import("./notification"),
 };
 
 Object.keys(models).forEach((key) => {

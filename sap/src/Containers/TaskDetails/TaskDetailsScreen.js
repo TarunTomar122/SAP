@@ -13,7 +13,7 @@ import {
 import Header from '../../Components/Header';
 import Button from '../../Components/Button';
 import styles from './TaskDetailsScreenStyles';
-import {color, size, typography} from '../../theme';
+import { color, size, typography } from '../../theme';
 
 import {
   addCountTask,
@@ -35,35 +35,35 @@ class TaskDetailsScreen extends React.Component {
 
   async componentDidMount() {
     // Fetch recent entries
-    this.setState({loading: true});
+    this.setState({ loading: true });
     const entries = await getLatestTasks(this.state.title);
     if (entries) {
-      this.setState({entries: entries, loading: false});
+      this.setState({ entries: entries, loading: false });
     } else {
       ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   }
 
   _onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     getLatestTasks(this.state.title).then(entries => {
-      this.setState({entries, refreshing: false});
+      this.setState({ entries, refreshing: false });
     });
   };
 
   async submitCount() {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     if (this.state.count == null) {
       ToastAndroid.show('Invalid Count', ToastAndroid.SHORT);
-      this.setState({loading: false});
+      this.setState({ loading: false });
       return;
     }
 
     const done = await addCountTask(this.state.title, this.state.count);
     if (!done) {
       ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
-      this.setState({loading: false});
+      this.setState({ loading: false });
       return;
     } else {
       this.props.navigation.navigate('track');
@@ -71,13 +71,13 @@ class TaskDetailsScreen extends React.Component {
   }
 
   async delete() {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     const done = await deleteTask(this.state.title);
     if (done) {
       this.props.navigation.navigate('track');
     } else {
       ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   }
 
@@ -85,7 +85,7 @@ class TaskDetailsScreen extends React.Component {
     return (
       <View style={styles.home}>
         <Header
-          route={{name: this.state.title}}
+          route={{ name: this.state.title.slice(0, 18) + '...' }}
           leftIcon={true}
           onLeftPress={() => this.props.navigation.navigate('track')}
           rightIcon="delete"
@@ -100,7 +100,7 @@ class TaskDetailsScreen extends React.Component {
               placeholderTextColor={color.searchText}
               color={color.searchText}
               onChangeText={text => {
-                this.setState({count: text});
+                this.setState({ count: text });
               }}
               value={this.state.count}
             />

@@ -24,6 +24,8 @@ import AnalysisDetailsScreen from '../Containers/AnalysisDetails/AnalysisDetails
 
 import ArticleDetailsScreen from '../Containers/ArticleDetails/ArticleDetailsScreen.js';
 
+import AddReminderScreen from '../Containers/AddReminder/AddReminderScreen.js';
+
 const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
@@ -38,7 +40,7 @@ function HomeTabs() {
       }}
       tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="home" component={HomeScreen} />
-      <Tab.Screen name="todo" component={TodoScreen} />
+      <Tab.Screen name="todo" component={TodoScreen} options={{ headerShown: false }} />
       <Tab.Screen name="analysis" component={AnalysisScreen} />
       <Tab.Screen name="track" component={TrackScreen} />
       <Tab.Screen name="people" component={PeopleScreen} />
@@ -63,6 +65,7 @@ function AppNavigator() {
           name="analysisDetails"
           component={AnalysisDetailsScreen}
         />
+        <Stack.Screen name="AddReminder" component={AddReminderScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

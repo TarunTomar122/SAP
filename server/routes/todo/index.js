@@ -21,7 +21,8 @@ router.post("/add", async (req, res) => {
 router.get("/get", async (req, res) => {
     try {
         const todos = await models.Todo.findAll();
-        res.json(todos);
+        const reversedTodos = todos.reverse();
+        res.json(reversedTodos);
     } catch (err) {
         console.error(err);
         res.status(500).send(err);

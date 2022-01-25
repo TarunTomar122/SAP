@@ -5,8 +5,6 @@ import Button from '../../Components/Button';
 import styles from './AnalysisScreenStyles';
 import { color, size, typography } from '../../theme';
 
-import DropDownPicker from 'react-native-dropdown-picker';
-
 import { ContributionGraph } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
@@ -88,7 +86,6 @@ class AnalysisScreen extends React.Component {
       // set year to 2000
       lastDate.setFullYear(date.getFullYear() + 1);
       // lastDate = dateString;
-      console.log(dateString, count, lastDate);
 
       data.push({ date: dateString, count: count });
     }

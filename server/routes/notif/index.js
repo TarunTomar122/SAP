@@ -33,11 +33,60 @@ router.get("/test", async (req, res) => {
         })
 
         const notification = NotificationService.send(reg_ids, payload);
-        res.status(200).send(notification);
+        res.status(200).send({ notification, reg_ids });
     } catch (err) {
         console.error(err);
         res.status(500).send(err);
     }
 });
+
+router.post("/add", async (req, res) => {
+    try {
+        const obj = req.body;
+        const notification = await models.Notification.create(obj);
+        res.status(200).send(notification);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+})
+
+router.post("/get", async (req, res) => {
+    try {
+
+        const { title } = req.body;
+
+        const notification = await models.Notification.findOne({
+            where: {
+                title,
+            },
+        });
+
+        res.status(200).send(notification);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+})
+
+router.post("/delete", async (req, res) => {
+    try {
+
+        const { title } = req.body;
+
+        const notification = await models.Notification.destroy({
+            where: {
+                title,
+            },
+        });
+
+        res.status(200).send();
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+})
 
 export default router;

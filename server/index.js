@@ -32,7 +32,7 @@ const eraseDatabaseOnSync = false;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
 
   // Drop the User Table from the database
-  // await models.Todo.drop();
+  // await models.User.drop();
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

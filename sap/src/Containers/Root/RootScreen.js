@@ -20,9 +20,9 @@ class RootScreen extends React.Component {
 
   handleRegister = async (token) => {
     console.log("Token: ", token);
-    this.setState({ notificationToken: token });
+    // this.setState({ notificationToken: token });
     // try {
-    //   const response = await setNotifToken({ userType: "dev", notificationToken: token });
+    //   const response = await setNotifToken({ userType: "main", notificationToken: token });
     //   console.log("Response: ", response);
     // } catch (e) {
     //   console.error(e);

@@ -9,6 +9,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: color.background,
   },
+  header: {
+    width: '100%',
+  },
   text: {
     fontSize: 50,
     color: color.text,
@@ -115,5 +118,5 @@ export default StyleSheet.create({
   },
   iconView: {
     marginHorizontal: size.scale(24),
-  }
+  },
 });

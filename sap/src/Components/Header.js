@@ -105,6 +105,20 @@ const CustomHeader = props => {
           </TouchableOpacity>
         )
       }
+      {
+        rightIcon == 'add' && (
+          <TouchableOpacity
+            onPress={onRightPress}
+            style={[rightIconStyle, styles.rightIconStyle]}>
+            <MaterialIcons
+              name="add"
+              color={color.text}
+              size={32}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        )
+      }
     </View>
   );
 };
