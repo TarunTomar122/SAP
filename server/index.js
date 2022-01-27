@@ -6,8 +6,8 @@ import bodyParser from "body-parser";
 
 import routes from "./routes";
 
-import { reg_id } from "./config";
-import NotificationService from "./services/notification";
+import notify from "./services/notify";
+import startSchedule from './services/cronModule';
 
 const app = express();
 
@@ -32,9 +32,44 @@ const eraseDatabaseOnSync = false;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
 
   // Drop the User Table from the database
-  // await models.User.drop();
+  // await models.Notification.drop();
+  // await models.Reminder.drop();
+  await startSchedule();
+  setIntervals();
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 });
+
+
+const setIntervals = async () => {
+
+  const intervals = await models.Reminder.findAll();
+
+  for (var interval of intervals) {
+    const timeInterval = interval.dataValues.timeInterval;
+
+    const time = paseInt(timeInterval.split(" ")[0]);
+    const unit = timeInterval.split(" ")[1];
+
+    if (unit == "hrs") {
+      time = time * 60;
+    }
+
+    time = time * 60 * 1000;
+
+    const intervalId = setInterval(async () => {
+      const payload = {
+        title: interval.dataValues.title,
+        body: interval.dataValues.description,
+      }
+      await notify(payload);
+    }, interval);
+
+    interval.intervalId = intervalId;
+    await interval.save();
+
+  }
+
+}

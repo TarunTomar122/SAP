@@ -21,7 +21,7 @@ export default class HorizontalTimePiker extends React.Component {
 
     componentDidMount() {
         let start = "4:00";
-        let moment = "am";
+        let moment = " AM";
         const time = [];
         let clock = 1;
         time.push(start + moment);
@@ -33,13 +33,13 @@ export default class HorizontalTimePiker extends React.Component {
                 minutes = 0;
                 hour = hour === 12 ? 1 : hour + 1;
                 if (hour >= 12) {
-                    moment === "am" ? (moment = "pm") : (moment = "am");
+                    moment === " AM" ? (moment = " PM") : (moment = " AM");
                 }
                 clock += 1;
             }
             start = hour + ":" + (minutes === 0 ? "00" : minutes) + moment;
             if (clock <= 24) {
-                if (start == "11:30am") {
+                if (start == "11:30 AM") {
                     time.push("None  ");
                 }
                 time.push(start);

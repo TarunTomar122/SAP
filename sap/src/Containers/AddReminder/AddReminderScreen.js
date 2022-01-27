@@ -138,7 +138,7 @@ class AddReminderScreen extends React.Component {
                             visibleElements={4}
                             mainColor={color.primary}
                             secondaryColor={"white"}
-                            fontSize={size.scale(20)}
+                            fontSize={size.scale(22)}
                             fontFamily={typography.primaryBold}
                         ></HorizontalTimePiker>
                     </View>

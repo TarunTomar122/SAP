@@ -37,6 +37,31 @@ router.post("/delete", async (req, res) => {
                 title
             }
         });
+
+        const notification = await models.Notification.destroy({
+            where: {
+                title
+            }
+        });
+
+        const reminder = await models.Reminder.findOne({
+            where: {
+                title
+            }
+        });
+
+        if (reminder) {
+            const intervalId = reminder.dataValues.intervalId;
+
+            clearInterval(String(intervalId));
+
+            const reminder = await models.Reminder.destroy({
+                where: {
+                    title,
+                },
+            });
+        }
+
         res.json(todo);
     } catch (err) {
         console.error(err);

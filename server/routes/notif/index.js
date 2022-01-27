@@ -1,6 +1,9 @@
 import { Router } from "express";
 import models from "../../models";
 import NotificationService from "../../services/notification";
+import notify from "../../services/notify";
+
+import startSchedule from "../../services/cronModule";
 
 const router = Router();
 
@@ -42,9 +45,46 @@ router.get("/test", async (req, res) => {
 
 router.post("/add", async (req, res) => {
     try {
+
         const obj = req.body;
-        const notification = await models.Notification.create(obj);
-        res.status(200).send(notification);
+
+        if (obj.isExact) {
+
+            const notification = await models.Notification.create(obj);
+            await startSchedule();
+            res.status(200).send(notification);
+
+        }
+        else {
+
+            var interval = parseInt(obj.timeInterval.split(" ")[0]);
+            var unit = obj.timeInterval.split(" ")[1];
+
+            if (unit == "hrs") {
+                interval = interval * 60;
+            }
+
+            interval = interval * 60 * 1000;
+
+            const intervalId = setInterval(async () => {
+                const payload = {
+                    title: obj.title,
+                    body: obj.description,
+                }
+                await notify(payload);
+            }, interval);
+
+            const reminder = await models.Reminder.create({
+                intervalId: parseInt(String(intervalId)),
+                title: obj.title,
+                description: obj.description,
+                timeInterval: obj.timeInterval,
+            });
+
+            res.status(200).send(reminder);
+
+        }
+
     } catch (err) {
         console.error(err);
         res.status(500).send(err);
@@ -55,14 +95,12 @@ router.post("/get", async (req, res) => {
     try {
 
         const { title } = req.body;
-
-        const notification = await models.Notification.findOne({
+        const reminder = await models.Reminder.findOne({
             where: {
                 title,
             },
         });
-
-        res.status(200).send(notification);
+        res.status(200).send(reminder);
 
     } catch (err) {
         console.error(err);
@@ -75,11 +113,41 @@ router.post("/delete", async (req, res) => {
 
         const { title } = req.body;
 
-        const notification = await models.Notification.destroy({
+        const notification = await models.Notification.findOne({
             where: {
                 title,
             },
         });
+
+        if (notification) {
+
+            await models.Notification.destroy({
+                where: {
+                    title,
+                },
+            });
+
+            await startSchedule();
+        }
+        else {
+
+            const reminder = await models.Reminder.findOne({
+                where: {
+                    title,
+                },
+            });
+
+            const intervalId = reminder.dataValues.intervalId;
+
+            clearInterval(String(intervalId));
+
+            await models.Reminder.destroy({
+                where: {
+                    title,
+                },
+            });
+
+        }
 
         res.status(200).send();
 
