@@ -28,6 +28,7 @@ class AddReminderScreen extends React.Component {
                 { label: '30 mins', value: '30 mins' },
                 { label: '1 hr', value: '1 hr' },
                 { label: '3 hrs', value: '3 hrs' },
+                { label: '6 hrs', value: '6 hrs' },
                 { label: '12 hrs', value: '12 hrs' },
             ],
             exactValue: "None  ",

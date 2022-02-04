@@ -44,7 +44,6 @@ class AnalysisScreen extends React.Component {
 
     let data = [];
     let lastDate = null;
-    console.log("new....")
     for (let key in result) {
       let date = new Date(key);
       var dateString = date.toDateString();
@@ -59,20 +58,38 @@ class AnalysisScreen extends React.Component {
       }
       else {
         if (date.getMonth() < 10) {
-          dateString =
-            date.getFullYear()+1 +
-            '-0' +
-            (date.getMonth() + 1) +
-            '-' +
-            date.getDate();
+          if (date.getDate() < 10) {
+            dateString =
+              date.getFullYear() + 1 +
+              '-0' +
+              (date.getMonth() + 1) +
+              '-0' +
+              date.getDate();
+          } else {
+            dateString =
+              date.getFullYear() + 1 +
+              '-0' +
+              (date.getMonth() + 1) +
+              '-' +
+              date.getDate();
+          }
         } else {
-          // Convert date into a string
-          dateString =
-            date.getFullYear() + 1 +
-            '-' +
-            (date.getMonth() + 1) +
-            '-' +
-            date.getDate();
+          if (date.getDate() < 10) {
+            dateString =
+              date.getFullYear() + 1 +
+              '-' +
+              (date.getMonth() + 1) +
+              '-0' +
+              date.getDate();
+          } else {
+            dateString =
+              date.getFullYear() + 1 +
+              '-' +
+              (date.getMonth() + 1) +
+              '-' +
+              date.getDate();
+
+          }
         }
       }
 
@@ -86,11 +103,10 @@ class AnalysisScreen extends React.Component {
       // set year to 2000
       lastDate.setFullYear(date.getFullYear() + 1);
       // lastDate = dateString;
-
       data.push({ date: dateString, count: count });
     }
 
-    // console.log("data", data)
+    // console.log("data", data, lastDate);
 
     this.setState({ data: data, lastDate: lastDate, loading: false });
   }

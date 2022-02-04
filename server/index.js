@@ -53,7 +53,7 @@ const setIntervals = async () => {
     const time = paseInt(timeInterval.split(" ")[0]);
     const unit = timeInterval.split(" ")[1];
 
-    if (unit == "hrs") {
+    if (unit == "hrs" || unit == "hr") {
       time = time * 60;
     }
 

@@ -100,7 +100,17 @@ router.post("/get", async (req, res) => {
                 title,
             },
         });
-        res.status(200).send(reminder);
+        if (reminder) {
+            res.status(200).send(reminder);
+        }
+        else {
+            const notification = await models.Notification.findOne({
+                where: {
+                    title,
+                },
+            })
+            res.status(200).send(notification);
+        }
 
     } catch (err) {
         console.error(err);

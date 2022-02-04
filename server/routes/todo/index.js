@@ -3,6 +3,8 @@ import models from "../../models";
 
 const router = Router();
 
+import startSchedule from "../../services/cronModule";
+
 router.post("/add", async (req, res) => {
     try {
         const { description, title } = req.body;
@@ -38,28 +40,40 @@ router.post("/delete", async (req, res) => {
             }
         });
 
-        const notification = await models.Notification.destroy({
+        const notification = await models.Notification.findOne({
             where: {
-                title
-            }
+                title,
+            },
         });
 
-        const reminder = await models.Reminder.findOne({
-            where: {
-                title
-            }
-        });
+        if (notification) {
 
-        if (reminder) {
-            const intervalId = reminder.dataValues.intervalId;
-
-            clearInterval(String(intervalId));
-
-            const reminder = await models.Reminder.destroy({
+            await models.Notification.destroy({
                 where: {
                     title,
                 },
             });
+
+            await startSchedule();
+        }
+        else {
+
+            const reminder = await models.Reminder.findOne({
+                where: {
+                    title,
+                },
+            });
+
+            const intervalId = reminder.dataValues.intervalId;
+
+            clearInterval(String(intervalId));
+
+            await models.Reminder.destroy({
+                where: {
+                    title,
+                },
+            });
+
         }
 
         res.json(todo);
