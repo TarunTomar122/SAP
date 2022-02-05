@@ -115,7 +115,7 @@ class TodoScreen extends React.Component {
     return (
       <View style={styles.qaContainer}>
         <View style={[styles.iconView]}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('AddReminder', { title: item.title, description: item.description })}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('AddReminder', { title: item.title, description: item.description, permanent: false })}>
             <Ionicons name="alarm-outline" style={styles.icon} />
           </TouchableOpacity>
         </View>
@@ -133,7 +133,7 @@ class TodoScreen extends React.Component {
     return (
       <View style={styles.home}>
         <Header
-          route={{ name: 'reminders' }}
+          route={{ name: 'notes' }}
           style={styles.header}
           rightIcon="add"
           onRightPress={() => this.setState({ modalVisible: true })}

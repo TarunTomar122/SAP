@@ -9,6 +9,10 @@ const notification = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.TEXT,
         },
+        permanent: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        }
     });
 
     return Notification;

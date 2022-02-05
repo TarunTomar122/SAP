@@ -12,7 +12,7 @@ import {
 import Header from '../../Components/Header';
 
 import styles from "./ArticleDetailsScreenStyles";
-import { color, size, typography } from '../../theme';
+import { color } from '../../theme';
 
 import { getArticle, addBookMark, getBookmarked } from '../../Services/API/articles';
 

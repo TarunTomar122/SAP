@@ -7,6 +7,9 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: color.background,
   },
+  header: {
+    width: '100%',
+  },
   searchBar: {
     margin: size.scale(10),
     borderBottomWidth: 1,

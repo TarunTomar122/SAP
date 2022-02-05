@@ -12,6 +12,10 @@ const reminder = (sequelize, DataTypes) => {
         timeInterval: {
             type: DataTypes.STRING,
         },
+        permanent: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        }
     });
 
     return Reminder;

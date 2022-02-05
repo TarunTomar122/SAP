@@ -37,7 +37,6 @@ class AddReminderScreen extends React.Component {
     }
 
     async componentDidMount() {
-
         this.setState({ loading: true });
         const response = await getReminder(this.state.title);
         if (response) {
@@ -63,6 +62,7 @@ class AddReminderScreen extends React.Component {
             "timeInterval": this.state.value,
             "title": this.state.title,
             "description": this.state.description,
+            "permanent": this.props.route.params.permanent,
         }
 
         this.setState({ loading: true });

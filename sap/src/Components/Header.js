@@ -6,6 +6,7 @@ import { color, size, spacing, typography } from '../theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const CustomHeader = props => {
   const {
@@ -114,6 +115,20 @@ const CustomHeader = props => {
               name="add"
               color={color.text}
               size={32}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        )
+      }
+      {
+        rightIcon == 'profile' && (
+          <TouchableOpacity
+            onPress={onRightPress}
+            style={[rightIconStyle, styles.rightIconStyle]}>
+            <MaterialCommunityIcons
+              name="guitar-pick"
+              color={color.text}
+              size={28}
               style={styles.icon}
             />
           </TouchableOpacity>

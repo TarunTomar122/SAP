@@ -14,9 +14,11 @@ import {
 import FloatingButton from '../../Components/FloatingButton';
 
 import styles from './TrackScreenStyles';
-import {color, size, typography} from '../../theme';
+import { color, size, typography } from '../../theme';
 
-import {getTodaysTasks} from '../../Services/API/task';
+import { getTodaysTasks } from '../../Services/API/task';
+
+import Header from '../../Components/Header';
 
 class TrackScreen extends React.Component {
   constructor(props) {
@@ -31,13 +33,13 @@ class TrackScreen extends React.Component {
 
   async componentDidMount() {
     // Fetch tasks from the api
-    this.setState({loading: true});
+    this.setState({ loading: true });
     const tasks = await getTodaysTasks();
     if (!tasks) {
       ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
-      this.setState({loading: false});
+      this.setState({ loading: false });
     } else {
-      this.setState({tasks, loading: false});
+      this.setState({ tasks, loading: false });
     }
 
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -48,25 +50,25 @@ class TrackScreen extends React.Component {
   componentWillUnmount() {
     try {
       this._unsubscribe();
-    } catch (err) {}
+    } catch (err) { }
   }
 
   _onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     getTodaysTasks().then(tasks => {
-      this.setState({tasks, refreshing: false});
+      this.setState({ tasks, refreshing: false });
     });
   };
 
   async refreshScreen() {
     // Fetch tasks from the api
-    this.setState({loading: true});
+    this.setState({ loading: true });
     const tasks = await getTodaysTasks();
     if (!tasks) {
       ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
-      this.setState({loading: false});
+      this.setState({ loading: false });
     } else {
-      this.setState({tasks, loading: false});
+      this.setState({ tasks, loading: false });
     }
   }
 
@@ -81,11 +83,17 @@ class TrackScreen extends React.Component {
   }
 
   render() {
-    const {searchTask} = this.state;
+    const { searchTask } = this.state;
     const data = this.filterData(searchTask);
 
     return (
       <View style={styles.home}>
+        <Header
+          route={{ name: 'track' }}
+          style={styles.header}
+          rightIcon="view"
+          onRightPress={() => this.props.navigation.navigate('Analysis')}
+        />
         <View style={styles.searchBar}>
           <TextInput
             style={[styles.textInput]}
@@ -93,7 +101,7 @@ class TrackScreen extends React.Component {
             placeholderTextColor={color.searchText}
             color={color.searchText}
             onChangeText={text => {
-              this.setState({searchTask: text});
+              this.setState({ searchTask: text });
             }}
             value={this.state.searchTask}
           />

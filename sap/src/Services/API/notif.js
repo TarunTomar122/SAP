@@ -29,3 +29,13 @@ export async function deleteReminder(title) {
         return false;
     }
 }
+
+export async function getAllReminders() {
+    try {
+        const response = await client.post(`/notif/getAllReminders`);
+        return response;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}

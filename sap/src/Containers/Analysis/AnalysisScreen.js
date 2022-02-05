@@ -11,6 +11,8 @@ const screenWidth = Dimensions.get('window').width;
 
 import { getContribAnalysis } from '../../Services/API/analysis';
 
+import Header from '../../Components/Header';
+
 const chartConfig = {
   backgroundGradientFrom: '#1E2923',
   backgroundGradientFromOpacity: 0,
@@ -125,6 +127,12 @@ class AnalysisScreen extends React.Component {
   render() {
     return (
       <View style={styles.home}>
+        <Header
+          route={{ name: 'analysis' }}
+          style={styles.header}
+          leftIcon='back'
+          onLeftPress={() => this.props.navigation.navigate('track')}
+        />
         <View style={styles.contribCont}>
           <Text style={styles.WorkoutHeadingText}>
             Workout Contribution Graph

@@ -6,8 +6,13 @@ export default StyleSheet.create({
   home: {
     flex: 1,
     backgroundColor: color.background,
-    padding: size.scale(20),
-    paddingTop: size.scale(40),
+  },
+  header: {
+    width: '100%',
+  },
+  contribCont: {
+    padding: size.scale(10),
+    paddingTop: size.scale(40)
   },
   WorkoutHeadingText: {
     fontSize: size.scale(24),

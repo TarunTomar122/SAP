@@ -79,6 +79,7 @@ router.post("/add", async (req, res) => {
                 title: obj.title,
                 description: obj.description,
                 timeInterval: obj.timeInterval,
+                permanent: obj.permanent,
             });
 
             res.status(200).send(reminder);
@@ -160,6 +161,28 @@ router.post("/delete", async (req, res) => {
         }
 
         res.status(200).send();
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+})
+
+router.post("/getAllReminders", async (req, res) => {
+    try {
+
+        const reminders = await models.Reminder.findAll({
+            where: {
+                permanent: true
+            }
+        });
+        const notifications = await models.Notification.findAll({
+            where: {
+                permanent: true
+            }
+        });
+
+        res.status(200).send({ reminders, notifications });
 
     } catch (err) {
         console.error(err);

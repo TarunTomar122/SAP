@@ -1,26 +1,27 @@
 import React from 'react';
 
-import {View, Pressable, Dimensions, StyleSheet} from 'react-native';
+import { View, Pressable, Dimensions, StyleSheet } from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
-import {color, size} from '../theme';
+import { color, size } from '../theme';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
-const TabBar = ({state, descriptors, navigation}) => {
+const TabBar = ({ state, descriptors, navigation }) => {
   return (
     <View style={styles.mainContainer}>
       {state.routes.map((route, index) => {
-        const {options} = descriptors[route.key];
+        const { options } = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
 
         const isFocused = state.index === index;
 
@@ -40,7 +41,7 @@ const TabBar = ({state, descriptors, navigation}) => {
             key={index}
             style={[
               styles.mainItemContainer,
-              {borderRightWidth: label == 'notes' ? 3 : 0},
+              { borderRightWidth: label == 'notes' ? 3 : 0 },
             ]}>
             <Pressable
               onPress={onPress}
@@ -61,19 +62,19 @@ const TabBar = ({state, descriptors, navigation}) => {
                   isFocused ? (
                     <AntDesign name="home" color={color.text} size={32} />
                   ) : (
-                    <AntDesign name="home" color={color.text} size={32} />
+                    <AntDesign name="home" color={color.secondary} size={32} />
                   )
                 ) : label == 'todo' ? (
                   isFocused ? (
                     <SimpleLineIcons name="pencil" color={color.text} size={28} />
                   ) : (
-                    <SimpleLineIcons name="pencil" color={color.text} size={28} />
+                    <SimpleLineIcons name="pencil" color={color.secondary} size={28} />
                   )
-                ) : label == 'analysis' ? (
+                ) : label == 'read' ? (
                   isFocused ? (
-                    <SimpleLineIcons name="chart" color={color.text} size={28} />
+                    <MaterialIcons name="article" color={color.text} size={30} />
                   ) : (
-                    <SimpleLineIcons name="chart" color={color.text} size={28} />
+                    <MaterialIcons name="article" color={color.secondary} size={30} />
                   )
                 ) : label == 'track' ? (
                   isFocused ? (
@@ -85,7 +86,7 @@ const TabBar = ({state, descriptors, navigation}) => {
                   ) : (
                     <Ionicons
                       name="stopwatch-outline"
-                      color={color.text}
+                      color={color.secondary}
                       size={36}
                     />
                   )
@@ -93,13 +94,13 @@ const TabBar = ({state, descriptors, navigation}) => {
                   <Ionicons
                     name="ios-people-outline"
                     color={color.text}
-                    size={34}
+                    size={33}
                   />
                 ) : (
                   <Ionicons
                     name="ios-people-outline"
-                    color={color.text}
-                    size={36}
+                    color={color.secondary}
+                    size={35}
                   />
                 )}
               </View>
