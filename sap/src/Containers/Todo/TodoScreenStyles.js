@@ -72,7 +72,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     paddingTop: size.scale(20),
     paddingBottom: size.scale(70),
-    paddingHorizontal: size.scale(10),
+    paddingHorizontal: size.scale(5),
     width: "100%",
   },
   card: {

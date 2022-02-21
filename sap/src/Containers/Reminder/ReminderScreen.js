@@ -178,12 +178,12 @@ class ProfileScreen extends React.Component {
                                 <View style={styles.reminderCard} key={index}>
                                     <View>
                                         <Text style={styles.reminderTitle}>{reminder.title}</Text>
-                                        {reminder.description.length != 0 && (<Text style={styles.reminderDescription}>{reminder.description}</Text>)}
+                                        {reminder.description.length != 0 && (<Text style={styles.reminderDescription}>{reminder.description.slice(0, 28)}...</Text>)}
                                         {reminder.type === 'notification' && (
-                                            <Text style={styles.reminderTime}>{reminder.exactTime}</Text>
+                                            <Text style={styles.reminderTime}>At {reminder.exactTime}</Text>
                                         )}
                                         {reminder.type === 'reminder' && (
-                                            <Text style={styles.reminderTime}>{reminder.timeInterval}</Text>
+                                            <Text style={styles.reminderTime}>Every {reminder.timeInterval}</Text>
                                         )}
                                     </View>
                                     <TouchableOpacity onPress={async () => {

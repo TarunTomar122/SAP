@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ARTICLE_API_URL, MAIN_API_URL } from "@env"
+import { ARTICLE_API_URL, MAIN_API_URL, AUTO_API_URL } from "@env"
 
 export const client = axios.create({
   // baseURL: 'http://10.0.2.2:4040/api',
@@ -20,9 +20,10 @@ export const articleClient = axios.create({
   },
 });
 
-function printURLS() {
-  console.log("Main", MAIN_API_URL)
-  console.log("Article", ARTICLE_API_URL)
-}
-
-printURLS()
+export const autoClient = axios.create({
+  baseURL: AUTO_API_URL,
+  timeout: 8000,
+  headers: {
+    Accept: 'application/json',
+  },
+})

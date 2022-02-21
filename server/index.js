@@ -35,7 +35,7 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   // await models.Notification.drop();
   // await models.Reminder.drop();
   await startSchedule();
-  setIntervals();
+  // setIntervals();
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
@@ -50,7 +50,7 @@ const setIntervals = async () => {
   for (var interval of intervals) {
     const timeInterval = interval.dataValues.timeInterval;
 
-    const time = paseInt(timeInterval.split(" ")[0]);
+    const time = parseInt(timeInterval.split(" ")[0]);
     const unit = timeInterval.split(" ")[1];
 
     if (unit == "hrs" || unit == "hr") {

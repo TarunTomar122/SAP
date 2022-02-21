@@ -58,11 +58,13 @@ export default StyleSheet.create({
     marginTop: size.scale(20),
   },
   button: {
+    paddingTop: size.scale(20),
     borderRadius: size.scale(5),
     borderBottomWidth: size.scale(1),
     borderColor: color.primary,
     paddingVertical: size.scale(16),
     paddingHorizontal: size.scale(10),
+    marginHorizontal: size.scale(10),
   },
   buttonText: {
     fontSize: size.scale(24),

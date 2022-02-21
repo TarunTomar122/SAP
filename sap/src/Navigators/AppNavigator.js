@@ -29,6 +29,12 @@ import ReminderScreen from '../Containers/Reminder/ReminderScreen.js';
 import AddReminderScreen from '../Containers/AddReminder/AddReminderScreen.js';
 
 import ProfileScreen from '../Containers/Profile/ProfileScreen.js';
+import StateScreen from '../Containers/State/StateScreen.js';
+import AutomateScreen from '../Containers/Automate/AutomateScreen.js';
+import FolderDetailScreen from '../Containers/FolderDetail/FolderDetailScreen.js';
+import FileContentScreen from '../Containers/FileContent/FileContentScreen.js';
+
+import TrackLocationScreen from '../Containers/TrackLocation/TrackLocationScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -73,6 +79,11 @@ function AppNavigator() {
         <Stack.Screen name="AddReminder" component={AddReminderScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Reminder" component={ReminderScreen} />
+        <Stack.Screen name="State" component={StateScreen} />
+        <Stack.Screen name="Automate" component={AutomateScreen} />
+        <Stack.Screen name="FolderDetail" component={FolderDetailScreen} />
+        <Stack.Screen name="FileContent" component={FileContentScreen} />
+        <Stack.Screen name="TrackLocation" component={TrackLocationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

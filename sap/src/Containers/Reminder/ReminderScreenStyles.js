@@ -9,7 +9,8 @@ export default StyleSheet.create({
     },
     container: {
         flex: 1,
-        padding: size.scale(20),
+        padding: size.scale(10),
+        paddingTop: size.scale(20),
     },
     text: {
         fontSize: size.scale(20),

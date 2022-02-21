@@ -134,6 +134,20 @@ const CustomHeader = props => {
           </TouchableOpacity>
         )
       }
+      {
+        rightIcon == 'run' && (
+          <TouchableOpacity
+            onPress={onRightPress}
+            style={[rightIconStyle, styles.rightIconStyle]}>
+            <MaterialCommunityIcons
+              name="run"
+              color={color.text}
+              size={28}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        )
+      }
     </View>
   );
 };

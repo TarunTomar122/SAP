@@ -34,9 +34,9 @@ router.get("/test", async (req, res) => {
         users.forEach(user => {
             reg_ids.push(user.notificationToken);
         })
-
-        const notification = NotificationService.send(reg_ids, payload);
-        res.status(200).send({ notification, reg_ids });
+        // const notification = await NotificationService.send(reg_ids, payload);
+        const notification = await NotificationService.send(['decA2ohzQw2SSWvDe1MJK0:APA91bH5o1CxNDXX7-byFQLMFqlks40knykcw_TYCfW6RlMg7mbTmoGh9_EB9LQLmHNvbwbtQFpJY5GIbBKyiaoY_4jztv7t17gmyNqoCvYLjOmMVifuVzSQO18XhxCY2nRLnDWAD5qt'], payload);
+        res.status(200).send({ notification });
     } catch (err) {
         console.error(err);
         res.status(500).send(err);

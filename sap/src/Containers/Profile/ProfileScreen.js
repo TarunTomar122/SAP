@@ -39,15 +39,23 @@ class ProfileScreen extends React.Component {
         return (
             <View style={styles.home}>
                 <Header
-                    route={{ name: 'profile' }}
+                    route={{ name: 'management' }}
                     style={styles.header}
                     leftIcon="back"
                     onLeftPress={() => this.props.navigation.goBack()}
                 />
                 <View style={styles.container}>
 
+                    <TouchableOpacity style={styles.cardStyle} onPress={() => this.props.navigation.navigate('Automate')}>
+                        <Text style={styles.text}>manage laura</Text>
+                    </TouchableOpacity>
+
                     <TouchableOpacity style={styles.cardStyle} onPress={() => this.props.navigation.navigate('Reminder')}>
                         <Text style={styles.text}>manage reminders</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.cardStyle} onPress={() => this.props.navigation.navigate('State')}>
+                        <Text style={styles.text}>manage state</Text>
                     </TouchableOpacity>
 
                 </View>

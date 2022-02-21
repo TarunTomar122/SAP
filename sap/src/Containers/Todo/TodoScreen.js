@@ -138,70 +138,70 @@ class TodoScreen extends React.Component {
           rightIcon="add"
           onRightPress={() => this.setState({ modalVisible: true })}
         />
-        <View style={styles.home}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={this.state.modalVisible}
-            onRequestClose={() => {
-              this.setState({ modalVisible: !this.state.modalVisible })
-            }}
-          >
-            <TouchableWithoutFeedback onPress={() => {
-              this.setState({ modalVisible: !this.state.modalVisible })
-            }}>
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <TextInput
-                    style={[styles.textInput]}
-                    placeholder="Title"
-                    placeholderTextColor="#999999"
-                    color="#999999"
-                    onChangeText={text => {
-                      this.setState({ title: text });
-                    }}
-                    value={this.state.title}
-                  />
-                  <TextInput
-                    style={[styles.textInput]}
-                    placeholder="Description (Optional)"
-                    placeholderTextColor="#999999"
-                    color="#999999"
-                    multiline={true}
-                    textAlignVertical="top"
-                    numberOfLines={1}
-                    onChangeText={text => {
-                      this.setState({ description: text });
-                    }}
-                    value={this.state.description}
-                  />
-                  <Pressable
-                    style={[styles.button]}
-                    onPress={() => this.handleSubmit()}
-                    disabled={this.state.loading}
-                  >
-                    <Text style={styles.textStyle}>Submit</Text>
-                  </Pressable>
-                </View>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            this.setState({ modalVisible: !this.state.modalVisible })
+          }}
+        >
+          <TouchableWithoutFeedback onPress={() => {
+            this.setState({ modalVisible: !this.state.modalVisible })
+          }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <TextInput
+                  style={[styles.textInput]}
+                  placeholder="Title"
+                  placeholderTextColor="#999999"
+                  color="#999999"
+                  onChangeText={text => {
+                    this.setState({ title: text });
+                  }}
+                  value={this.state.title}
+                />
+                <TextInput
+                  style={[styles.textInput]}
+                  placeholder="Description (Optional)"
+                  placeholderTextColor="#999999"
+                  color="#999999"
+                  multiline={true}
+                  textAlignVertical="top"
+                  numberOfLines={1}
+                  onChangeText={text => {
+                    this.setState({ description: text });
+                  }}
+                  value={this.state.description}
+                />
+                <Pressable
+                  style={[styles.button]}
+                  onPress={() => this.handleSubmit()}
+                  disabled={this.state.loading}
+                >
+                  <Text style={styles.textStyle}>Submit</Text>
+                </Pressable>
               </View>
-            </TouchableWithoutFeedback>
-          </Modal>
-          <SafeAreaView style={styles.container}>
-            {this.state.loading && (
-              <ActivityIndicator size="large" color={color.primary} />
-            )}
-            <SwipeableFlatList
-              style={{ flex: 1, width: "100%" }}
-              keyExtractor={(item, index) => index.toString()}
-              maxSwipeDistance={180}
-              data={this.state.todos}
-              renderItem={(todo) => this.ListItem(todo.item)}
-              renderQuickActions={({ index, item }) => this.QuickActions(index, item)}
-              contentContainerStyle={styles.contentContainerStyle}
-              shouldBounceOnMount={false}
-            />
-          </SafeAreaView>
-        </View >
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+        <SafeAreaView style={styles.container}>
+          {this.state.loading && (
+            <ActivityIndicator size="large" color={color.primary} />
+          )}
+          <SwipeableFlatList
+            style={{ flex: 1, width: "100%" }}
+            keyExtractor={(item, index) => index.toString()}
+            maxSwipeDistance={180}
+            data={this.state.todos}
+            renderItem={(todo) => this.ListItem(todo.item)}
+            renderQuickActions={({ index, item }) => this.QuickActions(index, item)}
+            contentContainerStyle={styles.contentContainerStyle}
+            shouldBounceOnMount={false}
+          />
+        </SafeAreaView>
+
       </View>
     );
   }
