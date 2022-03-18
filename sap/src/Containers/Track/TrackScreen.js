@@ -20,6 +20,8 @@ import { getTodaysTasks } from '../../Services/API/task';
 
 import Header from '../../Components/Header';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 class TrackScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -132,21 +134,28 @@ class TrackScreen extends React.Component {
                   this.props.navigation.navigate('TaskDetails', {
                     title: task.taskInfoTaskName,
                   })
-                }>
-                <Text style={styles.taskTitle}>{task.taskInfoTaskName}</Text>
-                <Text style={styles.taskRemaining}>Goal: {task.goal}</Text>
-                <Text style={styles.taskRemaining}>
-                  Remaining: {task.goal - task.count}
-                </Text>
+                }
+                onLongPress={() => {
+                  this.props.navigation.navigate('AddReminder', { title: task.taskInfoTaskName, description: 'get up and workout mfker', permanent: false })
+                }}
+              >
+                <View>
+                  <Text style={styles.taskTitle}>{task.taskInfoTaskName}</Text>
+                  <Text style={styles.taskRemaining}>Goal: {task.goal}</Text>
+                  <Text style={styles.taskRemaining}>
+                    Remaining: {task.goal - task.count}
+                  </Text>
+                </View>
               </TouchableOpacity>
             ))}
           </ScrollView>
-        )}
+        )
+        }
 
         <FloatingButton
           onPress={() => this.props.navigation.navigate('AddTask')}
         />
-      </View>
+      </View >
     );
   }
 }

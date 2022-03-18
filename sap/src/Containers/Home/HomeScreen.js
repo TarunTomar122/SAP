@@ -13,6 +13,9 @@ import Header from '../../Components/Header';
 
 import * as Progress from 'react-native-progress';
 
+import BackgroundTimer from 'react-native-background-timer';
+import { testBackground } from '../../Services/API/notif';
+
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +30,13 @@ class HomeScreen extends React.Component {
   }
 
   async componentDidMount() {
+
+    // BackgroundTimer.runBackgroundTimer(async () => {
+    //   //code that will be called every 3 seconds 
+    //   testBackground();
+    // },
+    //   1000);
+
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.refreshScreen();
     });
@@ -55,12 +65,12 @@ class HomeScreen extends React.Component {
         />
         <ScrollView style={styles.container}>
 
-          <TouchableOpacity
-            style={styles.progressContainer}
+          {/* <TouchableOpacity
+            style={{ marginVertical: size.scale(20), alignItems: 'center', marginBottom: size.scale(60) }}
             onPress={() => this.props.navigation.navigate('TrackLocation')}
           >
             <Text style={{ fontSize: 24, color: 'white' }}>Track Location</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <View style={styles.mainProgressContainer}>
             <Progress.Circle

@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import {color, size, typography} from '../../theme';
+import { color, size, typography } from '../../theme';
 
 export default StyleSheet.create({
   home: {
@@ -31,6 +31,9 @@ export default StyleSheet.create({
     marginVertical: size.scale(6),
     // borderBottomWidth: 1,
     borderBottomColor: color.separator,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   elevation: {
     elevation: 4,
@@ -65,4 +68,8 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginTop: size.scale(20),
   },
+  icon: {
+    fontSize: size.scale(36),
+    color: color.primary,
+  }
 });

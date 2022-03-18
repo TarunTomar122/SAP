@@ -35,7 +35,7 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   // await models.Notification.drop();
   // await models.Reminder.drop();
   await startSchedule();
-  // setIntervals();
+  setIntervals();
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
@@ -59,13 +59,18 @@ const setIntervals = async () => {
 
     time = time * 60 * 1000;
 
-    const intervalId = setInterval(async () => {
+    // console.log(time, unit);
+
+    const intervalObj = setInterval(async () => {
       const payload = {
         title: interval.dataValues.title,
         body: interval.dataValues.description,
       }
       await notify(payload);
-    }, interval);
+    }, time);
+
+    // get interval id from intrervalObj
+    const intervalId = parseInt(String(intervalObj));
 
     interval.intervalId = intervalId;
     await interval.save();

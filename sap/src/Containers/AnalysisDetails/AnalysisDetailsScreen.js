@@ -131,6 +131,8 @@ class AnalysisDetailsScreen extends React.Component {
       achieved.push(validData[i].achieved);
     }
 
+    console.log(labels);
+
     const data = {
       labels: labels,
       datasets: [
@@ -158,7 +160,7 @@ class AnalysisDetailsScreen extends React.Component {
         <Header
           route={{ name: this.state.title }}
           leftIcon={true}
-          onLeftPress={() => this.props.navigation.navigate('analysis')}
+          onLeftPress={() => this.props.navigation.navigate('Analysis')}
           rightIcon="swap"
           onRightPress={() => {
             this.setState({ pickedChart: !this.state.pickedChart });

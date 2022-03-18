@@ -23,6 +23,49 @@ const startSchedule = async () => {
 
     var notifications = await models.Notification.findAll({});
 
+    // let endOfDay = "00 00 * * *";
+
+    // cron job to run per minutes
+    let endOfDay = "* * * * *";
+
+    schedule.scheduleJob(endOfDay, async () => {
+
+        // Get all the reminders having description as get up and workout mfker
+        const reminders = await models.Reminder.findAll({
+            where: {
+                description: "get up and workout mfker"
+            }
+        });
+
+        // Get all the notifications having description as get up and workout mfker
+        const notifications = await models.Notification.findAll({
+            where: {
+                description: "get up and workout mfker"
+            }
+        });
+
+        console.log("reminders", reminders);
+        console.log("notifications", notifications);
+
+        // remove all the reminders and notifications
+        for (const reminder of reminders) {
+            await models.Reminder.destroy({
+                where: {
+                    id: reminder.id
+                }
+            });
+        }
+
+        for (const notification of notifications) {
+            await models.Notification.destroy({
+                where: {
+                    id: notification.id
+                }
+            });
+        }
+
+    })
+
     for (var notification of notifications) {
 
         const obj = notification.dataValues;

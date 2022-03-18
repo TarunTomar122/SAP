@@ -155,7 +155,7 @@ class AnalysisScreen extends React.Component {
           )}
         </View>
 
-        {!this.state.loading && (
+        {/* {!this.state.loading && (
           <TouchableOpacity style={styles.button} onPress={() => {
             if (this.state.value === '') {
               ToastAndroid.show('Please select an option', ToastAndroid.SHORT);
@@ -167,7 +167,7 @@ class AnalysisScreen extends React.Component {
           }}>
             <Text style={styles.buttonText}>Analyse -> </Text>
           </TouchableOpacity>
-        )}
+        )} */}
 
       </View>
     );

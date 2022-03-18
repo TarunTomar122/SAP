@@ -39,3 +39,14 @@ export async function getAllReminders() {
         return false;
     }
 }
+
+
+export async function testBackground() {
+    try {
+        const response = await client.post(`/notif/test`, { randomNumber: Math.random() });
+        return response;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}

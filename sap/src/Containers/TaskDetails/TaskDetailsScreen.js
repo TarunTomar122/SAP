@@ -21,6 +21,22 @@ import {
   deleteTask,
 } from '../../Services/API/task';
 
+import { Dimensions } from 'react-native';
+const screenWidth = Dimensions.get('window').width;
+
+import { LineChart, BarChart } from 'react-native-chart-kit';
+
+const chartConfig = {
+  backgroundGradientFrom: '#1E2923',
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientTo: '#08130D',
+  backgroundGradientToOpacity: 0.5,
+  color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
+  strokeWidth: 2, // optional, default 3
+  barPercentage: 0.5,
+  useShadowColorFromDataset: false, // optional
+};
+
 class TaskDetailsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -28,17 +44,61 @@ class TaskDetailsScreen extends React.Component {
       title: this.props.route.params.title,
       count: null,
       entries: [],
-      loading: false,
+      loading: true,
       refreshing: false,
+      data: null,
     };
   }
 
   async componentDidMount() {
     // Fetch recent entries
-    this.setState({ loading: true });
     const entries = await getLatestTasks(this.state.title);
     if (entries) {
-      this.setState({ entries: entries, loading: false });
+
+      const labels = [];
+      const goals = [];
+      const achieved = [];
+
+      var i = 0;
+
+      entries.forEach(entry => {
+
+        if (i >= 12) {
+          return;
+        }
+        var label = entry.date;
+        label = label.split('-')[2];
+        labels.push(label);
+        goals.push(entry.goal);
+        achieved.push(entry.count);
+        i++;
+      })
+
+      // reverse the arrays
+      labels.reverse();
+      goals.reverse();
+      achieved.reverse();
+
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            data: goals,
+            color: (opacity = 1) => `rgba(221,51,51, ${opacity})`, // optional
+            strokeWidth: 2, // optional
+          },
+          {
+            data: achieved,
+            color: (opacity = 1) => `rgba(251,169,40, ${opacity})`, // optional
+            strokeWidth: 4, // optional
+          },
+        ],
+        legend: ['Goals', 'Achieved'], // optional
+        barColors: ['#dfe4ea', '#ced6e0'],
+      };
+
+      this.setState({ data: data, loading: false });
+
     } else {
       ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
       this.setState({ loading: false });
@@ -85,7 +145,7 @@ class TaskDetailsScreen extends React.Component {
     return (
       <View style={styles.home}>
         <Header
-          route={{ name: this.state.title.slice(0, 18) + '...' }}
+          route={{ name: 'add rep' }}
           leftIcon={true}
           onLeftPress={() => this.props.navigation.navigate('track')}
           rightIcon="delete"
@@ -110,49 +170,23 @@ class TaskDetailsScreen extends React.Component {
             style={styles.button}
             onPress={this.submitCount.bind(this)}
           />
-          {this.state.loading && (
-            <View>
-              <ActivityIndicator size="large" color={color.primary} />
-            </View>
+        </View>
+
+        <View style={styles.chartView}>
+          <Text style={styles.chartText}>
+            {this.state.title}
+          </Text>
+          {this.state.loading ? (
+            <ActivityIndicator size="large" color={color.primary} />
+          ) : (
+            <LineChart
+              data={this.state.data}
+              width={screenWidth}
+              height={220}
+              chartConfig={chartConfig}
+            />
           )}
 
-          <View style={styles.entriesContainer}>
-            <Text style={styles.entriesText}>Recent Entries</Text>
-
-            {this.state.loading ? (
-              <ActivityIndicator size="large" color={color.primary} />
-            ) : (
-              <View style={styles.entries}>
-                <ScrollView
-                  refreshControl={
-                    <RefreshControl
-                      refreshing={this.state.refreshing}
-                      onRefresh={this._onRefresh}
-                    />
-                  }>
-                  {this.state.entries.map((entry, index) => {
-                    let date = new Date(entry.date);
-                    return (
-                      <View
-                        style={[styles.entryContainer, styles.elevation]}
-                        key={index}>
-                        <Text style={styles.entryText}>
-                          {date.getUTCDate()} : {date.getUTCMonth() + 1} :{' '}
-                          {date.getUTCFullYear()}
-                        </Text>
-                        <Text style={styles.entryText}>
-                          Goal : {entry.goal}
-                        </Text>
-                        <Text style={styles.entryText}>
-                          Reached : {entry.count}
-                        </Text>
-                      </View>
-                    );
-                  })}
-                </ScrollView>
-              </View>
-            )}
-          </View>
         </View>
       </View>
     );

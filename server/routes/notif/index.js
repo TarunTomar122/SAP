@@ -7,6 +7,14 @@ import startSchedule from "../../services/cronModule";
 
 const router = Router();
 
+router.post('/test', async (req, res) => {
+    const value = req.body.value;
+
+    console.log("testing value: " + value);
+
+    res.send("testing value: " + value);
+})
+
 router.post("/saveToken", async (req, res) => {
     try {
         const { notificationToken, userType } = req.body;
