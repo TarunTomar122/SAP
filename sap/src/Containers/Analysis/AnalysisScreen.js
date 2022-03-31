@@ -14,9 +14,9 @@ import { getContribAnalysis } from '../../Services/API/analysis';
 import Header from '../../Components/Header';
 
 const chartConfig = {
-  backgroundGradientFrom: '#1E2923',
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: '#08130D',
+  backgroundGradientFrom: '#183140',
+  backgroundGradientFromOpacity: 0.3,
+  backgroundGradientTo: '#183140',
   backgroundGradientToOpacity: 0.5,
   color: (opacity = 1) => `rgba(108, 198, 68, ${opacity})`,
   strokeWidth: 2, // optional, default 3
@@ -37,6 +37,7 @@ class AnalysisScreen extends React.Component {
         { label: 'track', value: 'track' },
         { label: 'people', value: 'people' },
       ],
+      darkMode: true,
     };
   }
 
@@ -126,32 +127,32 @@ class AnalysisScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.home}>
+      <View style={this.state.darkMode ? styles.darkHome : styles.lightHome}>
+
         <Header
-          route={{ name: 'analysis' }}
-          style={styles.header}
-          leftIcon='back'
-          onLeftPress={() => this.props.navigation.navigate('track')}
+          route={{ name: 'Workout analysis' }}
+          style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
+          titleStyle={this.state.darkMode ? styles.darkHeaderTitle : styles.lightHeaderTitle}
         />
+
         <View style={styles.contribCont}>
-          <Text style={styles.WorkoutHeadingText}>
-            Workout Contribution Graph
-          </Text>
 
           {this.state.loading && (
             <ActivityIndicator size="large" color={color.primary} />
           )}
 
           {this.state.data && (
-            <ContributionGraph
-              values={this.state.data}
-              endDate={this.state.lastDate}
-              numDays={91}
-              width={screenWidth * 0.99}
-              height={220}
-              chartConfig={chartConfig}
-              style={styles.graphStyles}
-            />
+            <View style={this.state.darkMode ? this.state.darkChartView : this.state.lightChartView}>
+              <ContributionGraph
+                values={this.state.data}
+                endDate={this.state.lastDate}
+                numDays={91}
+                width={screenWidth * 0.99}
+                height={220}
+                chartConfig={chartConfig}
+              // style={this.state.darkMode ? this.state.darkChartView : this.state.lightChartView}
+              />
+            </View>
           )}
         </View>
 

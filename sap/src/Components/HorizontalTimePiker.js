@@ -87,7 +87,7 @@ export default class HorizontalTimePiker extends React.Component {
                     width: "100%",
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: 'black'
+                    backgroundColor: this.props.backgroundColor
                 }}
             >
                 <FlatList

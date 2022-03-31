@@ -14,6 +14,8 @@ import { color, size, typography } from '../../theme';
 
 import { getArticles, reduceScore } from '../../Services/API/articles';
 
+import Header from '../../Components/Header';
+
 class ReadScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -21,23 +23,24 @@ class ReadScreen extends React.Component {
             loading: false,
             articles: [],
             bookmarkedArticles: [],
-            flag: 1
+            flag: 1,
+            darkMode: true,
         };
     }
 
     async componentDidMount() {
-        this.setState({ loading: true });
-        const res2 = await getArticles();
-        if (res2) {
-            this.setState({ articles: res2.data, loading: false, bookmarkedArticles: res2.bookmarked });
-        } else {
-            ToastAndroid.show('Something Went Wrong :D', ToastAndroid.SHORT);
-            this.setState({ loading: false });
-        }
+        // this.setState({ loading: true });
+        // const res2 = await getArticles();
+        // if (res2) {
+        //     this.setState({ articles: res2.data, loading: false, bookmarkedArticles: res2.bookmarked });
+        // } else {
+        //     ToastAndroid.show('Something Went Wrong :D', ToastAndroid.SHORT);
+        //     this.setState({ loading: false });
+        // }
 
-        this._unsubscribe = this.props.navigation.addListener('focus', () => {
-            this.refreshScreen();
-        });
+        // this._unsubscribe = this.props.navigation.addListener('focus', () => {
+        //     this.refreshScreen();
+        // });
 
     }
 
@@ -60,114 +63,132 @@ class ReadScreen extends React.Component {
 
 
     render() {
+
         return (
-            <ScrollView style={styles.home}>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={[styles.button, {
-                            borderColor: this.state.flag === 1 ? color.primary : color.lightGrey
-                        }]}
-                        onPress={() => {
-                            this.setState({ flag: 1 });
-                        }}
-                    >
-                        <Text style={styles.buttonText}>
-                            Latest articles
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.button, {
-                            borderColor: this.state.flag === 0 ? color.primary : color.lightGrey
-                        }]}
-                        onPress={() => {
-                            this.setState({ flag: 0 });
-                        }}
-                    >
-                        <Text style={styles.buttonText}>
-                            Bookmarked articles
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+            <View style={this.state.darkMode ? styles.darkHomeContainer : styles.lightHomeContainer}>
+                <Header
+                    route={{ name: 'Articles' }}
+                    style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
+                />
+            </View>
+        )
 
-                <View style={styles.mainContainerArticles}>
-                    {
-                        this.state.loading && (
-                            <ActivityIndicator size="large" color={color.primary} />
-                        )
-                    }
-                    {(!this.state.loading && this.state.flag == 1) && (
-
-                        this.state.articles.map((article, index) => {
-                            return (
-                                <TouchableOpacity style={styles.articlesContainer} key={index} onPress={() => this.props.navigation.navigate("ArticleDetails", { title: article.title, bookmarked: false })}>
-                                    {article.img && (<Image source={{ uri: article.img }} style={styles.articleImage} />)}
-                                    <View style={styles.textContainer}>
-                                        <Text style={styles.articlesTitle}>
-                                            {article.title}
-                                        </Text>
-                                        <Text style={styles.articlesDesc}>
-                                            {
-                                                // show 100 words of description
-                                                article.description.split(' ').slice(0, 10).join(' ')
-                                            }...
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-                            )
-                        })
-
-                    )
-                    }
-
-
-                    {(!this.state.loading && this.state.flag == 0) && (
-                        <View style={{ marginBottom: size.scale(70) }}>
-                            {
-                                this.state.bookmarkedArticles.map((article, index) => {
-                                    return (
-                                        <TouchableOpacity style={styles.articlesContainer} key={index} onPress={() => this.props.navigation.navigate("ArticleDetails", { title: article.title, bookmarked: true })}>
-                                            {article.img && (<Image source={{ uri: article.img }} style={styles.articleImage} />)}
-                                            <View style={styles.textContainer}>
-                                                <Text style={styles.articlesTitle}>
-                                                    {article.title}
-                                                </Text>
-                                                <Text style={styles.articlesDesc}>
-                                                    {
-                                                        // show 100 words of description
-                                                        article.description.split(' ').slice(0, 10).join(' ')
-                                                    }...
-                                                </Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    )
-                                })}
-                        </View>
-                    )
-                    }
-
-
-                </View>
-
-                {(!this.state.loading && this.state.flag == 1 && this.state.articles.length > 0) && (
-                    <View style={styles.nextPageContainer}>
-                        <TouchableOpacity style={styles.nextPageButton} onPress={() => {
-                            reduceScore().then(res => {
-                                if (res) {
-                                    this.refreshScreen();
-                                } else {
-                                    ToastAndroid.show('Something Went Wrong :D', ToastAndroid.SHORT);
-                                }
-                            }).catch(err => {
-                                ToastAndroid.show('Something Went Wrong :D', ToastAndroid.SHORT);
-                            });
-                        }}>
-                            <Text style={styles.nextPageText}>more articles....</Text>
+        return (
+            <View style={styles.container}>
+                <Header
+                    route={{ name: 'Read Articles' }}
+                    style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
+                    titleStyle={this.state.darkMode ? styles.darkText : styles.lightText}
+                />
+                <ScrollView style={this.state.darkMode ? styles.darkScrollViewContainer : styles.lightScrollViewContainer}>
+                    <View style={this.state.darkMode ? styles.darkButtonContainer : styles.lightButtonContainer}>
+                        <TouchableOpacity
+                            style={[styles.button, {
+                                borderColor: this.state.flag === 1 ? color.primary : color.lightGrey
+                            }]}
+                            onPress={() => {
+                                this.setState({ flag: 1 });
+                            }}
+                        >
+                            <Text style={styles.buttonText}>
+                                Latest articles
+                            </Text>
                         </TouchableOpacity>
-                    </View>)
-                }
+                        <TouchableOpacity
+                            style={[styles.button, {
+                                borderColor: this.state.flag === 0 ? color.primary : color.lightGrey
+                            }]}
+                            onPress={() => {
+                                this.setState({ flag: 0 });
+                            }}
+                        >
+                            <Text style={styles.buttonText}>
+                                Bookmarked articles
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.mainContainerArticles}>
+                        {
+                            this.state.loading && (
+                                <ActivityIndicator size="large" color={color.primary} />
+                            )
+                        }
+                        {(!this.state.loading && this.state.flag == 1) && (
+
+                            this.state.articles.map((article, index) => {
+                                return (
+                                    <TouchableOpacity style={styles.articlesContainer} key={index} onPress={() => this.props.navigation.navigate("ArticleDetails", { title: article.title, bookmarked: false })}>
+                                        {article.img && (<Image source={{ uri: article.img }} style={styles.articleImage} />)}
+                                        <View style={styles.textContainer}>
+                                            <Text style={styles.articlesTitle}>
+                                                {article.title}
+                                            </Text>
+                                            <Text style={styles.articlesDesc}>
+                                                {
+                                                    // show 100 words of description
+                                                    article.description.split(' ').slice(0, 10).join(' ')
+                                                }...
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )
+                            })
+
+                        )
+                        }
 
 
-            </ScrollView >
+                        {(!this.state.loading && this.state.flag == 0) && (
+                            <View style={{ marginBottom: size.scale(70) }}>
+                                {
+                                    this.state.bookmarkedArticles.map((article, index) => {
+                                        return (
+                                            <TouchableOpacity style={styles.articlesContainer} key={index} onPress={() => this.props.navigation.navigate("ArticleDetails", { title: article.title, bookmarked: true })}>
+                                                {article.img && (<Image source={{ uri: article.img }} style={styles.articleImage} />)}
+                                                <View style={styles.textContainer}>
+                                                    <Text style={styles.articlesTitle}>
+                                                        {article.title}
+                                                    </Text>
+                                                    <Text style={styles.articlesDesc}>
+                                                        {
+                                                            // show 100 words of description
+                                                            article.description.split(' ').slice(0, 10).join(' ')
+                                                        }...
+                                                    </Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        )
+                                    })}
+                            </View>
+                        )
+                        }
+
+
+                    </View>
+
+                    {(!this.state.loading && this.state.flag == 1 && this.state.articles.length > 0) && (
+                        <View style={styles.nextPageContainer}>
+                            <TouchableOpacity style={styles.nextPageButton} onPress={() => {
+                                reduceScore().then(res => {
+                                    if (res) {
+                                        this.refreshScreen();
+                                    } else {
+                                        ToastAndroid.show('Something Went Wrong :D', ToastAndroid.SHORT);
+                                    }
+                                }).catch(err => {
+                                    ToastAndroid.show('Something Went Wrong :D', ToastAndroid.SHORT);
+                                });
+                            }}>
+                                <Text style={styles.nextPageText}>more articles....</Text>
+                            </TouchableOpacity>
+                        </View>)
+                    }
+
+
+                </ScrollView >
+            </View>
+
         );
     }
 }

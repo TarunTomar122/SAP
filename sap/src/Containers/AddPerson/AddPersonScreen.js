@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import Header from '../../Components/Header';
-import Autocomplete from 'react-native-autocomplete-input';
+// import Autocomplete from 'react-native-autocomplete-input';
 import Button from '../../Components/Button';
 import styles from './AddPersonScreenStyles';
 import {color, size, typography} from '../../theme';
@@ -94,7 +94,7 @@ class AddPersonScreen extends React.Component {
 
         <View style={styles.container}>
           <ScrollView style={styles.autocompleteContainer}>
-            <Autocomplete
+            {/* <Autocomplete
               data={filteredData}
               value={tagName == null ? null : tagName.toLowerCase()}
               onChangeText={text =>
@@ -142,7 +142,7 @@ class AddPersonScreen extends React.Component {
                   );
                 },
               }}
-            />
+            /> */}
             {this.state.selectedTags.length > 0 && (
               <View style={styles.selectedTagsContainer}>
                 {this.state.selectedTags.map((item, index) => (

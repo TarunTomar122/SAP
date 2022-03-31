@@ -1,74 +1,44 @@
 import { StyleSheet } from 'react-native';
 
-import { color, size, typography } from '../../theme';
+import { color, colorLight, size, typography } from '../../theme';
 
 export default StyleSheet.create({
-  home: {
+  lightHome: {
+    flex: 1,
+    backgroundColor: colorLight.background,
+  },
+  darkHome: {
     flex: 1,
     backgroundColor: color.background,
   },
-  header: {
-    width: '100%',
-  },
-  contribCont: {
-    padding: size.scale(10),
-    paddingTop: size.scale(40)
-  },
-  WorkoutHeadingText: {
-    fontSize: size.scale(24),
-    color: color.text,
-    fontFamily: typography.primaryBold,
-    marginHorizontal: size.scale(10),
-    marginBottom: size.scale(10),
-    // alignSelf: 'center'
-  },
-  text: {
-    fontSize: size.scale(50),
-    color: color.text,
-    fontFamily: typography.primaryBold,
-  },
-  pickerContainer: {
+  darkHeader: {
+    backgroundColor: color.background,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: size.scale(30),
-    backgroundColor: color.background,
-    height: size.scale(50),
+    height: size.scale(120),
   },
-  pickerText: {
-    fontSize: size.scale(22),
-    color: color.text,
+  lightHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: colorLight.background,
+    height: size.scale(100),
+  },
+  darkHeaderTitle: {
+    color: color.lightGrey,
+  },
+  darkTitle: {
+    color: colorLight.lightGrey,
     fontFamily: typography.primaryBold,
-  },
-  elevation: {
-    elevation: size.scale(6),
-    shadowColor: 'white',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    borderRadius: size.scale(10),
-  },
-  pickerDropDown: {
-    backgroundColor: color.background,
-    borderRadius: size.scale(10),
-    borderWidth: size.scale(1),
-    marginTop: size.scale(20),
-  },
-  button: {
-    paddingTop: size.scale(20),
-    borderRadius: size.scale(5),
-    borderBottomWidth: size.scale(1),
-    borderColor: color.primary,
-    paddingVertical: size.scale(16),
-    paddingHorizontal: size.scale(10),
-    marginHorizontal: size.scale(10),
-  },
-  buttonText: {
     fontSize: size.scale(24),
-    color: color.text,
-    fontFamily: typography.primaryBold,
+    marginVertical: size.scale(10),
+    marginBottom: size.scale(20),
+  },
+  darkChartView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: color.background,
   }
 });

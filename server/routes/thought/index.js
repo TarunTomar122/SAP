@@ -26,13 +26,8 @@ router.post("/add", async (req, res) => {
 // Get all the thoughts for some person
 router.post("/get", async (req, res) => {
   try {
-    const { name } = req.body;
-    const thoughts = await models.Thought.findAll({
-      where: {
-        personName: name,
-      },
-    });
-    res.status(200).json({ thoughts });
+    const thoughts = await models.Thought.findAll({});
+    res.json(thoughts.slice(thoughts.length - 2, thoughts.length));
   } catch (err) {
     console.log(err);
     res.status(500).send(err);

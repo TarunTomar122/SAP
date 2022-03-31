@@ -14,7 +14,7 @@ import {
 import FloatingButton from '../../Components/FloatingButton';
 
 import styles from './TrackScreenStyles';
-import { color, size, typography } from '../../theme';
+import { colorLight, color, size, typography } from '../../theme';
 
 import { getTodaysTasks } from '../../Services/API/task';
 
@@ -30,6 +30,7 @@ class TrackScreen extends React.Component {
       refreshing: false,
       searchTask: '',
       loading: false,
+      darkMode: true,
     };
   }
 
@@ -89,31 +90,20 @@ class TrackScreen extends React.Component {
     const data = this.filterData(searchTask);
 
     return (
-      <View style={styles.home}>
+      <View style={this.state.darkMode ? styles.darkHome : styles.lightHome}>
         <Header
-          route={{ name: 'track' }}
-          style={styles.header}
+          route={{ name: 'Workout' }}
+          style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
           rightIcon="view"
           onRightPress={() => this.props.navigation.navigate('Analysis')}
+          titleStyle={this.state.darkMode ? styles.darkText : styles.lightText}
         />
-        <View style={styles.searchBar}>
-          <TextInput
-            style={[styles.textInput]}
-            placeholder="Search task"
-            placeholderTextColor={color.searchText}
-            color={color.searchText}
-            onChangeText={text => {
-              this.setState({ searchTask: text });
-            }}
-            value={this.state.searchTask}
-          />
-        </View>
-
         {this.state.loading ? (
           <ActivityIndicator size="large" color={color.primary} />
         ) : (
           <ScrollView
             style={styles.listView}
+            showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}
@@ -122,14 +112,14 @@ class TrackScreen extends React.Component {
             }>
             {data.length == 0 && (
               <>
-                <Text style={styles.noEntryText}>No entries for today :(</Text>
+                <Text style={styles.noEntryText}>no entries for today 😏</Text>
               </>
             )}
 
             {data.map((task, index) => (
               <TouchableOpacity
                 key={index}
-                style={[styles.task, styles.elevation]}
+                style={[this.state.darkMode ? styles.darkTaskContainer : styles.lightTaskContainer, styles.elevation]}
                 onPress={() =>
                   this.props.navigation.navigate('TaskDetails', {
                     title: task.taskInfoTaskName,
@@ -140,9 +130,9 @@ class TrackScreen extends React.Component {
                 }}
               >
                 <View>
-                  <Text style={styles.taskTitle}>{task.taskInfoTaskName}</Text>
-                  <Text style={styles.taskRemaining}>Goal: {task.goal}</Text>
-                  <Text style={styles.taskRemaining}>
+                  <Text style={this.state.darkMode ? styles.darkTitle : styles.lightTitle}>{task.taskInfoTaskName}</Text>
+                  <Text style={this.state.darkMode ? styles.darkTaskRemainderText : styles.lightTaskRemainderText}>Goal: {task.goal}</Text>
+                  <Text style={this.state.darkMode ? styles.darkTaskRemainderText : styles.lightTaskRemainderText}>
                     Remaining: {task.goal - task.count}
                   </Text>
                 </View>

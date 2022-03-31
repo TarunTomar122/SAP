@@ -20,12 +20,7 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      progress: 0.75,
-      videoProgress: 0.24,
-      audioProgress: 0.35,
-      textProgress: 0.21,
-      physicalProgress: 0.75,
-      mentalProgress: 0.65,
+      darkMode: true,
     };
   }
 
@@ -55,6 +50,19 @@ class HomeScreen extends React.Component {
 
 
   render() {
+
+    return (
+      <View style={this.state.darkMode ? styles.darkHomeContainer : styles.lightHomeContainer}>
+
+        <Header
+          route={{ name: 'Goals' }}
+          style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
+          rightIcon="profile"
+          onRightPress={() => this.props.navigation.navigate('Profile')}
+        />
+      </View>
+    )
+
     return (
       <View style={styles.home}>
         <Header

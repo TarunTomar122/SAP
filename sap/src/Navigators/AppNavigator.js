@@ -19,7 +19,7 @@ import TaskDetailsScreen from '../Containers/TaskDetails/TaskDetailsScreen.js';
 import PeopleScreen from '../Containers/People/PeopleScreen.js';
 import AddPersonScreen from '../Containers/AddPerson/AddPersonScreen.js';
 import AddThoughtScreen from '../Containers/AddThought/AddThoughtScreen';
-import ViewThoughtsScreen from '../Containers/ViewThoughts/ViewThoughtsScreen.js';
+import ViewJournalScreen from '../Containers/ViewJournal/ViewJournalScreen.js';
 
 import AnalysisDetailsScreen from '../Containers/AnalysisDetails/AnalysisDetailsScreen.js';
 
@@ -43,7 +43,7 @@ const Tab = createBottomTabNavigator();
 function HomeTabs() {
   return (
     <Tab.Navigator
-      initialRouteName={'home'}
+      initialRouteName={'people'}
       screenOptions={{
         header: props => <Header {...props} />,
         keyboardHidesTabBar: true,
@@ -51,9 +51,9 @@ function HomeTabs() {
       tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="home" component={HomeScreen} options={{ headerShown: false }} />
       <Tab.Screen name="todo" component={TodoScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="read" component={ReadScreen} />
+      <Tab.Screen name="read" component={ReadScreen} options={{ headerShown: false }} />
       <Tab.Screen name="track" component={TrackScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="people" component={PeopleScreen} />
+      <Tab.Screen name="people" component={PeopleScreen} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }
@@ -69,7 +69,7 @@ function AppNavigator() {
         <Stack.Screen name="AddPerson" component={AddPersonScreen} />
         <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
         <Stack.Screen name="AddThought" component={AddThoughtScreen} />
-        <Stack.Screen name="ViewThoughts" component={ViewThoughtsScreen} />
+        <Stack.Screen name="ViewJournal" component={ViewJournalScreen} />
         <Stack.Screen name="ArticleDetails" component={ArticleDetailsScreen} />
         <Stack.Screen name="Analysis" component={AnalysisScreen} options={{ headerShown: false }} />
         <Stack.Screen

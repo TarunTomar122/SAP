@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { color, size, spacing, typography } from '../theme';
+import { colorLight, color, size, spacing, typography } from '../theme';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const CustomHeader = props => {
   const {
@@ -31,36 +32,52 @@ const CustomHeader = props => {
     // </View>
 
     <View style={[{ ...styles.customHeader, ...style }, styles.elevation]}>
-      {leftIcon ? (
+      {leftIcon == 'write' ? (
         <TouchableOpacity onPress={onLeftPress} style={leftIconStyle}>
-          <Ionicons
-            name="arrow-back-outline"
-            color={color.text}
-            size={32}
+          <FontAwesome5
+            name="pen"
+            color={color.lightGrey}
+            size={24}
             style={styles.icon}
           />
         </TouchableOpacity>
       ) : null}
-      <Text style={styles.title}>{props.route.name}</Text>
+
+      <Text style={[styles.titleStyle, titleStyle]}>{props.route.name}</Text>
+
+      {rightIcon == 'calendar' && (
+        <TouchableOpacity
+          onPress={onRightPress}
+          style={[rightIconStyle, styles.rightIconStyle]}>
+          <FontAwesome5
+            name="calendar-day"
+            color={color.lightGrey}
+            size={24}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      )}
+
       {rightIcon == 'delete' && (
         <TouchableOpacity
           onPress={onRightPress}
           style={[rightIconStyle, styles.rightIconStyle]}>
           <AntDesign
             name="delete"
-            color={color.text}
+            color={color.lightGrey}
             size={32}
             style={styles.icon}
           />
         </TouchableOpacity>
       )}
+
       {rightIcon == 'view' && (
         <TouchableOpacity
           onPress={onRightPress}
           style={[rightIconStyle, styles.rightIconStyle]}>
           <MaterialIcons
             name="show-chart"
-            color={color.text}
+            color={color.lightGrey}
             size={32}
             style={styles.icon}
           />
@@ -72,7 +89,7 @@ const CustomHeader = props => {
           style={[rightIconStyle, styles.rightIconStyle]}>
           <MaterialIcons
             name="swap-horiz"
-            color={color.text}
+            color={color.lightGrey}
             size={32}
             style={styles.icon}
           />
@@ -85,7 +102,7 @@ const CustomHeader = props => {
             style={[rightIconStyle, styles.rightIconStyle]}>
             <MaterialIcons
               name="bookmark-outline"
-              color={color.text}
+              color={color.lightGrey}
               size={32}
               style={styles.icon}
             />
@@ -99,7 +116,7 @@ const CustomHeader = props => {
             style={[rightIconStyle, styles.rightIconStyle]}>
             <MaterialIcons
               name="bookmark"
-              color={color.text}
+              color={color.lightGrey}
               size={32}
               style={styles.icon}
             />
@@ -113,7 +130,7 @@ const CustomHeader = props => {
             style={[rightIconStyle, styles.rightIconStyle]}>
             <MaterialIcons
               name="add"
-              color={color.text}
+              color={color.lightGrey}
               size={32}
               style={styles.icon}
             />
@@ -127,7 +144,7 @@ const CustomHeader = props => {
             style={[rightIconStyle, styles.rightIconStyle]}>
             <MaterialCommunityIcons
               name="guitar-pick"
-              color={color.text}
+              color={color.lightGrey}
               size={28}
               style={styles.icon}
             />
@@ -141,7 +158,7 @@ const CustomHeader = props => {
             style={[rightIconStyle, styles.rightIconStyle]}>
             <MaterialCommunityIcons
               name="run"
-              color={color.text}
+              color={color.lightGrey}
               size={28}
               style={styles.icon}
             />
@@ -154,44 +171,39 @@ const CustomHeader = props => {
 
 const styles = StyleSheet.create({
   customHeader: {
-    height: size.scale(58),
+    height: size.scale(76),
     paddingHorizontal: spacing.tiny,
-    backgroundColor: color.background,
-    borderBottomWidth: 1,
-    borderBottomColor: color.primary,
-    shadowColor: color.primary,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    elevation: 5,
-    flexDirection: 'row',
-    paddingVertical: size.scale(10),
-    alignItems: 'center',
+    // borderBottomWidth: 1,
+    // borderBottomColor: color.primary,
+    // shadowColor: color.primary,
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.2,
+    // elevation: 5,
+    // flexDirection: 'row',
+    // paddingVertical: size.scale(10),
+    // alignItems: 'center',
   },
   icon: {
     marginTop: size.scale(4),
   },
-  title: {
+  titleStyle: {
     fontSize: size.scale(24),
-    color: color.text,
     marginHorizontal: size.scale(10),
     fontFamily: typography.primaryBold,
+    color: color.lightGrey,
   },
-  rightIconStyle: {
-    position: 'absolute',
-    right: size.scale(18),
-  },
-  elevation: {
-    elevation: 10,
-    shadowColor: color.lightGrey,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    // borderRadius: size.scale(10),
-    padding: size.scale(15),
-  },
+  // elevation: {
+  //   elevation: 10,
+  //   shadowColor: color.lightGrey,
+  //   shadowOffset: {
+  //     width: 0,
+  //     height: 2,
+  //   },
+  //   shadowOpacity: 0.25,
+  //   shadowRadius: 3.84,
+  //   // borderRadius: size.scale(10),
+  //   padding: size.scale(15),
+  // },
 });
 
 export default CustomHeader;

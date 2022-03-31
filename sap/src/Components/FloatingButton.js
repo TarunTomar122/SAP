@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {color, size} from '../theme';
+import { colorLight, color, size } from '../theme';
 
 const FloatingButton = props => {
   return (
@@ -17,11 +17,11 @@ const FloatingButton = props => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 0,
-    backgroundColor: color.secondary,
+    backgroundColor: color.lightBackground,
     borderBottomWidth: 1,
     borderBottomColor: '#333b45',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     elevation: 2,
     position: 'absolute',

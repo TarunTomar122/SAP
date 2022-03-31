@@ -7,7 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
-import { color, size } from '../theme';
+import { colorLight, color, size } from '../theme';
 
 const { width } = Dimensions.get('window');
 
@@ -48,7 +48,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
               style={{
                 // backgroundColor: isFocused ? '#d6bfa9' : '#222a2d',
                 // borderRadius: 20,
-                borderBottomColor: 'white',
+                borderBottomColor: isFocused ? color.primary : color.lightGrey,
                 borderBottomWidth: isFocused ? 1 : 0,
               }}>
               <View
@@ -60,46 +60,46 @@ const TabBar = ({ state, descriptors, navigation }) => {
                 }}>
                 {label == 'home' ? (
                   isFocused ? (
-                    <AntDesign name="home" color={color.text} size={32} />
+                    <AntDesign name="home" color={color.darkGrey} size={32} />
                   ) : (
-                    <AntDesign name="home" color={color.secondary} size={32} />
+                    <AntDesign name="home" color={color.lightGrey} size={32} />
                   )
                 ) : label == 'todo' ? (
                   isFocused ? (
-                    <SimpleLineIcons name="pencil" color={color.text} size={28} />
+                    <SimpleLineIcons name="pencil" color={color.darkGrey} size={28} />
                   ) : (
-                    <SimpleLineIcons name="pencil" color={color.secondary} size={28} />
+                    <SimpleLineIcons name="pencil" color={color.lightGrey} size={28} />
                   )
                 ) : label == 'read' ? (
                   isFocused ? (
-                    <MaterialIcons name="article" color={color.text} size={30} />
+                    <MaterialIcons name="article" color={color.darkGrey} size={30} />
                   ) : (
-                    <MaterialIcons name="article" color={color.secondary} size={30} />
+                    <MaterialIcons name="article" color={color.lightGrey} size={30} />
                   )
                 ) : label == 'track' ? (
                   isFocused ? (
                     <Ionicons
                       name="stopwatch-outline"
-                      color={color.text}
+                      color={color.darkGrey}
                       size={34}
                     />
                   ) : (
                     <Ionicons
                       name="stopwatch-outline"
-                      color={color.secondary}
+                      color={color.lightGrey}
                       size={36}
                     />
                   )
                 ) : isFocused ? (
                   <Ionicons
                     name="ios-people-outline"
-                    color={color.text}
+                    color={color.darkGrey}
                     size={33}
                   />
                 ) : (
                   <Ionicons
                     name="ios-people-outline"
-                    color={color.secondary}
+                    color={color.lightGrey}
                     size={35}
                   />
                 )}
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
-    backgroundColor: color.description,
+    backgroundColor: colorLight.description,
     marginHorizontal: 0,
     paddingVertical: size.scale(2),
   },

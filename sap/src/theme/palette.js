@@ -1,9 +1,16 @@
-export const palette = {
+export const darkPalette = {
+  
   black: '#000000',
   white: '#ffffff',
+  background: '#061620',
+  lightBackground: '#183140',
+  primary: '#00BFDD',
+  lightGrey: '#C8C9DE',
+  darkGrey: '#8B889C',
+
+
   description: '#666666',
   darkGrey: '#4C525C',
-  primary: '#CC0400',
   secondary: '#333333',
   offWhite: '#e6e6e6',
   orange: '#FBA928',
@@ -15,3 +22,11 @@ export const palette = {
   transparent: 'transparent',
   reddish: '#CC0300',
 };
+
+export const lightPalette = {
+  black: '#000000',
+  white: '#ffffff',
+  background: '#EEEEF2',
+  lightGrey: '#C8C9DE',
+  darkGrey: '#8B889C',
+}

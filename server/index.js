@@ -59,8 +59,6 @@ const setIntervals = async () => {
 
     time = time * 60 * 1000;
 
-    // console.log(time, unit);
-
     const intervalObj = setInterval(async () => {
       const payload = {
         title: interval.dataValues.title,
@@ -71,6 +69,8 @@ const setIntervals = async () => {
 
     // get interval id from intrervalObj
     const intervalId = parseInt(String(intervalObj));
+
+    console.log(intervalId, String(intervalObj));
 
     interval.intervalId = intervalId;
     await interval.save();

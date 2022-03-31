@@ -4,7 +4,7 @@ import { View, Text, ToastAndroid, ActivityIndicator, TouchableOpacity, ScrollVi
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import styles from './AddReminderScreenStyles';
-import { color, size, typography } from '../../theme';
+import { color, colorLight, size, typography } from '../../theme';
 
 import Button from '../../Components/Button';
 import Header from '../../Components/Header';
@@ -33,6 +33,7 @@ class AddReminderScreen extends React.Component {
             ],
             exactValue: "None  ",
             reminderExists: false,
+            darkMode: true,
         };
     }
 
@@ -85,16 +86,15 @@ class AddReminderScreen extends React.Component {
 
     render() {
         return (
-            <View style={styles.home}>
+            <View style={this.state.darkMode ? styles.darkHomeContainer : styles.lightHomeContainer}>
                 <Header
-                    route={{ name: 'add reminder' }}
-                    leftIcon={true}
-                    onLeftPress={() => this.props.navigation.goBack()}
+                    route={{ name: 'Add reminder' }}
+                    style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
                     rightIcon={this.state.reminderExists ? "delete" : null}
                     onRightPress={this.handleDelete.bind(this)}
                 />
                 <ScrollView style={styles.container}>
-                    <Text style={styles.pickText}>Notify Every</Text>
+                    <Text style={this.state.darkMode ? styles.darkPickText : styles.lightPickText}>Notify Every</Text>
                     <DropDownPicker
                         open={this.state.open}
                         value={this.state.value}
@@ -107,7 +107,7 @@ class AddReminderScreen extends React.Component {
                             this.setState({ items: items() });
                         }}
                         style={[styles.pickerContainer, styles.elevation]}
-                        textStyle={[styles.pickerText]}
+                        textStyle={this.state.darkMode ? styles.darkPickText : styles.lightPickText}
                         dropDownContainerStyle={[styles.pickerDropDown, styles.elevation]}
                         listMode="SCROLLVIEW"
                         listItemContainerStyle={{
@@ -124,7 +124,7 @@ class AddReminderScreen extends React.Component {
                         ]}
                         labelStyle={{ borderRadius: 5, borderColor: 'white' }}
                     />
-                    <Text style={styles.pickText}>Notify At</Text>
+                    <Text style={this.state.darkMode ? styles.darkPickText : styles.lightPickText}>Notify At</Text>
 
                     <View style={styles.dateContainer}>
                         <HorizontalTimePiker
@@ -138,13 +138,19 @@ class AddReminderScreen extends React.Component {
                             }}
                             visibleElements={4}
                             mainColor={color.primary}
-                            secondaryColor={"white"}
+                            secondaryColor={color.darkGrey}
                             fontSize={size.scale(22)}
                             fontFamily={typography.primaryBold}
+                            backgroundColor={this.state.darkMode ? color.background : colorLight.background}
                         ></HorizontalTimePiker>
                     </View>
-
-                    <Button text="submit" style={styles.button} onPress={this.submit.bind(this)} />
+                    <View style={styles.buttonContainer}>
+                        <Button text="submit"
+                            style={this.state.darkMode ? styles.darkButton : styles.lightButton}
+                            textStyle={this.state.darkMode ? styles.darkButtonText : styles.lightButtonText}
+                            onPress={this.submit.bind(this)}
+                        />
+                    </View>
 
                     {this.state.loading && (
                         <ActivityIndicator size="large" color={color.primary} />

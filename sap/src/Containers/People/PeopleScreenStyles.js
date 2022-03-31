@@ -1,64 +1,88 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import {color, size, typography} from '../../theme';
+import { colorLight, color, size, typography } from '../../theme';
 
 export default StyleSheet.create({
-  home: {
+  linearGradient: {
+    flex: 1,
+  },
+  lightHome: {
+    flex: 1,
+    backgroundColor: colorLight.background,
+  },
+  darkHome: {
     flex: 1,
     backgroundColor: color.background,
   },
-  searchBar: {
-    margin: size.scale(10),
-    borderBottomWidth: 1,
-    borderColor: color.lightGrey,
+  lightHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
-  textInput: {
-    fontSize: size.scale(16),
-    color: color.primaryDarker,
-    fontFamily: typography.primary,
+  darkHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
-  text: {
-    fontSize: size.scale(20),
-    color: color.text,
-    fontFamily: typography.primaryBold,
+  darkText: {
+    color: colorLight.lightGrey,
   },
-  listBox: {
-    margin: size.scale(10),
-    // borderRightWidth: 0.6,
-    // borderColor: color.lightGrey,
-    padding: size.scale(10),
-  },
-  listView: {
-    marginBottom: size.scale(60),
+  lightText: {
+    color: colorLight.text,
   },
   elevation: {
-    elevation: 4,
-    shadowColor: 'white',
+    elevation: 2,
+    shadowColor: colorLight.lightGrey,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 1,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     borderRadius: size.scale(10),
     padding: size.scale(15),
   },
-  personName: {
-    fontSize: size.scale(22),
-    color: color.text,
-    fontFamily: typography.primaryBoldItalic,
+  darkRecentEntriesContainer: {
+    marginVertical: size.scale(20),
+    marginHorizontal: size.scale(20),
   },
-  tagView: {
-    flexDirection: 'row',
-    marginTop: size.scale(10),
-  },
-  tag: {
-    fontSize: size.scale(14),
+  darkTitle: {
+    fontSize: size.scale(20),
+    fontFamily: typography.primaryBold,
     color: color.lightGrey,
-    fontFamily: typography.primary,
-    marginHorizontal: size.scale(5),
+    marginVertical: size.scale(10),
+    borderBottomWidth: 1,
+    borderBottomColor: color.primary,
+    paddingVertical: size.scale(10),
   },
-  tagListView: {
-    flexDirection: 'row',
+  darkListCardContainer: {
+    marginVertical: size.scale(10),
+    overflow: 'hidden',
+    borderLeftWidth: size.scale(5),
+    borderLeftColor: color.primary,
+    paddingHorizontal: size.scale(14),
+    marginHorizontal: size.scale(10),
   },
+  darkListCardDate: {
+    fontSize: size.scale(12),
+    fontFamily: typography.primaryBold,
+    color: color.darkGrey,
+  },
+  darkListCardTitle: {
+    fontSize: size.scale(18),
+    fontFamily: typography.primaryBold,
+    color: color.primary,
+    marginTop: size.scale(5),
+  },
+  darkBottomContainer: {
+    marginHorizontal: size.scale(14),
+    marginVertical: size.scale(20),
+  },
+  darkQuote: {
+    fontSize: size.scale(18),
+    fontFamily: typography.primaryBold,
+    color: color.lightGrey,
+    marginHorizontal: size.scale(10),
+    marginVertical: size.scale(10),
+  }
 });

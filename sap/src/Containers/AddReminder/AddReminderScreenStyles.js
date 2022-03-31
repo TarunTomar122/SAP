@@ -1,14 +1,31 @@
 import { StyleSheet } from 'react-native';
 
-import { color, size, typography } from '../../theme';
+import { color, colorLight, size, typography } from '../../theme';
 
 export default StyleSheet.create({
-    home: {
+    darkHomeContainer: {
         flex: 1,
         backgroundColor: color.background,
     },
-    container: {
+    lightHomeContainer: {
         flex: 1,
+        backgroundColor: colorLight.background,
+    },
+    darkHeader: {
+        backgroundColor: color.background,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        height: size.scale(100),
+    },
+    lightHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: colorLight.background,
+        height: size.scale(100),
+    },
+    container: {
         padding: size.scale(20),
     },
     text: {
@@ -21,17 +38,21 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: size.scale(30),
-        backgroundColor: color.background,
+        marginBottom: size.scale(30),
+        backgroundColor: color.lightBackground,
         height: size.scale(50),
     },
-    pickerText: {
+    darkPickText: {
         fontSize: size.scale(22),
-        color: color.text,
+        color: color.lightGrey,
         fontFamily: typography.primaryBold,
+    },
+    lightPickText: {
+
     },
     elevation: {
         elevation: size.scale(6),
-        shadowColor: 'white',
+        shadowColor: color.primary,
         shadowOffset: {
             width: 0,
             height: 4,
@@ -39,12 +60,13 @@ export default StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         borderRadius: size.scale(10),
+        borderColor: color.background
     },
     pickerDropDown: {
         backgroundColor: color.background,
         borderRadius: size.scale(10),
-        borderWidth: size.scale(1),
         marginTop: size.scale(20),
+        borderColor: color.background
     },
     pickText: {
         fontSize: size.scale(22),
@@ -56,5 +78,15 @@ export default StyleSheet.create({
         backgroundColor: color.text,
         flex: 1,
         marginVertical: size.scale(26),
+    },
+    darkButtonText: {
+        color: color.primary,
+        fontFamily: typography.primary,
+        fontSize: size.scale(20),
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
     }
 });

@@ -1,15 +1,27 @@
 import { StyleSheet } from 'react-native';
 
-import { color, size, typography } from '../../theme';
+import { color, colorLight, size, typography } from '../../theme';
 
 export default StyleSheet.create({
-  home: {
+  darkHomeContainer: {
     flex: 1,
     backgroundColor: color.background,
   },
-  container: {
+  lightHomeContainer: {
     flex: 1,
-    padding: size.scale(20),
+    backgroundColor: colorLight.background,
+  },
+  darkHeader: {
+    backgroundColor: color.background,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  lightHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: colorLight.background,
   },
   text: {
     fontSize: size.scale(20),

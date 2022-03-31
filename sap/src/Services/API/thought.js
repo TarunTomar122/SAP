@@ -1,6 +1,6 @@
-import {client} from './index';
+import { client } from './index';
 
-export async function addThought({name, rating, thought, title}) {
+export async function addThought({ name, rating, thought, title }) {
   try {
     const response = await client.post(`/thought/add`, {
       name,
@@ -15,9 +15,9 @@ export async function addThought({name, rating, thought, title}) {
   }
 }
 
-export async function getThoughts(name) {
+export async function getThoughts() {
   try {
-    const response = await client.post(`/thought/get`, {name});
+    const response = await client.post(`/thought/get`);
     return response.data;
   } catch (e) {
     console.error(e);

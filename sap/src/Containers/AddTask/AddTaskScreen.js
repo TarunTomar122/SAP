@@ -6,54 +6,57 @@ import {
   TextInput,
   ActivityIndicator,
   ToastAndroid,
+  SafeAreaView,
+  ScrollView,
 } from 'react-native';
 
 import Header from '../../Components/Header';
-import Autocomplete from 'react-native-autocomplete-input';
 import Button from '../../Components/Button';
 import styles from './AddTaskScreenStyles';
-import {color, size, typography} from '../../theme';
+import { colorLight, color, size, typography } from '../../theme';
 
-import {getTasks, addTask} from '../../Services/API/task';
+import { getTasks, addTask } from '../../Services/API/task';
+
 
 class AddTaskScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      taskName: null,
+      taskName: '',
       goal: null,
       modalVisible: true,
       data: [],
       loading: false,
+      darkMode: true,
     };
   }
 
   async componentDidMount() {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     const tasks = await getTasks();
     if (tasks) {
       let taskNames = [];
       for (let task in tasks) {
         taskNames.push(tasks[task].taskName);
       }
-      this.setState({data: taskNames, loading: false});
+      this.setState({ data: taskNames, loading: false });
     } else {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
     }
   }
 
   async addTodayTask() {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     if (this.state.taskName == null || this.state.goal == null) {
       ToastAndroid.show('Invalid Details', ToastAndroid.SHORT);
-      this.setState({loading: false});
+      this.setState({ loading: false });
       return;
     }
     const done = await addTask(this.state.taskName, this.state.goal);
     if (!done) {
       ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
-      this.setState({loading: false});
+      this.setState({ loading: false });
     } else {
       this.props.navigation.navigate('track');
     }
@@ -69,80 +72,70 @@ class AddTaskScreen extends React.Component {
     }
   }
 
+
   render() {
-    const {taskName} = this.state;
-    const data = this.filterData(taskName);
+    const { taskName } = this.state;
 
     return (
-      <View style={styles.home}>
+      <View style={this.state.darkMode ? styles.darkHome : styles.lightHome}>
         <Header
-          route={{name: 'add task'}}
-          leftIcon={true}
-          onLeftPress={() => this.props.navigation.navigate('track')}
+          route={{ name: 'Add workout' }}
+          style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
+          titleStyle={this.state.darkMode ? styles.darkTitle : styles.lightTitle}
         />
 
-        <View style={styles.container}>
-          <View style={styles.autocompleteContainer}>
-            <Autocomplete
-              data={data}
-              value={taskName == null ? null : taskName.toLocaleLowerCase()}
-              onChangeText={text =>
-                this.setState({
-                  taskName: text.toLocaleLowerCase(),
-                  modalVisible: true,
-                })
-              }
-              placeholder="Task name"
-              placeholderTextColor={color.lightGrey}
-              style={styles.autocomplete}
-              flatListProps={{
-                keyExtractor: (_, idx) => idx,
-                renderItem: ({item}) => {
-                  if (this.state.modalVisible == false) {
-                    return null;
-                  }
+        <View style={[styles.container]}>
 
-                  return (
+          <TextInput
+            style={this.state.darkMode ? [styles.darkTextInput, styles.elevation] : styles.lightTextInput}
+            placeholder="Workout name"
+            placeholderTextColor={colorLight.darkGrey}
+            onChangeText={taskName => this.setState({ taskName })}
+            value={taskName}
+          />
+
+          <View>
+            <Text style={this.state.darkMode ? styles.darkSText : styles.lightSuggestionText}>Suggestions</Text>
+            {this.state.loading ? (
+              <ActivityIndicator size="large" color={color.primary} />
+            ) : (
+              <View style={this.state.darkMode ? styles.darkSuggestionContainer : styles.lightSuggestionContainer}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {this.filterData(taskName).map((item, index) => (
                     <TouchableOpacity
-                      style={styles.suggestionBox}
-                      onPress={() => {
-                        this.setState({taskName: item});
-                        this.setState({modalVisible: false});
-                      }}>
-                      <Text style={styles.suggestionText}>{item}</Text>
+                      key={index}
+                      onPress={() => this.setState({ taskName: item })}
+                      style={this.state.darkMode ? styles.darkSuggestion : styles.lightSuggestion}
+                    >
+                      <Text style={this.state.darkMode ? styles.darkSuggestionText : styles.lightSuggestionText}>
+                        {item}
+                      </Text>
                     </TouchableOpacity>
-                  );
-                },
-              }}
-            />
-
-            <TextInput
-              style={[styles.textInput]}
-              placeholder="Today's Goal"
-              placeholderTextColor="#999999"
-              color="#999999"
-              onChangeText={text => {
-                this.setState({goal: text});
-              }}
-              value={this.state.goal}
-            />
-
-            <Button
-              style={styles.button}
-              onPress={this.addTodayTask.bind(this)}
-              text="Submit"
-            />
-
-            {this.state.loading && (
-              <View>
-                <ActivityIndicator size="large" color={color.primary} />
+                  ))}
+                </ScrollView>
               </View>
             )}
           </View>
+
+          <TextInput
+            style={this.state.darkMode ? [styles.darkTextInput, styles.elevation] : styles.lightTextInput}
+            placeholder="Goal"
+            placeholderTextColor={colorLight.darkGrey}
+            onChangeText={goal => this.setState({ goal })}
+            value={this.state.goal}
+          />
+
+          <Button
+            text="Add"
+            onPress={() => this.addTodayTask()}
+            style={this.state.darkMode ? styles.darkButton : styles.lightButton}
+            textStyle={this.state.darkMode ? styles.darkButtonText : styles.lightButtonText}
+          />
         </View>
       </View>
     );
   }
+
 }
 
 export default AddTaskScreen;

@@ -27,11 +27,11 @@ const screenWidth = Dimensions.get('window').width;
 import { LineChart, BarChart } from 'react-native-chart-kit';
 
 const chartConfig = {
-  backgroundGradientFrom: '#1E2923',
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: '#08130D',
+  backgroundGradientFrom: '#183140',
+  backgroundGradientFromOpacity: 0.3,
+  backgroundGradientTo: '#183140',
   backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
+  color: (opacity = 1) => `rgba(108, 198, 68, ${opacity})`,
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional
@@ -47,6 +47,7 @@ class TaskDetailsScreen extends React.Component {
       loading: true,
       refreshing: false,
       data: null,
+      darkMode: true,
     };
   }
 
@@ -89,7 +90,7 @@ class TaskDetailsScreen extends React.Component {
           },
           {
             data: achieved,
-            color: (opacity = 1) => `rgba(251,169,40, ${opacity})`, // optional
+            color: (opacity = 1) => `rgba(0, 191, 221, ${opacity})`, // optional
             strokeWidth: 4, // optional
           },
         ],
@@ -143,21 +144,25 @@ class TaskDetailsScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.home}>
+      <View style={this.state.darkMode ? styles.darkHome : styles.lightHome}>
+
         <Header
-          route={{ name: 'add rep' }}
-          leftIcon={true}
-          onLeftPress={() => this.props.navigation.navigate('track')}
+          route={{ name: 'Add rep' }}
+          style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
+          titleStyle={this.state.darkMode ? styles.darkHeaderTitle : styles.lightHeaderTitle}
           rightIcon="delete"
           onRightPress={() => this.delete()}
         />
 
         <View style={styles.container}>
+          <Text style={this.state.darkMode ? styles.darkTitle : styles.lightTitle}>
+            {this.state.title}
+          </Text>
           <View style={styles.inputContainer}>
             <TextInput
-              style={[styles.textInput]}
+              style={this.state.darkMode ? styles.darkInput : styles.lightInput}
               placeholder="Count"
-              placeholderTextColor={color.searchText}
+              placeholderTextColor={color.darkGrey}
               color={color.searchText}
               onChangeText={text => {
                 this.setState({ count: text });
@@ -166,16 +171,13 @@ class TaskDetailsScreen extends React.Component {
             />
           </View>
           <Button
-            text="Submit"
-            style={styles.button}
+            text="Add"
+            style={this.state.darkMode ? styles.darkButton : styles.lightButton}
             onPress={this.submitCount.bind(this)}
           />
         </View>
 
-        <View style={styles.chartView}>
-          <Text style={styles.chartText}>
-            {this.state.title}
-          </Text>
+        <View style={this.state.darkMode ? styles.darkChartView : styles.lightChartView}>
           {this.state.loading ? (
             <ActivityIndicator size="large" color={color.primary} />
           ) : (

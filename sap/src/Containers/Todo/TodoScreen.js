@@ -11,7 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import styles from './TodoScreenStyles';
-import { color, size, typography } from '../../theme';
+import { color, colorLight, size, typography } from '../../theme';
 
 import Header from '../../Components/Header';
 
@@ -32,6 +32,7 @@ class TodoScreen extends React.Component {
       loading: false,
       todos: [],
       backgroundColor: '#fff',
+      darkMode: true,
     };
   }
 
@@ -131,10 +132,11 @@ class TodoScreen extends React.Component {
   render() {
 
     return (
-      <View style={styles.home}>
+      <View style={this.state.darkMode ? styles.darkHomeContainer : styles.lightHomeContainer}>
+
         <Header
-          route={{ name: 'notes' }}
-          style={styles.header}
+          route={{ name: 'Notes' }}
+          style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
           rightIcon="add"
           onRightPress={() => this.setState({ modalVisible: true })}
         />
@@ -151,12 +153,13 @@ class TodoScreen extends React.Component {
             this.setState({ modalVisible: !this.state.modalVisible })
           }}>
             <View style={styles.centeredView}>
-              <View style={styles.modalView}>
+              <View style={[styles.modalView, this.state.darkMode ? { backgroundColor: color.background } : { backgroundColor: color.text }]}>
+                <Text style={this.state.darkMode ? styles.darkModalTitle : styles.lightModalTitle}>Add Note</Text>
                 <TextInput
                   style={[styles.textInput]}
                   placeholder="Title"
-                  placeholderTextColor="#999999"
-                  color="#999999"
+                  placeholderTextColor={color.darkGrey}
+                  color={color.lightGrey}
                   onChangeText={text => {
                     this.setState({ title: text });
                   }}
@@ -165,8 +168,8 @@ class TodoScreen extends React.Component {
                 <TextInput
                   style={[styles.textInput]}
                   placeholder="Description (Optional)"
-                  placeholderTextColor="#999999"
-                  color="#999999"
+                  placeholderTextColor={color.darkGrey}
+                  color={color.lightGrey}
                   multiline={true}
                   textAlignVertical="top"
                   numberOfLines={1}
@@ -176,7 +179,7 @@ class TodoScreen extends React.Component {
                   value={this.state.description}
                 />
                 <Pressable
-                  style={[styles.button]}
+                  style={[styles.button, { backgroundColor: color.background }]}
                   onPress={() => this.handleSubmit()}
                   disabled={this.state.loading}
                 >
@@ -199,10 +202,12 @@ class TodoScreen extends React.Component {
             renderQuickActions={({ index, item }) => this.QuickActions(index, item)}
             contentContainerStyle={styles.contentContainerStyle}
             shouldBounceOnMount={false}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
           />
         </SafeAreaView>
 
-      </View>
+      </View >
     );
   }
 }

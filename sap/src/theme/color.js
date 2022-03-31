@@ -1,48 +1,47 @@
-import {palette} from './palette';
+import { darkPalette, lightPalette } from './palette';
 
-/**
- * Roles for colors.  Prefer using these over the palette.  It makes it easier
- * to change things.
- *
- * The only roles we need to place in here are the ones that span through the app.
- *
- * If you have a specific use-case, like a spinner color.  It makes more sense to
- * put that in the <Spinner /> component.
- */
 export const color = {
-  palette,
 
+  darkPalette,
   transparent: 'rgba(0, 0, 0, 0)',
+  background: darkPalette.background,
+  lightBackground: darkPalette.lightBackground,
+  primary: darkPalette.primary,
+  lightGrey: darkPalette.lightGrey,
+  darkGrey: darkPalette.darkGrey,
 
-  background: palette.black,
+  description: darkPalette.description,
 
-  description: palette.description,
+  secondary: darkPalette.secondary,
 
-  secondary: palette.secondary,
+  grey: darkPalette.grey,
 
-  lightGrey: palette.lightGrey,
 
-  grey: palette.grey,
+  primaryDarker: darkPalette.reddish,
 
-  primary: palette.orange,
+  icons: darkPalette.reddish,
 
-  primaryDarker: palette.reddish,
+  line: darkPalette.offWhite,
 
-  icons: palette.reddish,
+  text: darkPalette.white,
 
-  line: palette.offWhite,
+  dim: darkPalette.lightGrey,
 
-  text: palette.white,
+  error: darkPalette.angry,
 
-  dim: palette.lightGrey,
+  storybookDarkBg: darkPalette.black,
 
-  error: palette.angry,
+  storybookTextColor: darkPalette.black,
 
-  storybookDarkBg: palette.black,
+  searchText: darkPalette.lightGrey,
 
-  storybookTextColor: palette.black,
-
-  searchText: palette.lightGrey,
-
-  separator: palette.orangeDarker,
+  separator: darkPalette.orangeDarker,
 };
+
+export const colorLight = {
+  lightPalette,
+  background: lightPalette.background,
+  lightGrey: darkPalette.lightGrey,
+  darkGrey: darkPalette.darkGrey,
+  text: lightPalette.black,
+}
