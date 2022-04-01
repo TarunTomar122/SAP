@@ -142,7 +142,7 @@ class AnalysisScreen extends React.Component {
           )}
 
           {this.state.data && (
-            <View style={this.state.darkMode ? this.state.darkChartView : this.state.lightChartView}>
+            <View style={this.state.darkMode ? styles.darkChartView : styles.lightChartView}>
               <ContributionGraph
                 values={this.state.data}
                 endDate={this.state.lastDate}
@@ -152,6 +152,9 @@ class AnalysisScreen extends React.Component {
                 chartConfig={chartConfig}
               // style={this.state.darkMode ? this.state.darkChartView : this.state.lightChartView}
               />
+              <Text style={this.state.darkMode ? styles.darkContribText : lightContribText}>
+                {this.state.data.length} / 91 days of contribution 🙂
+              </Text>
             </View>
           )}
         </View>

@@ -8,6 +8,18 @@ router.post("/add", async (req, res) => {
   try {
     const { name, thought, rating, title } = req.body;
 
+    // if name is not person, create person
+    const person = await models.Person.findOne({
+      where: { name },
+    });
+
+    if (!person) {
+      const newPerson = await models.Person.create({
+        name,
+      });
+    }
+
+
     // Add thought to person
     await models.Thought.create({
       thought: thought,
@@ -27,11 +39,13 @@ router.post("/add", async (req, res) => {
 router.post("/get", async (req, res) => {
   try {
     const thoughts = await models.Thought.findAll({});
-    res.json(thoughts.slice(thoughts.length - 2, thoughts.length));
+    const tags = await models.Person.findAll({});
+    res.json({ journals: thoughts.slice(thoughts.length - 2, thoughts.length), tags });
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }
 });
+
 
 export default router;

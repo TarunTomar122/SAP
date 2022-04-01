@@ -82,7 +82,106 @@ export default StyleSheet.create({
     fontSize: size.scale(18),
     fontFamily: typography.primaryBold,
     color: color.lightGrey,
-    marginHorizontal: size.scale(10),
+    marginHorizontal: size.scale(12),
     marginVertical: size.scale(10),
-  }
+    marginBottom: size.scale(20),
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: '#00000040',
+  },
+  modalView: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    borderTopRightRadius: size.scale(20),
+    borderTopLeftRadius: size.scale(20),
+    marginTop: size.scale(60),
+    padding: size.scale(15),
+    // alignItems: "center",
+    shadowColor: color.primary,
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5
+  },
+  button: {
+    borderRadius: size.scale(5),
+    padding: size.scale(16),
+    backgroundColor: color.text,
+    borderWidth: size.scale(1),
+    borderColor: color.primary,
+    elevation: 2,
+    marginTop: size.scale(10),
+    borderRadius: size.scale(12),
+    marginBottom: size.scale(36),
+  },
+  darkModalTitle: {
+    fontSize: size.scale(24),
+    marginBottom: size.scale(20),
+    marginTop: size.scale(30),
+    textAlign: 'center',
+    fontFamily: typography.primaryBold,
+    color: color.primary
+  },
+  textStyle: {
+    fontSize: size.scale(16),
+    color: color.primary,
+    fontFamily: typography.primaryBold,
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  textInput: {
+    width: "100%",
+    marginVertical: size.scale(20),
+    borderBottomWidth: 1,
+    borderColor: color.lightGrey,
+    padding: size.scale(10),
+    fontSize: size.scale(18),
+    fontFamily: typography.primaryBold,
+  },
+  darkIconContainer: {
+    width: "100%",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: size.scale(16),
+    marginBottom: size.scale(24),
+  },
+  darkSuggestionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: color.background,
+    width: size.scale(280),
+    marginVertical: size.scale(20),
+  },
+  darkSuggestion: {
+    backgroundColor: color.background,
+    borderColor: color.darkGrey,
+    borderBottomWidth: 1,
+    paddingVertical: size.scale(10),
+    marginRight: size.scale(18),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  darkSuggestionText: {
+    color: color.lightGrey,
+    fontFamily: typography.primary,
+    fontSize: size.scale(20),
+  },
+  darkSText: {
+    color: color.lightGrey,
+    fontFamily: typography.primary,
+    fontSize: size.scale(20),
+    marginTop: size.scale(18),
+  },
 });

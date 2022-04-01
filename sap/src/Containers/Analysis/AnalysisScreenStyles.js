@@ -36,9 +36,15 @@ export default StyleSheet.create({
     marginBottom: size.scale(20),
   },
   darkChartView: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: color.background,
+  },
+  darkContribText:{
+    color: color.primary,
+    fontFamily: typography.primaryBold,
+    fontSize: size.scale(14),
+    marginVertical: size.scale(16),
+    marginBottom: size.scale(20),
   }
 });

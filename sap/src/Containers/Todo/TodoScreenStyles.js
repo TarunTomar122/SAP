@@ -42,7 +42,7 @@ export default StyleSheet.create({
     borderTopLeftRadius: size.scale(20),
     marginTop: size.scale(60),
     padding: size.scale(15),
-    alignItems: "center",
+    // alignItems: "center",
     shadowColor: color.primary,
     shadowOffset: {
       width: 0,
@@ -61,6 +61,7 @@ export default StyleSheet.create({
     elevation: 2,
     marginTop: size.scale(10),
     borderRadius: size.scale(12),
+    marginBottom: size.scale(36),
   },
   darkModalTitle: {
     fontSize: size.scale(24),

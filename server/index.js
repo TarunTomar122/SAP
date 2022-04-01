@@ -34,6 +34,7 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   // Drop the User Table from the database
   // await models.Notification.drop();
   // await models.Reminder.drop();
+  await dummyOperations();
   await startSchedule();
   setIntervals();
 
@@ -42,6 +43,20 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   });
 });
 
+
+const dummyOperations = async () => {
+
+  // delete the latest thought
+  const thoughts = await models.Thought.findAll({
+    order: [["createdAt", "DESC"]],
+    limit: 1,
+  });
+
+  if (thoughts.length > 0) {
+    await thoughts[0].destroy();
+  }
+
+}
 
 const setIntervals = async () => {
 

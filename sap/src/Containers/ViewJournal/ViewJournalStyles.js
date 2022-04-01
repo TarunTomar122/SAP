@@ -47,6 +47,7 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    marginBottom: size.scale(80),
   },
   darkTagsText: {
     fontSize: size.scale(18),

@@ -7,6 +7,7 @@ import {
   Animated,
   ToastAndroid,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -18,6 +19,8 @@ import Header from '../../Components/Header';
 import { addTodo, getTodos, deleteTodo } from '../../Services/API/todo';
 
 import SwipeableFlatList from 'react-native-swipeable-list';
+
+import Clipboard from '@react-native-community/clipboard';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -92,8 +95,13 @@ class TodoScreen extends React.Component {
     const { title, description, date } = todo
     return (
       <Animated.View style={styles.card}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
+        <TouchableOpacity onLongPress={() => {
+          Clipboard.setString(description);
+          ToastAndroid.show('Copied to clipboard', ToastAndroid.SHORT);
+        }}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.description}>{description}</Text>
+        </TouchableOpacity>
       </Animated.View>
     )
 
@@ -153,39 +161,41 @@ class TodoScreen extends React.Component {
             this.setState({ modalVisible: !this.state.modalVisible })
           }}>
             <View style={styles.centeredView}>
-              <View style={[styles.modalView, this.state.darkMode ? { backgroundColor: color.background } : { backgroundColor: color.text }]}>
-                <Text style={this.state.darkMode ? styles.darkModalTitle : styles.lightModalTitle}>Add Note</Text>
-                <TextInput
-                  style={[styles.textInput]}
-                  placeholder="Title"
-                  placeholderTextColor={color.darkGrey}
-                  color={color.lightGrey}
-                  onChangeText={text => {
-                    this.setState({ title: text });
-                  }}
-                  value={this.state.title}
-                />
-                <TextInput
-                  style={[styles.textInput]}
-                  placeholder="Description (Optional)"
-                  placeholderTextColor={color.darkGrey}
-                  color={color.lightGrey}
-                  multiline={true}
-                  textAlignVertical="top"
-                  numberOfLines={1}
-                  onChangeText={text => {
-                    this.setState({ description: text });
-                  }}
-                  value={this.state.description}
-                />
-                <Pressable
-                  style={[styles.button, { backgroundColor: color.background }]}
-                  onPress={() => this.handleSubmit()}
-                  disabled={this.state.loading}
-                >
-                  <Text style={styles.textStyle}>Submit</Text>
-                </Pressable>
-              </View>
+              <ScrollView style={[styles.modalView, this.state.darkMode ? { backgroundColor: color.background } : { backgroundColor: color.text }]}>
+                <View style={{ alignItems: 'center' }}>
+                  <Text style={this.state.darkMode ? styles.darkModalTitle : styles.lightModalTitle}>Add Note</Text>
+                  <TextInput
+                    style={[styles.textInput]}
+                    placeholder="Title"
+                    placeholderTextColor={color.darkGrey}
+                    color={color.lightGrey}
+                    onChangeText={text => {
+                      this.setState({ title: text });
+                    }}
+                    value={this.state.title}
+                  />
+                  <TextInput
+                    style={[styles.textInput]}
+                    placeholder="Description (Optional)"
+                    placeholderTextColor={color.darkGrey}
+                    color={color.lightGrey}
+                    multiline={true}
+                    textAlignVertical="top"
+                    numberOfLines={1}
+                    onChangeText={text => {
+                      this.setState({ description: text });
+                    }}
+                    value={this.state.description}
+                  />
+                  <Pressable
+                    style={[styles.button, { backgroundColor: color.background }]}
+                    onPress={() => this.handleSubmit()}
+                    disabled={this.state.loading}
+                  >
+                    <Text style={styles.textStyle}>Submit</Text>
+                  </Pressable>
+                </View>
+              </ScrollView>
             </View>
           </TouchableWithoutFeedback>
         </Modal>
