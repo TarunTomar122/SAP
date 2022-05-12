@@ -17,6 +17,7 @@ const models = {
   Todo: sequelize.import("./todo"),
   Notification: sequelize.import("./notification"),
   Reminder: sequelize.import("./reminder"),
+  Journal: sequelize.import("./journal"),
 };
 
 Object.keys(models).forEach((key) => {

@@ -24,6 +24,7 @@ app.use("/api/people", routes.people);
 app.use("/api/thought", routes.thought);
 app.use("/api/analyze", routes.analyze);
 app.use('/api/todo', routes.todo);
+app.use('/api/journal', routes.journal);
 
 const PORT = 4040;
 
@@ -33,7 +34,7 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
 
   // Drop the User Table from the database
   // await models.Notification.drop();
-  // await models.Reminder.drop();
+  // await models.Journal.drop();
   await dummyOperations();
   await startSchedule();
   setIntervals();
@@ -46,15 +47,20 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
 
 const dummyOperations = async () => {
 
-  // delete the latest thought
-  const thoughts = await models.Thought.findAll({
-    order: [["createdAt", "DESC"]],
-    limit: 1,
-  });
+  // const answers = [
+  //   "Ok so i feel pretty good right now. I have just finished working on SAP journal feature uwu",
+  //   "I don't think i want to change anything right now",
+  //   "I am kind of worried about upcoming intern and current relationship",
+  //   "I am super grateful for the upcoming internship and current relationship",
+  //   "4"
+  // ]
 
-  if (thoughts.length > 0) {
-    await thoughts[0].destroy();
-  }
+  // const date = new Date();
+
+  // const journal = await models.Journal.create({
+  //   answers: answers,
+  //   date: date,
+  // });
 
 }
 

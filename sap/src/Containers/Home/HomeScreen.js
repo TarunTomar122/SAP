@@ -13,14 +13,26 @@ import Header from '../../Components/Header';
 
 import * as Progress from 'react-native-progress';
 
-import BackgroundTimer from 'react-native-background-timer';
-import { testBackground } from '../../Services/API/notif';
-
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       darkMode: true,
+      goals: [1, 2, 3, 4, 5, 6],
+      goal: {
+        title: 'I wanna play more valorant',
+        progress: 0.3,
+        targets: [
+          {
+            title: 'spend 2 hours on the app',
+            done: true,
+          },
+          {
+            title: 'workout for atleast an hour',
+            done: false,
+          },
+        ]
+      }
     };
   }
 
@@ -57,120 +69,64 @@ class HomeScreen extends React.Component {
         <Header
           route={{ name: 'Goals' }}
           style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
-          rightIcon="profile"
-          onRightPress={() => this.props.navigation.navigate('Profile')}
+        // rightIcon="profile"
+        // onRightPress={() => this.props.navigation.navigate('Profile')}
         />
+
+        {this.state.loading ? (
+          <ActivityIndicator size="large" color={color.primary} />
+        ) : (
+          <ScrollView
+            style={styles.listView}
+            showsVerticalScrollIndicator={false}
+          // refreshControl={
+          //   <RefreshControl
+          //     refreshing={this.state.refreshing}
+          //     onRefresh={this._onRefresh}
+          //   />
+          // }
+          >
+
+            {this.state.goals == 0 && (
+              <>
+                <Text style={styles.noEntryText}>no entries for today 😏</Text>
+              </>
+            )}
+
+            {
+
+              this.state.goals.map((goal, index) => {
+                return (
+                  <TouchableOpacity
+                    style={[this.state.darkMode ? styles.darkGoalContainer : styles.lightGoalContainer, styles.elevation]}
+                    key={index}
+                    onPress={() => this.props.navigation.navigate('GoalDetail', { goal: this.state.goal })}
+                  >
+
+                    <Text style={this.state.darkMode ? styles.darkGoalTitle : styles.lightGoalTitle}>
+                      I wanna play more valorant uwu here and there
+                    </Text>
+
+                    <Progress.Bar
+                      progress={0.3}
+                      height={size.scale(10)}
+                      width={null}
+                      borderWidth={size.scale(2)}
+                      borderColor={color.primary}
+                      color={color.primary}
+                    />
+
+                  </TouchableOpacity>
+                )
+              })
+
+            }
+          </ScrollView>
+        )
+        }
       </View>
     )
 
-    return (
-      <View style={styles.home}>
-        <Header
-          route={{ name: 'home' }}
-          style={styles.header}
-          rightIcon="profile"
-          onRightPress={() => this.props.navigation.navigate('Profile')}
-        />
-        <ScrollView style={styles.container}>
-
-          {/* <TouchableOpacity
-            style={{ marginVertical: size.scale(20), alignItems: 'center', marginBottom: size.scale(60) }}
-            onPress={() => this.props.navigation.navigate('TrackLocation')}
-          >
-            <Text style={{ fontSize: 24, color: 'white' }}>Track Location</Text>
-          </TouchableOpacity> */}
-
-          <View style={styles.mainProgressContainer}>
-            <Progress.Circle
-              progress={this.state.progress}
-              size={size.scale(200)}
-              thickness={size.scale(8)}
-              strokeCap="round"
-              showsText={true}
-              formatText={(progress) => this.state.progress.toFixed(2) * 100}
-              color={color.primary}
-              indeterminate={false}
-            />
-          </View>
-
-          <View style={styles.secondaryProgressContainer}>
-            <View style={styles.indvProgressContainer}>
-              <Text style={styles.progressHeading}>
-                Video Content
-              </Text>
-              <Progress.Bar
-                progress={this.state.videoProgress}
-                height={size.scale(12)}
-                width={size.scale(300)}
-                borderWidth={size.scale(2)}
-                borderColor={color.primary}
-                color={color.primary}
-              />
-            </View>
-
-            <View style={styles.indvProgressContainer}>
-              <Text style={styles.progressHeading}>
-                Audio Content
-              </Text>
-              <Progress.Bar
-                progress={this.state.audioProgress}
-                height={size.scale(12)}
-                width={size.scale(300)}
-                borderWidth={size.scale(2)}
-                borderColor={color.primary}
-                color={color.primary}
-              />
-            </View>
-
-            <View style={styles.indvProgressContainer}>
-              <Text style={styles.progressHeading}>
-                Text Content
-              </Text>
-              <Progress.Bar
-                progress={this.state.textProgress}
-                height={size.scale(12)}
-                width={size.scale(300)}
-                borderWidth={size.scale(2)}
-                borderColor={color.primary}
-                color={color.primary}
-              />
-            </View>
-
-
-            <View style={styles.indvProgressContainer}>
-              <Text style={styles.progressHeading}>
-                Physical State
-              </Text>
-              <Progress.Bar
-                progress={this.state.physicalProgress}
-                height={size.scale(12)}
-                width={size.scale(300)}
-                borderWidth={size.scale(2)}
-                borderColor={color.primary}
-                color={color.primary}
-              />
-            </View>
-
-
-            <View style={styles.indvProgressContainer}>
-              <Text style={styles.progressHeading}>
-                Mental State
-              </Text>
-              <Progress.Bar
-                progress={this.state.mentalProgress}
-                height={size.scale(12)}
-                width={size.scale(300)}
-                borderWidth={size.scale(2)}
-                borderColor={color.primary}
-                color={color.primary}
-              />
-            </View>
-
-          </View>
-
-        </ScrollView>
-      </View>
-    );
   }
 }
 

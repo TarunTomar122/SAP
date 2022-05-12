@@ -20,6 +20,7 @@ import PeopleScreen from '../Containers/People/PeopleScreen.js';
 import AddPersonScreen from '../Containers/AddPerson/AddPersonScreen.js';
 import AddThoughtScreen from '../Containers/AddThought/AddThoughtScreen';
 import ViewJournalScreen from '../Containers/ViewJournal/ViewJournalScreen.js';
+import AddJournalScreen from '../Containers/AddJournal/AddJournalScreen';
 
 import AnalysisDetailsScreen from '../Containers/AnalysisDetails/AnalysisDetailsScreen.js';
 
@@ -35,6 +36,8 @@ import FolderDetailScreen from '../Containers/FolderDetail/FolderDetailScreen.js
 import FileContentScreen from '../Containers/FileContent/FileContentScreen.js';
 
 import TrackLocationScreen from '../Containers/TrackLocation/TrackLocationScreen.js';
+
+import GoalDetailScreen from '../Containers/GoalDetail/GoalDetailScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +73,7 @@ function AppNavigator() {
         <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
         <Stack.Screen name="AddThought" component={AddThoughtScreen} />
         <Stack.Screen name="ViewJournal" component={ViewJournalScreen} />
+        <Stack.Screen name="AddJournal" component={AddJournalScreen} />
         <Stack.Screen name="ArticleDetails" component={ArticleDetailsScreen} />
         <Stack.Screen name="Analysis" component={AnalysisScreen} options={{ headerShown: false }} />
         <Stack.Screen
@@ -84,6 +88,8 @@ function AppNavigator() {
         <Stack.Screen name="FolderDetail" component={FolderDetailScreen} />
         <Stack.Screen name="FileContent" component={FileContentScreen} />
         <Stack.Screen name="TrackLocation" component={TrackLocationScreen} />
+        <Stack.Screen name="GoalDetail" component={GoalDetailScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

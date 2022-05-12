@@ -2,63 +2,99 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
-  ScrollView,
-  RefreshControl,
-  TextInput,
   ActivityIndicator,
   ToastAndroid,
-  TouchableWithoutFeedback,
-  Modal, Pressable,
 } from 'react-native';
 
-import FloatingButton from '../../Components/FloatingButton';
 import styles from './PeopleScreenStyles.js';
 import { color, size, typography } from '../../theme';
 
-import { getThoughts, addThought } from '../../Services/API/thought';
-
 import Header from '../../Components/Header';
+import { Calendar } from 'react-native-calendars';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { getRandomEntry, getMonthlyData } from "../../Services/API/journal"
 
 class PeopleScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: false,
-      loading: false,
-      searchPerson: '',
+      loading: true,
       refreshing: false,
-      journals: [],
       darkMode: true,
-      rating: '',
-      thought: '',
-      title: '',
-      tag: '',
-      tags: [],
+      randomEntry: false,
+      markedDates: {}
     };
   }
 
   async componentDidMount() {
-    // Fetch journals from the api
-    this.setState({ loading: true });
-    const response = await getThoughts();
-    if (!response) {
-      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
-      this.setState({ loading: false });
+
+    console.log(new Date().toISOString().slice(0, 10))
+
+    var today = new Date();
+    // this month 
+    var thisMonth = today.getMonth();
+    // this year
+    var thisYear = today.getFullYear();
+
+    const response = await getMonthlyData({ month: thisMonth, year: thisYear });
+
+    if (response) {
+
+      var data = response.data;
+      var markedDates = [];
+
+      for (var i = 0; i < data.length; i++) {
+
+        var backgroundColor = '#fff';
+        var rating = data[i].rating;
+        // based on the rating value, set the background color
+        if (rating <= 1) {
+          backgroundColor = '#222222';
+        } else if (rating <= 2) {
+          backgroundColor = '#223343';
+        } else if (rating <= 3) {
+          backgroundColor = '#2C4D6E';
+        } else if (rating <= 4) {
+          backgroundColor = '#376899';
+        } else {
+          backgroundColor = '#4183C4';
+        }
+
+        markedDates[data[i].date] = {
+          customStyles: {
+            container: {
+              backgroundColor: backgroundColor,
+              opacity: 0.5
+            },
+            text: {
+              color: 'black',
+              fontWeight: 'bold'
+            }
+          },
+        }
+      }
+
+      this.setState({ markedDates })
+
     } else {
-      const { journals, tags } = response;
-      journals.reverse();
-
-      // keep the name of the tags in the tags array
-      const tagsArray = [];
-      tags.forEach(item => {
-        tagsArray.push(item.name);
-      });
-
-      this.setState({ journals, loading: false, tags: tagsArray });
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
     }
+
+
+    const randomEntry = await getRandomEntry();
+    if (randomEntry) {
+      this.setState({
+        loading: false,
+        randomEntry: randomEntry
+      })
+    } else {
+      this.setState({
+        loading: false,
+        randomEntry: {}
+      });
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+    }
+
 
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.refreshScreen();
@@ -72,277 +108,184 @@ class PeopleScreen extends React.Component {
   }
 
   async refreshScreen() {
-    // Fetch journals from the api
-    this.setState({ loading: true });
-    const response = await getThoughts();
-    if (!response) {
-      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
-      this.setState({ loading: false });
+
+    this.setState({ loading: true })
+
+    const randomEntry = await getRandomEntry();
+
+    if (randomEntry) {
+
+      this.setState({
+        loading: false,
+        randomEntry: randomEntry
+      })
     } else {
-      const { journals, tags } = response;
-      journals.reverse();
-      // keep the name of the tags in the tags array
-      const tagsArray = [];
-      tags.forEach(item => {
-        tagsArray.push(item.name);
+      this.setState({
+        loading: false,
+        randomEntry: {}
       });
-
-      this.setState({ journals, loading: false, tags: tagsArray });
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
     }
   }
 
-
-  async handleSubmit() {
-
-    this.setState({ loading: true });
-    const { thought, rating, tag, title } = this.state;
-    const response = await addThought({ name: tag, thought, rating, title });
-    if (response) {
-      this.setState({ loading: false, modalVisible: false });
-    } else {
-      this.setState({ loading: false });
-      ToastAndroid.show('Something Went Wrong', ToastAndroid.SHORT);
-    }
-
-  }
-
-
-  filterData(tag) {
-    try {
-      return this.state.tags.filter(item =>
-        item.includes(tag.toLowerCase()),
-      );
-    } catch (e) {
-      return [];
-    }
+  getDaysAgo(randomEntry) {
+    const today = new Date();
+    const entryDate = new Date(randomEntry.date);
+    const diffTime = Math.abs(today.getTime() - entryDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
   }
 
   render() {
 
-    // console.log(this.state.journals)
-
     return (
       <View style={this.state.darkMode ? styles.darkHome : styles.lightHome}>
-
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setState({ modalVisible: !this.state.modalVisible })
-          }}
-        >
-          <TouchableWithoutFeedback onPress={() => {
-            this.setState({ modalVisible: !this.state.modalVisible })
-          }}>
-            <View style={styles.centeredView}>
-              <ScrollView style={[styles.modalView, this.state.darkMode ? { backgroundColor: color.background } : { backgroundColor: color.text }]}>
-                <View style={{ alignItems: 'center' }}>
-                  <Text style={this.state.darkMode ? styles.darkModalTitle : styles.lightModalTitle}>Write your heart out.</Text>
-                  <TextInput
-                    style={[styles.textInput]}
-                    placeholder="Title"
-                    placeholderTextColor={color.darkGrey}
-                    color={color.lightGrey}
-                    onChangeText={text => {
-                      this.setState({ title: text });
-                    }}
-                    value={this.state.title}
-                  />
-                  <TextInput
-                    style={[styles.textInput]}
-                    placeholder="Thoughts"
-                    placeholderTextColor={color.darkGrey}
-                    color={color.lightGrey}
-                    multiline={true}
-                    textAlignVertical="top"
-                    numberOfLines={1}
-                    onChangeText={text => {
-                      this.setState({ thought: text });
-                    }}
-                    value={this.state.thought}
-                  />
-
-                  <TextInput
-                    style={[styles.textInput]}
-                    placeholder="tag"
-                    placeholderTextColor={color.darkGrey}
-                    color={color.lightGrey}
-                    onChangeText={text => {
-                      this.setState({ tag: text });
-                    }}
-                    value={this.state.tag}
-                  />
-
-                  <View style={this.state.darkMode ? styles.darkSuggestionContainer : styles.lightSuggestionContainer}>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                      {this.filterData(this.state.tag).map((item, index) => (
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => this.setState({ tag: item })}
-                          style={this.state.darkMode ? styles.darkSuggestion : styles.lightSuggestion}
-                        >
-                          <Text style={this.state.darkMode ? styles.darkSuggestionText : styles.lightSuggestionText}>
-                            {item}
-                          </Text>
-                        </TouchableOpacity>
-                      ))}
-                    </ScrollView>
-                  </View>
-
-                  <View style={this.state.darkMode ? styles.darkIconContainer : styles.lightIconContainer}>
-                    <TouchableOpacity
-                      style={this.state.darkMode ? styles.darkIcon : styles.lightIcon}
-                      onPress={() => {
-                        this.setState({ rating: 1 })
-                      }}
-                    >
-                      <MaterialCommunityIcons
-                        style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon}
-                        name="emoticon-dead-outline"
-                        size={size.scale(30)}
-                        color={this.state.rating == 1 ? color.primary : color.lightGrey}
-                      />
-
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={this.state.darkMode ? styles.darkIcon : styles.lightIcon}
-                      onPress={() => {
-                        this.setState({ rating: 2 })
-                      }}
-                    >
-                      <MaterialCommunityIcons
-                        style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon}
-                        name="emoticon-sad-outline"
-                        size={size.scale(30)}
-                        color={this.state.rating == 2 ? color.primary : color.lightGrey}
-                      />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={this.state.darkMode ? styles.darkIcon : styles.lightIcon}
-                      onPress={() => {
-                        this.setState({ rating: 3 })
-                      }}
-                    >
-                      <MaterialCommunityIcons
-                        style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon}
-                        name="emoticon-neutral-outline"
-                        size={size.scale(30)}
-                        color={this.state.rating == 3 ? color.primary : color.lightGrey}
-                      />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={this.state.darkMode ? styles.darkIcon : styles.lightIcon}
-                      onPress={() => {
-                        this.setState({ rating: 4 })
-                      }}
-                    >
-                      <MaterialCommunityIcons
-                        style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon}
-                        name="emoticon-happy-outline"
-                        size={size.scale(30)}
-                        color={this.state.rating == 4 ? color.primary : color.lightGrey}
-                      />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={this.state.darkMode ? styles.darkIcon : styles.lightIcon}
-                      onPress={() => {
-                        this.setState({ rating: 5 })
-                      }}
-                    >
-                      <MaterialCommunityIcons
-                        style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon}
-                        name="emoticon-excited-outline"
-                        size={size.scale(30)}
-                        color={this.state.rating == 5 ? color.primary : color.lightGrey}
-                      />
-                    </TouchableOpacity>
-
-                  </View>
-
-
-                  <Pressable
-                    style={[styles.button, { backgroundColor: color.background }]}
-                    onPress={() => this.handleSubmit()}
-                    disabled={this.state.loading}
-                  >
-                    <Text style={styles.textStyle}>Submit</Text>
-                  </Pressable>
-                </View>
-              </ScrollView>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
-
 
         <Header
           route={{ name: 'Journals' }}
           style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}
           leftIcon="write"
           rightIcon="calendar"
-          onLeftPress={() => this.setState({ modalVisible: !this.state.modalVisible })}
+          onLeftPress={() => this.props.navigation.navigate('AddJournal')}
           titleStyle={this.state.darkMode ? styles.darkText : styles.lightText}
         />
-        <View style={this.state.darkMode ? styles.darkRecentEntriesContainer : styles.lightRecentEntriesContainer}>
 
 
-          {this.state.loading && (
-            <ActivityIndicator size="large" color={color.primary} />
+        {this.state.loading && (
+          <ActivityIndicator size="large" color={color.primary} />
+        )}
+
+        <View style={this.state.darkMode ? styles.darkFactContainer : styles.lightFactContainer}>
+
+          {this.state.randomEntry && (
+            <>
+              <Text style={this.state.darkMode ? styles.darkFactTitle : styles.lightFactTitle}>
+                {this.getDaysAgo(this.state.randomEntry) == 1 ?
+                  this.getDaysAgo(this.state.randomEntry) + ' day ago' :
+                  this.getDaysAgo(this.state.randomEntry) + ' days ago'}
+              </Text>
+              <Text style={this.state.darkMode ? styles.darkFactText : styles.lightFactText}>
+                {
+                  // generate a random number between 0 and 4
+                  this.state.randomEntry.answers[Math.floor(Math.random() * 4)]
+                }
+              </Text>
+            </>
           )}
 
-          {!this.state.loading && (
-            <View>
 
-              <Text style={this.state.darkMode ? styles.darkQuote : styles.lightQuote}>
-                "The best way to predict the future is to create it"
-              </Text>
-              {this.state.journals.length > 0 && (
-                this.state.journals.map((journal, index) => (
-                  <TouchableOpacity
-                    style={[this.state.darkMode ? styles.darkListCardContainer : styles.lightListCardContainer, styles.elevation]}
-                    onPress={() => this.props.navigation.navigate('ViewJournal', {
-                      journal
-                    })}
-                    key={index}
-                  >
-                    <Text style={this.state.darkMode ? styles.darkListCardDate : styles.lightListCardDate}>
-                      {
-                        // get the date in the format
-                        new Date(journal.date).toLocaleDateString('en-US', {
-                          day: 'numeric',
-                          month: 'long',
-                          year: 'numeric',
-                        })
+          <Calendar
+            theme={{
+              backgroundColor: color.background,
+              calendarBackground: color.background,
+            }}
+            // Initially visible month. Default = now
+            // current={new Date().toISOString().slice(0, 10)}
+            // current={"2022-05-11"}
+            onDayPress={data => {
 
+              var dateString = data.dateString;
+
+              // if dateString is not in the markedDates array, navigate to the AddJournal screen
+              if (!this.state.markedDates[dateString]) {
+                return;
+              }
+
+              this.props.navigation.navigate('ViewJournal', { data })
+            }}
+            monthFormat={'yyyy MM'}
+            // Handler which gets executed when visible month changes in calendar. Default = undefined
+            onMonthChange={async (data) => {
+
+              var month = data.month - 1;
+              var year = data.year;
+
+              const response = await getMonthlyData({ month: month, year: year });
+
+              if (response) {
+
+                var data = response.data;
+                var markedDates = [];
+
+                for (var i = 0; i < data.length; i++) {
+
+                  var backgroundColor = '#fff';
+                  var rating = data[i].rating;
+                  // based on the rating value, set the background color
+                  if (rating <= 1) {
+                    backgroundColor = '#222222';
+                  } else if (rating <= 2) {
+                    backgroundColor = '#223343';
+                  } else if (rating <= 3) {
+                    backgroundColor = '#2C4D6E';
+                  } else if (rating <= 4) {
+                    backgroundColor = '#376899';
+                  } else {
+                    backgroundColor = '#4183C4';
+                  }
+
+                  markedDates[data[i].date] = {
+                    customStyles: {
+                      container: {
+                        backgroundColor: backgroundColor,
+                        opacity: 0.5
+                      },
+                      text: {
+                        color: 'black',
+                        fontWeight: 'bold'
                       }
-                    </Text>
-                    <Text style={this.state.darkMode ? styles.darkListCardTitle : styles.lightListCardTitle}>
-                      {journal.title}
-                    </Text>
-                  </TouchableOpacity>
-                ))
-              )}
-            </View>
-          )}
+                    },
+                  }
+                }
 
-          <View style={this.state.darkMode ? styles.darkBottomContainer : styles.lightBottomContainer}>
-            <TouchableOpacity>
-              <Text style={this.state.darkMode ? styles.darkTitle : styles.lightTitle}>
-                Today's prompt
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={this.state.darkMode ? styles.darkTitle : styles.lightTitle}>
-                Daily Quiz
-              </Text>
-            </TouchableOpacity>
-          </View>
+                this.setState({ markedDates })
+
+              } else {
+                ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+              }
+
+
+            }}
+            hideExtraDays={true}
+            disableMonthChange={true}
+            firstDay={1}
+            onPressArrowLeft={subtractMonth => subtractMonth()}
+            onPressArrowRight={addMonth => addMonth()}
+            disableAllTouchEventsForDisabledDays={true}
+            // Replace default month and year title with custom one. the function receive a date as parameter
+            renderHeader={date => {
+              /*Return JSX*/
+              return (
+                <View style={styles.header}>
+                  <Text style={{ color: color.primary }}>
+                    {(date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)} / {date.getFullYear()}
+                  </Text>
+                </View>
+              );
+            }}
+            enableSwipeMonths={true}
+            markingType={'custom'}
+            markedDates={this.state.markedDates}
+          // markedDates={{
+          //   '2022-05-10': {
+          //     customStyles: {
+          //       container: {
+          //         backgroundColor: 'green',
+          //         opacity: 0.5
+          //       },
+          //       text: {
+          //         color: 'black',
+          //         fontWeight: 'bold'
+          //       }
+          //     },
+          //   },
+          // }}
+          />
 
         </View>
+
+
+
 
       </View>
     )

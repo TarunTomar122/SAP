@@ -17,16 +17,34 @@ import { color, colorLight, size, typography } from '../../theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { getJournal } from "../../Services/API/journal"
+
 class ViewJournalScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      journal: this.props.route.params.journal,
+      loading: true,
       darkMode: true,
+      journal: {},
+      data: this.props.route.params.data,
     };
   }
 
   async componentDidMount() {
+
+    const response = await getJournal(this.props.route.params.data);
+    if (response) {
+      this.setState({
+        loading: false,
+        journal: response,
+      });
+    } else {
+      this.setState({
+        loading: false,
+      });
+      ToastAndroid.show('Error fetching journal', ToastAndroid.SHORT);
+    }
+
   }
 
 
@@ -35,85 +53,58 @@ class ViewJournalScreen extends React.Component {
       <ScrollView style={this.state.darkMode ? styles.darkHome : styles.lightHome}>
 
         <View style={this.state.darkMode ? styles.darkHeader : styles.lightHeader}>
-          <Text style={this.state.darkMode ? styles.darkHeaderText : styles.lightHeaderText}>
-            {this.state.journal.title}
-          </Text>
-          <Text style={this.state.darkMode ? styles.darkHeaderDate : styles.lightHeaderDate}>
-            {new Date(this.state.journal.date).toLocaleDateString('en-US', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            })}
-          </Text>
 
-        </View>
 
-        <View style={this.state.darkMode ? styles.darkContentContainer : styles.lightContentContainer}>
-          <Text style={this.state.darkMode ? styles.darkContentText : styles.lightContentText}>
-            {this.state.journal.thought}
-          </Text>
-        </View>
+          {this.state.loading && (
+            <ActivityIndicator size="large" color={color.primary} />
+          )}
 
-        <View style={this.state.darkMode ? styles.darkTagsContainer : styles.lightTagsContainer}>
-          <AntDesign style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon} name="tags" size={size.scale(22)} color={color.primary} />
-          <Text style={this.state.darkMode ? styles.darkTagsText : styles.lightTagsText}>
-            {this.state.journal.personName}
-          </Text>
+          {!this.state.loading && (
+            <ScrollView style={{ paddingBottom: size.scale(80) }}>
 
-          {
-            this.state.journal.rating == 1 && (
-              <MaterialCommunityIcons
-                style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon}
-                name="emoticon-dead-outline"
-                size={size.scale(22)}
-                color={color.primary}
-              />
-            )
-          }
+              <View style={this.state.darkMode ? styles.darkTagsContainer : styles.lightTagsContainer}>
+                <Text style={this.state.darkMode ? styles.darkTagsText : styles.lightHeaderText}>
+                  {new Date(this.state.journal.date).toISOString().slice(0, 10)}
+                </Text>
+              </View>
 
-          {
-            this.state.journal.rating == 2 && (
-              <MaterialCommunityIcons
-                style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon}
-                name="emoticon-sad-outline"
-                size={size.scale(22)}
-                color={color.primary}
-              />
-            )
-          }
+              <Text style={this.state.darkMode ? styles.darkHeaderText : styles.lightHeaderText}>
+                My thoughts
+              </Text>
 
-          {
-            this.state.journal.rating == 3 && (
-              <MaterialCommunityIcons
-                style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon}
-                name="emoticon-neutral-outline"
-                size={size.scale(22)}
-                color={color.primary}
-              />
-            )
-          }
+              <Text style={this.state.darkMode ? styles.darkContentText : styles.lightContentText}>
+                {this.state.journal.answers[0]}
+              </Text>
 
-          {
-            this.state.journal.rating == 4 && (
-              <MaterialCommunityIcons
-                style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon}
-                name="emoticon-happy-outline"
-                size={size.scale(22)}
-                color={color.primary}
-              />
-            )
-          }
+              <Text style={this.state.darkMode ? styles.darkHeaderText : styles.lightHeaderText}>
+                Things i wanted to change
+              </Text>
 
-          {
-            this.state.journal.rating == 5 && (
-              <MaterialCommunityIcons
-                style={this.state.darkMode ? styles.darkTagsIcon : styles.lightTagsIcon}
-                name="emoticon-excited-outline"
-                size={size.scale(22)}
-                color={color.primary}
-              />
-            )
-          }
+              <Text style={this.state.darkMode ? styles.darkContentText : styles.lightContentText}>
+                {this.state.journal.answers[1]}
+              </Text>
+
+              <Text style={this.state.darkMode ? styles.darkHeaderText : styles.lightHeaderText}>
+                Things that i was worried of
+              </Text>
+
+              <Text style={this.state.darkMode ? styles.darkContentText : styles.lightContentText}>
+                {this.state.journal.answers[2]}
+              </Text>
+
+              <Text style={this.state.darkMode ? styles.darkHeaderText : styles.lightHeaderText}>
+                Things that i was grateful for
+              </Text>
+
+              <Text style={this.state.darkMode ? styles.darkContentText : styles.lightContentText}>
+                {this.state.journal.answers[3]}
+              </Text>
+
+
+
+            </ScrollView>
+          )}
+
 
 
         </View>
@@ -124,3 +115,4 @@ class ViewJournalScreen extends React.Component {
 }
 
 export default ViewJournalScreen;
+

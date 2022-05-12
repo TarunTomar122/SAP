@@ -15,15 +15,17 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   darkHeader: {
-    alignItems: 'center',
+    // alignItems: 'center',
     paddingHorizontal: size.scale(20),
     justifyContent: 'center',
     marginTop: size.scale(80),
   },
   darkHeaderText: {
-    fontSize: size.scale(24),
+    fontSize: size.scale(20),
     fontFamily: typography.primaryBold,
     color: color.primary,
+    marginTop: size.scale(36),
+    marginBottom: size.scale(4),
   },
   darkHeaderDate: {
     fontSize: size.scale(14),
@@ -36,24 +38,20 @@ export default StyleSheet.create({
     marginHorizontal: size.scale(20),
   },
   darkContentText: {
-    fontSize: size.scale(18),
+    fontSize: size.scale(20),
     fontFamily: typography.primary,
     color: color.lightGrey,
   },
   darkTagsContainer: {
-    marginVertical: size.scale(20),
-    marginHorizontal: size.scale(20),
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginBottom: size.scale(80),
+    justifyContent: 'center',
   },
   darkTagsText: {
-    fontSize: size.scale(18),
+    fontSize: size.scale(26),
     fontFamily: typography.primary,
     color: color.lightGrey,
     marginHorizontal: size.scale(10),
   },
-  
+
 });

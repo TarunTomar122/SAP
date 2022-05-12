@@ -48,7 +48,8 @@ class AnalysisScreen extends React.Component {
     let data = [];
     let lastDate = null;
     for (let key in result) {
-      let date = new Date(key);
+      let date = new Date(key+" 2020 00:00:00 GMT+0530 (India Standard Time)");
+      console.log(key, date, new Date("Tue Apr 19 2020 00:00:00 GMT+0530 (India Standard Time)"));
       var dateString = date.toDateString();
       if (date.getMonth() == '11') {
         // Convert date into a string
@@ -60,6 +61,7 @@ class AnalysisScreen extends React.Component {
           date.getDate();
       }
       else {
+        // console.log(date.getMonth());
         if (date.getMonth() < 10) {
           if (date.getDate() < 10) {
             dateString =
@@ -109,7 +111,7 @@ class AnalysisScreen extends React.Component {
       data.push({ date: dateString, count: count });
     }
 
-    // console.log("data", data, lastDate);
+    console.log("data", data, lastDate);
 
     this.setState({ data: data, lastDate: lastDate, loading: false });
   }

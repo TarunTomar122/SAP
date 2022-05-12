@@ -189,9 +189,9 @@ export const journalPromts = [
 
 export const dailyPrompts = [
     "Write your day in bullet points.",
+    "What is it that you would want to change in today?",
     "What are you grateful for today?",
     "What is your biggest concern right now?",
-    "Could you be a better person today?",
 ]
 
 export const monthlyPrompts = [

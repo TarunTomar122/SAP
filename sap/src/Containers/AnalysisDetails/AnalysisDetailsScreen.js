@@ -76,7 +76,7 @@ class AnalysisDetailsScreen extends React.Component {
         taskNames.push({ label: taskName, value: taskName });
         tasks[taskName] = dataArr;
       }
-
+      console.log("tasks", tasks);
       this.setState({ tasks: tasks, fitems: taskNames });
     } else {
       ToastAndroid.show('Something Went Wrong', ToastAndroid.SHORT);
@@ -131,7 +131,7 @@ class AnalysisDetailsScreen extends React.Component {
       achieved.push(validData[i].achieved);
     }
 
-    console.log(labels);
+    // console.log(labels);
 
     const data = {
       labels: labels,
