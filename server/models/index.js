@@ -1,14 +1,14 @@
 import Sequelize from "sequelize";
 
 const sequelize = new Sequelize(
-  "postgres://gjnogsmk:G2CKVv5h1bjBcvze1kco6IE2nBCIJhfi@satao.db.elephantsql.com/gjnogsmk",
+  process.env.DB_HOST,
   {
     dialect: "postgres",
   }
 );
 
 const models = {
-  Person: sequelize.import("./person.js"),
+  Person: sequelize.import("./person"),
   Thought: sequelize.import("./thought"),
   TaskInfo: sequelize.import("./taskInfo"),
   TaskTrack: sequelize.import("./taskTrack"),
