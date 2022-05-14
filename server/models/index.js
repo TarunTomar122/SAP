@@ -8,7 +8,7 @@ const sequelize = new Sequelize(
 );
 
 const models = {
-  Person: sequelize.import("./person"),
+  Person: sequelize.import("./person.js"),
   Thought: sequelize.import("./thought"),
   TaskInfo: sequelize.import("./taskInfo"),
   TaskTrack: sequelize.import("./taskTrack"),
