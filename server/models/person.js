@@ -32,4 +32,5 @@ const person = (sequelize, DataTypes) => {
   return Person;
 };
 
-export default person;
+// export default person;
+module.exports = person;
