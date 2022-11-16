@@ -1,7 +1,7 @@
 [
-  { "size": 1, "color": "#CAE7E3" },
-  { "size": 1, "color": "#B2B2B2" },
-  { "size": 2, "color": "#EEB8C5" },
-  { "size": 1.5, "color": "#DCDBD9" },
-  { "size": 4, "color": "#FEC7BC" }
+  { "x": 1, "y": 8, "z": 0, "size": 1, "color": "#CAE7E3" },
+  { "x": -2, "y": 3, "z": 1, "size": 1, "color": "#B2B2B2" },
+  { "x": -1, "y": 3, "z": 2, "size": 2, "color": "#EEB8C5" },
+  { "x": 2, "y": 7, "z": 7, "size": 1.5, "color": "#DCDBD9" },
+  { "x": 1, "y": 6, "z": 3, "size": 4, "color": "#FEC7BC" }
 ]
